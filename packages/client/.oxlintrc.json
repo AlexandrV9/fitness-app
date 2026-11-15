@@ -1,0 +1,71 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "unicorn",
+    "react",
+    "react-perf",
+    "oxc",
+    "import",
+    "jsx-a11y",
+    "node",
+    "promise",
+    "vitest"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "off",
+    "perf": "off"
+  },
+  "env": {
+    "builtin": true,
+    "node": true,
+    "browser": true,
+    "es2024": true
+  },
+  "ignorePatterns": [
+    "**/dist/*",
+    "**/public/*",
+    ".tanstack",
+    ".output",
+    "**/node_modules/*",
+    "*.css",
+    "**/routeTree.gen.ts",
+    "**/*.d.ts",
+    ".vscode",
+    ".storybook",
+    "**/__generated__/*"
+  ],
+  "overrides": [
+    {
+      "files": ["src/**/*.{js,ts,jsx,tsx}"],
+      "rules": {
+        "no-redeclare": "off",
+        "no-with": "off",
+        "typescript/no-empty-object-type": [
+          "error",
+          { "allowInterfaces": "with-single-extends" }
+        ],
+        "react/rules-of-hooks": "error",
+        "react/exhaustive-deps": "error",
+        "react/react-in-jsx-scope": "off",
+        "react/preserve-manual-memoization": "off",
+        "react/immutability": "off",
+        "react/set-state-in-effect": "off",
+        "react/refs": "off",
+        "react/incompatible-library": "off",
+        "react_perf/jsx-no-new-array-as-prop": "off",
+        "react_perf/jsx-no-new-object-as-prop": "off",
+        "react_perf/jsx-no-new-function-as-prop": "off",
+        "react_perf/jsx-no-jsx-as-prop": "off",
+        "import/no-named-as-default": "off",
+        "import/no-named-as-default-member": "off",
+        "jsx_a11y/click-events-have-key-events": "off",
+        "jsx_a11y/no-static-element-interactions": "off",
+        "unicorn/no-useless-spread": "off",
+        "oxc/only-used-in-recursion": "off",
+        "no-useless-rename": "off"
+      }
+    }
+  ]
+}
