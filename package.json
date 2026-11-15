@@ -6,9 +6,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev -w client",
-    "build": "npm run build -w client",
-    "lint": "npm run lint -w client",
-    "preview": "npm run preview -w client"
+    "dev": "npm run dev -w @fitness-app/client",
+    "dev:client": "npm run dev -w @fitness-app/client",
+    "dev:server": "npm run dev -w @fitness-app/server",
+    "build": "npm run build -w @fitness-app/client && npm run build -w @fitness-app/server",
+    "build:client": "npm run build -w @fitness-app/client",
+    "build:server": "npm run build -w @fitness-app/server",
+    "start:server": "npm run start -w @fitness-app/server",
+    "lint": "npm run lint -w @fitness-app/client",
+    "preview": "npm run preview -w @fitness-app/client"
   }
 }
