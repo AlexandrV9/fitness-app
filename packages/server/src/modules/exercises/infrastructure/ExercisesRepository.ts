@@ -18,6 +18,7 @@ type ExerciseRow = {
 
 const TABLE_NAME = "exercises";
 
+/** Хранит упражнения пользователя: создание, чтение, обновление и удаление. */
 export class ExercisesRepository implements IExercisesRepository {
   private readonly pool: Pool;
 

@@ -7,6 +7,10 @@ export type PaginationMeta = {
   hasPrev: boolean;
 };
 
+export type PaginationParams = { page: number; size: number };
+
+export type PaginatedResult<T> = { data: T[]; pagination: PaginationMeta };
+
 export const buildPaginationMeta = (
   page: number,
   limit: number,
