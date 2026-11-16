@@ -1,30 +1,25 @@
-import { ExercisesRepository } from '../modules/exercises/infrastructure/ExercisesRepository.js'
-import { WorkoutExercisesRepository } from '../modules/workouts/infrastructure/WorkoutExercisesRepository.js'
-import { WorkoutSetsRepository } from '../modules/workouts/infrastructure/WorkoutSetsRepository.js'
-import { WorkoutTemplateExercisesRepository } from '../modules/workouts/infrastructure/WorkoutTemplateExercisesRepository.js'
-import { WorkoutTemplatesRepository } from '../modules/workouts/infrastructure/WorkoutTemplatesRepository.js'
-import { WorkoutsRepository } from '../modules/workouts/infrastructure/WorkoutsRepository.js'
-import { checkDatabaseConnection, pool } from './pool.js'
+import { ExercisesRepository } from "../modules/exercises/infrastructure/ExercisesRepository.js";
+import { UsersRepository } from "../modules/users/infrastructure/UsersRepository.js";
+import { WorkoutExercisesRepository } from "../modules/workouts/infrastructure/WorkoutExercisesRepository.js";
+import { WorkoutSetsRepository } from "../modules/workouts/infrastructure/WorkoutSetsRepository.js";
+import { WorkoutsRepository } from "../modules/workouts/infrastructure/WorkoutsRepository.js";
+import { WorkoutTemplateExercisesRepository } from "../modules/workouts/infrastructure/WorkoutTemplateExercisesRepository.js";
+import { WorkoutTemplatesRepository } from "../modules/workouts/infrastructure/WorkoutTemplatesRepository.js";
+import { checkDatabaseConnection, pool } from "./pool.js";
 
-await checkDatabaseConnection()
+await checkDatabaseConnection();
 
 try {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS users (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      email TEXT NOT NULL UNIQUE,
-      password_hash TEXT NOT NULL
-    )
-  `)
+  await new UsersRepository(pool).createTable();
 
-  await new ExercisesRepository(pool).createTable()
-  await new WorkoutTemplatesRepository(pool).createTable()
-  await new WorkoutTemplateExercisesRepository(pool).createTable()
-  await new WorkoutsRepository(pool).createTable()
-  await new WorkoutExercisesRepository(pool).createTable()
-  await new WorkoutSetsRepository(pool).createTable()
+  await new ExercisesRepository(pool).createTable();
+  await new WorkoutTemplatesRepository(pool).createTable();
+  await new WorkoutTemplateExercisesRepository(pool).createTable();
+  await new WorkoutsRepository(pool).createTable();
+  await new WorkoutExercisesRepository(pool).createTable();
+  await new WorkoutSetsRepository(pool).createTable();
 
-  console.log('Database tables are ready')
+  console.log("Database tables are ready");
 } finally {
-  await pool.end()
+  await pool.end();
 }

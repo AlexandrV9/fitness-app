@@ -1,14 +1,16 @@
+import { randomUUID } from "node:crypto";
+
 import { decode, sign, verify } from "hono/jwt";
 
-import { randomUUID } from "node:crypto";
+import { config } from "../../../config/index.js";
+
+import type { AuthJWTPayload } from "../domain/interfaces/IAuthJWTPayload.js";
 import type {
   AuthUserPayload,
   IJwtAuthTokenManager,
   VerifyAccessTokenResponse,
   VerifyRefreshTokenResponse,
 } from "../domain/interfaces/IJwtAuthTokenManager.js";
-import { config } from "../../../config/index.js";
-import type { AuthJWTPayload } from "../domain/interfaces/IAuthJWTPayload.js";
 
 /**
  * Реализация JWT access/refresh токенов.
