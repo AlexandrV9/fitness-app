@@ -1,4 +1,5 @@
-import { Hono } from "hono";
+import { swaggerUI } from "@hono/swagger-ui";
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
 import { config } from "./config/index.js";
@@ -10,7 +11,7 @@ import { createWorkoutTemplatesRouter } from "./modules/workouts/presentation/cr
 import { errorHandler } from "./shared/lib/error-handler.js";
 import { globalErrorMapper } from "./shared/lib/error-mapper.js";
 
-export const app = new Hono();
+export const app = new OpenAPIHono();
 
 app.use(
   "*",
@@ -30,3 +31,13 @@ app.route("/users", createUsersRouter());
 app.route("/exercises", createExercisesRouter());
 app.route("/workout-templates", createWorkoutTemplatesRouter());
 app.route("/workouts", createWorkoutsRouter());
+
+app.doc31("/openapi.json", {
+  openapi: "3.1.0",
+  info: {
+    title: "Fitness App API",
+    version: "0.0.0",
+  },
+});
+
+app.get("/docs", swaggerUI({ url: "/openapi.json" }));

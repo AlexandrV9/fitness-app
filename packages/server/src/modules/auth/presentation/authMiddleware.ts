@@ -1,22 +1,14 @@
+import { isUuid } from "../../../shared/lib/guards.js";
+import { JwtAuthTokenManager } from "../infrastructure/JwtAuthTokenManager.js";
+
+import type { AuthVariables } from "../../../shared/lib/types.js";
 import type { IJwtAuthTokenManager } from "../domain/interfaces/IJwtAuthTokenManager.js";
 import type { MiddlewareHandler } from "hono";
-
-export type AuthVariables = {
-  user: {
-    id: string;
-  };
-};
-
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-function isUuid(value: string): boolean {
-  return UUID_RE.test(value);
-}
 
 /**
  * Bearer access JWT → c.set("user", { id }).
  */
-export const createAuthMiddleware = (
+const createAuthMiddleware = (
   jwtAuthTokenManager: IJwtAuthTokenManager,
 ): MiddlewareHandler<{ Variables: AuthVariables }> => {
   return async (c, next) => {
@@ -45,3 +37,5 @@ export const createAuthMiddleware = (
     await next();
   };
 };
+
+export const authMiddleware = createAuthMiddleware(new JwtAuthTokenManager());

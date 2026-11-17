@@ -4,7 +4,7 @@ import { HTTPException } from "hono/http-exception";
 import { getPaginationParamsFromContext, readRequestBody } from "../../../shared/hono/index.js";
 import { isUuid } from "../../../shared/lib/guards.js";
 
-import type { AuthVariables } from "../../auth/presentation/createAuthMiddleware.js";
+import type { AuthVariables } from "../../../shared/lib/types.js";
 import type { CreateExerciseUseCase } from "../application/use-cases/createExercise/index.js";
 import type { DeleteExerciseUseCase } from "../application/use-cases/deleteExercise/index.js";
 import type { GetExerciseByIdUseCase } from "../application/use-cases/getExerciseById/index.js";

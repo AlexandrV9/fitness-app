@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 
 import { pool } from "../../../database/pool.js";
-import { authenticate } from "../../auth/presentation/authenticate.js";
+import { authMiddleware } from "../../auth/presentation/authMiddleware.js";
 import { CreateExerciseUseCase } from "../application/use-cases/createExercise/index.js";
 import { DeleteExerciseUseCase } from "../application/use-cases/deleteExercise/index.js";
 import { GetExerciseByIdUseCase } from "../application/use-cases/getExerciseById/index.js";
@@ -10,11 +10,11 @@ import { UpdateExerciseUseCase } from "../application/use-cases/updateExercise/i
 import { ExercisesRepository } from "../infrastructure/ExercisesRepository.js";
 import { ExercisesController } from "./ExercisesController.js";
 
-import type { AuthVariables } from "../../auth/presentation/createAuthMiddleware.js";
+import type { AuthVariables } from "../../../shared/lib/types.js";
 
 export function createExercisesRouter() {
   const router = new Hono<{ Variables: AuthVariables }>();
-  router.use("*", authenticate);
+  router.use("*", authMiddleware);
 
   const repository = new ExercisesRepository(pool);
 

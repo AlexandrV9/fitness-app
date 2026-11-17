@@ -1,4 +1,5 @@
-import { Hono } from "hono";
+import { OpenAPIHono } from "@hono/zod-openapi";
+import { HTTPException } from "hono/http-exception";
 
 import { config } from "../../../config/index.js";
 import { pool } from "../../../database/pool.js";
@@ -16,7 +17,13 @@ import { mapAuthError } from "./mapAuthError.js";
 export function createAuthRouter() {
   globalErrorMapper.register(mapAuthError);
 
-  const router = new Hono();
+  const router = new OpenAPIHono({
+    defaultHook: (result) => {
+      if (!result.success) {
+        throw new HTTPException(400, { message: "INVALID_AUTH_DATA" });
+      }
+    },
+  });
 
   router.use("*", async (c, next) => {
     c.header("Cache-Control", "no-store");
@@ -27,6 +34,7 @@ export function createAuthRouter() {
   const refreshSessionsRepository = new RefreshSessionsRepository(pool);
 
   const jwtAuthTokenManager = new JwtAuthTokenManager();
+
   const passwordHasher = new BcryptPasswordHasher();
 
   const sessions = new AuthSessionsService(
