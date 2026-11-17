@@ -47,6 +47,11 @@ export const WorkoutDetailSchema = WorkoutSchema.extend({
   exercises: z.array(WorkoutExerciseSchema),
 }).openapi("WorkoutDetail");
 
+/** Separate name so `.nullable()` does not pollute `WorkoutDetail` in OpenAPI. */
+const NullableWorkoutDetailSchema = WorkoutDetailSchema.nullable().openapi(
+  "NullableWorkoutDetail",
+);
+
 export const StartWorkoutBodySchema = z
   .object({
     templateId: z.uuid(),
@@ -106,7 +111,7 @@ export const getActiveWorkoutRoute = createRoute({
   summary: "Get active workout",
   security: [...bearerAuthSecurity],
   responses: {
-    200: jsonResponse(successData(WorkoutDetailSchema.nullable()), "Active workout or null"),
+    200: jsonResponse(successData(NullableWorkoutDetailSchema), "Active workout or null"),
     401: jsonResponse(ErrorCodeSchema, "Unauthorized"),
   },
 });
@@ -130,9 +135,11 @@ export const getWorkoutRoute = createRoute({
 
 export const startWorkoutRoute = createRoute({
   method: "post",
-  path: "/",
+  path: "/start",
   tags: ["Workouts"],
   summary: "Start workout from template",
+  operationId: "startWorkout",
+  description: "Starts a new workout from a template, or returns the existing active workout for the same template.",
   security: [...bearerAuthSecurity],
   request: {
     body: {
@@ -145,6 +152,8 @@ export const startWorkoutRoute = createRoute({
     201: jsonResponse(successData(WorkoutDetailSchema), "Workout started"),
     400: jsonResponse(ErrorCodeSchema, "Invalid template id"),
     401: jsonResponse(ErrorCodeSchema, "Unauthorized"),
+    404: jsonResponse(ErrorCodeSchema, "Template or user not found"),
+    409: jsonResponse(ErrorCodeSchema, "Active workout already exists"),
   },
 });
 

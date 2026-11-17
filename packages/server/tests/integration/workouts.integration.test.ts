@@ -118,7 +118,7 @@ describe("workouts integration", () => {
       name: "Pull day",
     });
 
-    const response = await jsonRequest(app, "POST", "/workouts", {
+    const response = await jsonRequest(app, "POST", "/workouts/start", {
       token: session.accessToken,
       body: { templateId: anotherTemplate.id },
     });
@@ -129,7 +129,7 @@ describe("workouts integration", () => {
 
   it("старт с неизвестным шаблоном → WORKOUT_TEMPLATE_NOT_FOUND", async () => {
     const session = await signUp(app);
-    const response = await jsonRequest(app, "POST", "/workouts", {
+    const response = await jsonRequest(app, "POST", "/workouts/start", {
       token: session.accessToken,
       body: { templateId: MISSING_UUID },
     });
@@ -141,7 +141,7 @@ describe("workouts integration", () => {
     const session = await signUp(app);
     await testDb.pool.query("DELETE FROM users WHERE id = $1", [session.user.id]);
 
-    const response = await jsonRequest(app, "POST", "/workouts", {
+    const response = await jsonRequest(app, "POST", "/workouts/start", {
       token: session.accessToken,
       body: { templateId: MISSING_UUID },
     });
@@ -153,7 +153,7 @@ describe("workouts integration", () => {
     const session = await signUp(app);
 
     await expectErrorMessage(
-      await jsonRequest(app, "POST", "/workouts", {
+      await jsonRequest(app, "POST", "/workouts/start", {
         token: session.accessToken,
         body: { templateId: "not-a-uuid" },
       }),

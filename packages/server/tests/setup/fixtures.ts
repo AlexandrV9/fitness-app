@@ -94,7 +94,7 @@ export const createTemplate = async (
 };
 
 export const startWorkout = async (app: TestApp, token: string, templateId: string) => {
-  const response = await jsonRequest(app, "POST", "/workouts", {
+  const response = await jsonRequest(app, "POST", "/workouts/start", {
     token,
     body: { templateId },
   });
