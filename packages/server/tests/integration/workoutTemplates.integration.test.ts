@@ -100,7 +100,7 @@ describe("workout templates integration", () => {
     );
   });
 
-  it("чужой шаблон → WORKOUT_TEMPLATE_NOT_FOUND", async () => {
+  it("чужой шаблон → WORKOUT_TEMPLATE_NOT_FOUND на GET/PATCH/DELETE", async () => {
     const owner = await signUp(app);
     const other = await signUp(app);
     const exercise = await createExercise(app, owner.accessToken);
@@ -113,19 +113,52 @@ describe("workout templates integration", () => {
       404,
       "WORKOUT_TEMPLATE_NOT_FOUND",
     );
+
+    await expectErrorCode(
+      await jsonRequest(app, "PATCH", `/workout-templates/${template.id}`, {
+        token: other.accessToken,
+        body: { name: "Hijacked" },
+      }),
+      404,
+      "WORKOUT_TEMPLATE_NOT_FOUND",
+    );
+
+    await expectErrorCode(
+      await jsonRequest(app, "DELETE", `/workout-templates/${template.id}`, {
+        token: other.accessToken,
+      }),
+      404,
+      "WORKOUT_TEMPLATE_NOT_FOUND",
+    );
   });
 
-  it("создание с несуществующим exerciseId → WORKOUT_TEMPLATE_EXERCISE_NOT_FOUND", async () => {
+  it("create/update с несуществующим exerciseId → WORKOUT_TEMPLATE_EXERCISE_NOT_FOUND", async () => {
     const session = await signUp(app);
-    const response = await jsonRequest(app, "POST", "/workout-templates", {
-      token: session.accessToken,
-      body: {
-        name: "Broken",
-        exercises: [{ exerciseId: MISSING_UUID, plannedSets: 1 }],
-      },
-    });
+    const exercise = await createExercise(app, session.accessToken);
+    const template = await createTemplate(app, session.accessToken, exercise.id);
 
-    await expectErrorCode(response, 404, "WORKOUT_TEMPLATE_EXERCISE_NOT_FOUND");
+    await expectErrorCode(
+      await jsonRequest(app, "POST", "/workout-templates", {
+        token: session.accessToken,
+        body: {
+          name: "Broken",
+          exercises: [{ exerciseId: MISSING_UUID, plannedSets: 1 }],
+        },
+      }),
+      404,
+      "WORKOUT_TEMPLATE_EXERCISE_NOT_FOUND",
+    );
+
+    await expectErrorCode(
+      await jsonRequest(app, "PATCH", `/workout-templates/${template.id}`, {
+        token: session.accessToken,
+        body: {
+          exercises: [{ exerciseId: MISSING_UUID, plannedSets: 2 }],
+        },
+      }),
+      404,
+      "WORKOUT_TEMPLATE_EXERCISE_NOT_FOUND",
+    );
   });
 
   it("пустой PATCH → EMPTY_UPDATE", async () => {

@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
-import { expectUnauthorized, signUp } from "../setup/fixtures.js";
+import { expiredAccessToken, expectUnauthorized, signUp } from "../setup/fixtures.js";
 import { expectErrorMessage, expectStatus, jsonRequest, readJson } from "../setup/http.js";
 import {
   releaseTestDatabase,
@@ -50,6 +50,14 @@ describe("users integration", () => {
   it("GET /users/me с битым токеном → Invalid token", async () => {
     const response = await jsonRequest(app, "GET", "/users/me", {
       token: "invalid.jwt.token",
+    });
+    await expectErrorMessage(response, 401, "Invalid token");
+  });
+
+  it("GET /users/me с истёкшим токеном → Invalid token", async () => {
+    const session = await signUp(app);
+    const response = await jsonRequest(app, "GET", "/users/me", {
+      token: await expiredAccessToken(session.user),
     });
     await expectErrorMessage(response, 401, "Invalid token");
   });

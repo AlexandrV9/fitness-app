@@ -9,6 +9,7 @@ import {
 } from "../setup/fixtures.js";
 import {
   expectErrorCode,
+  expectErrorMessage,
   expectStatus,
   jsonRequest,
   MISSING_UUID,
@@ -54,6 +55,17 @@ describe("workouts integration", () => {
 
   it("без токена → Unauthorized", async () => {
     await expectUnauthorized(await jsonRequest(app, "GET", "/workouts"));
+  });
+
+  it("GET /workouts/active без активной → null", async () => {
+    const session = await signUp(app);
+    const response = await jsonRequest(app, "GET", "/workouts/active", {
+      token: session.accessToken,
+    });
+
+    await expectStatus(response, 200);
+    const body = await readJson<{ success: true; data: null }>(response);
+    expect(body.data).toBeNull();
   });
 
   it("старт / active / get / finish / список завершённых", async () => {
@@ -125,6 +137,48 @@ describe("workouts integration", () => {
     await expectErrorCode(response, 404, "WORKOUT_TEMPLATE_NOT_FOUND");
   });
 
+  it("старт при удалённом пользователе → USER_NOT_FOUND", async () => {
+    const session = await signUp(app);
+    await testDb.pool.query("DELETE FROM users WHERE id = $1", [session.user.id]);
+
+    const response = await jsonRequest(app, "POST", "/workouts", {
+      token: session.accessToken,
+      body: { templateId: MISSING_UUID },
+    });
+
+    await expectErrorCode(response, 404, "USER_NOT_FOUND");
+  });
+
+  it("невалидные OpenAPI данные → INVALID_WORKOUT_DATA", async () => {
+    const session = await signUp(app);
+
+    await expectErrorMessage(
+      await jsonRequest(app, "POST", "/workouts", {
+        token: session.accessToken,
+        body: { templateId: "not-a-uuid" },
+      }),
+      400,
+      "INVALID_WORKOUT_DATA",
+    );
+
+    await expectErrorMessage(
+      await jsonRequest(app, "GET", "/workouts/not-a-uuid", {
+        token: session.accessToken,
+      }),
+      400,
+      "INVALID_WORKOUT_DATA",
+    );
+
+    await expectErrorMessage(
+      await jsonRequest(app, "GET", "/workouts", {
+        token: session.accessToken,
+        query: { size: 0 },
+      }),
+      400,
+      "INVALID_WORKOUT_DATA",
+    );
+  });
+
   it("get/finish неизвестной тренировки → WORKOUT_NOT_FOUND", async () => {
     const session = await signUp(app);
 
@@ -192,6 +246,7 @@ describe("workouts integration", () => {
     const { session, workout } = await seedActiveWorkout();
     const exercise = workout.exercises[0]!;
     const set = exercise.sets[0]!;
+    const secondSet = exercise.sets[1]!;
 
     const saved = await jsonRequest(
       app,
@@ -257,11 +312,54 @@ describe("workouts integration", () => {
     );
 
     await expectErrorCode(
+      await jsonRequest(
+        app,
+        "PATCH",
+        `/workouts/${workout.id}/exercises/${exercise.id}/sets/${secondSet.id}`,
+        {
+          token: session.accessToken,
+          body: { status: "completed", parameterValues: { reps: 8 } },
+        },
+      ),
+      409,
+      "WORKOUT_EXERCISE_SKIPPED",
+    );
+
+    await expectErrorCode(
       await jsonRequest(app, "POST", `/workouts/${workout.id}/exercises/${MISSING_UUID}/skip`, {
         token: session.accessToken,
       }),
       404,
       "WORKOUT_EXERCISE_NOT_FOUND",
+    );
+  });
+
+  it("save set с битой parameterSchema → INVALID_WORKOUT_PARAMETER_SCHEMA", async () => {
+    const { session, workout } = await seedActiveWorkout();
+    const exercise = workout.exercises[0]!;
+    const set = exercise.sets[0]!;
+
+    await testDb.pool.query(
+      `
+        UPDATE workout_exercises
+        SET parameter_schema = $2::jsonb
+        WHERE id = $1
+      `,
+      [exercise.id, JSON.stringify([{ key: "reps" }])],
+    );
+
+    await expectErrorCode(
+      await jsonRequest(
+        app,
+        "PATCH",
+        `/workouts/${workout.id}/exercises/${exercise.id}/sets/${set.id}`,
+        {
+          token: session.accessToken,
+          body: { status: "completed", parameterValues: { reps: 10 } },
+        },
+      ),
+      422,
+      "INVALID_WORKOUT_PARAMETER_SCHEMA",
     );
   });
 

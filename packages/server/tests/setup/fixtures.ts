@@ -1,3 +1,8 @@
+import { sign } from "hono/jwt";
+import { randomUUID } from "node:crypto";
+
+import { config } from "~/config/index.js";
+
 import { expectErrorMessage, jsonRequest, readJson, type TestApp } from "./http.js";
 
 export type AuthSession = {
@@ -116,3 +121,15 @@ export const startWorkout = async (app: TestApp, token: string, templateId: stri
 export const expectUnauthorized = async (response: Response) => {
   await expectErrorMessage(response, 401, "Unauthorized");
 };
+
+/** Access JWT with past `exp` for auth middleware expiry checks. */
+export const expiredAccessToken = (user: { id: string; login: string }) =>
+  sign(
+    {
+      data: user,
+      jti: randomUUID(),
+      exp: Math.floor(Date.now() / 1000) - 60,
+    },
+    config.auth.accessToken.secret,
+    "HS256",
+  );
