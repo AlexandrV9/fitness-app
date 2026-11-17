@@ -1,10 +1,14 @@
 import { HTTPException } from "hono/http-exception";
 
 import { InvalidCredentialsException } from "../domain/exceptions/InvalidCredentialsException.js";
+import { InvalidRefreshTokenException } from "../domain/exceptions/InvalidRefreshTokenException.js";
 import { WeakPasswordException } from "../domain/exceptions/WeakPasswordException.js";
 
-export function mapAuthError(error: Error): Error {
-  if (error instanceof InvalidCredentialsException) {
+export function mapAuthError(error: Error): Error | null {
+  if (
+    error instanceof InvalidCredentialsException ||
+    error instanceof InvalidRefreshTokenException
+  ) {
     return new HTTPException(401, { message: error.message });
   }
 
@@ -12,5 +16,5 @@ export function mapAuthError(error: Error): Error {
     return new HTTPException(400, { message: error.message });
   }
 
-  return error;
+  return null;
 }

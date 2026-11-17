@@ -2,19 +2,22 @@
 
 Для запуска нужен Node.js 22.9+ и доступный локальный PostgreSQL.
 
-Из корня проекта:
+Из корня проекта выполни `npm install`. Для новой локальной БД используй
+`createdb -h 127.0.0.1 -- fitness-app`.
+
+Создай `packages/server/.env` по примеру `packages/server/.env.example`.
+Для `ACCESS_TOKEN_SECRET` и `REFRESH_TOKEN_SECRET` сгенерируй два разных
+значения командой `openssl rand -hex 32`. Подключение к PostgreSQL задают
+`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` и `DB_PASSWORD`. Допустимые
+origin для браузера задаёт `ALLOWED_ORIGINS`, по умолчанию используется
+`CLIENT_URL` или `http://localhost:3000`.
+
+Подготовь схему базы и запусти сервер.
 
 ```sh
-npm install
-createdb -h 127.0.0.1 -- fitness-app
+npm run db:migrate -w @fitness-app/server
 npm run dev:server
 ```
-
-Команда `createdb` нужна один раз. По умолчанию сервер подключается к
-`fitness-app` на `127.0.0.1:5432` под текущим системным пользователем.
-Если нужны другие реквизиты, скопируй `.env.example` в `.env` в папке
-`packages/server` и задай `PGUSER`, `PGPASSWORD` и остальные параметры
-по необходимости. Для `createdb` под другой ролью используй `-U ИМЯ_РОЛИ`.
 
 Сервер проверяет подключение к базе до запуска HTTP на порту 8000.
 При ошибке подключения он выводит её и завершает работу с кодом 1.
@@ -25,3 +28,8 @@ npm run dev:server
 npm run build:server
 npm run start:server
 ```
+
+`POST /auth/refresh` и `POST /auth/logout` принимают JSON с полем
+`refreshToken`. Обновление возвращает новую пару токенов и отзывает
+предыдущий refresh-токен. Выход возвращает `204` и отзывает текущий
+refresh-токен. Уже выданный access-токен истечёт по своему сроку.

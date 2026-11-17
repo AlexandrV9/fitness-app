@@ -1,12 +1,11 @@
 import { UserAlreadyExistsException } from "../../../../users/domain/exceptions/UserAlreadyExistsException.js";
+import { BCRYPT_MAX_PASSWORD_BYTES } from "../../../../users/domain/passwordLimits.js";
 import { WeakPasswordException } from "../../../domain/exceptions/WeakPasswordException.js";
 
 import type { IPasswordHasher } from "../../../../users/domain/interfaces/IPasswordHasher.js";
 import type { IUsersRepository } from "../../../../users/domain/interfaces/IUsersRepository.js";
-import type {
-  AuthUserPayload,
-  IJwtAuthTokenManager,
-} from "../../../domain/interfaces/IJwtAuthTokenManager.js";
+import type { IAuthSessionsService } from "../../../domain/interfaces/IAuthSessionsService.js";
+import type { AuthUserPayload } from "../../../domain/interfaces/IJwtAuthTokenManager.js";
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -25,11 +24,14 @@ export class SignUpUseCase {
   constructor(
     private readonly usersRepository: IUsersRepository,
     private readonly passwordHasher: IPasswordHasher,
-    private readonly jwtAuthTokenManager: IJwtAuthTokenManager,
+    private readonly authSessionsService: IAuthSessionsService,
   ) {}
 
   async execute(request: SignUpRequest): Promise<SignUpResponse> {
-    if (request.password.length < MIN_PASSWORD_LENGTH) {
+    if (
+      request.password.length < MIN_PASSWORD_LENGTH ||
+      Buffer.byteLength(request.password, "utf8") > BCRYPT_MAX_PASSWORD_BYTES
+    ) {
       throw new WeakPasswordException();
     }
 
@@ -48,7 +50,7 @@ export class SignUpUseCase {
     }
 
     const user: AuthUserPayload = { id: created.id, login: created.login };
-    const tokens = await this.jwtAuthTokenManager.generateTokens(user);
+    const tokens = await this.authSessionsService.createUserSession(user);
 
     return {
       accessToken: tokens.accessToken,

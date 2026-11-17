@@ -1,3 +1,4 @@
+import { RefreshSessionsRepository } from "../modules/auth/infrastructure/RefreshSessionsRepository.js";
 import { ExercisesRepository } from "../modules/exercises/infrastructure/ExercisesRepository.js";
 import { UsersRepository } from "../modules/users/infrastructure/UsersRepository.js";
 import { WorkoutExercisesRepository } from "../modules/workouts/infrastructure/WorkoutExercisesRepository.js";
@@ -11,6 +12,7 @@ await checkDatabaseConnection();
 
 try {
   await new UsersRepository(pool).createTable();
+  await new RefreshSessionsRepository(pool).createTable();
 
   await new ExercisesRepository(pool).createTable();
   await new WorkoutTemplatesRepository(pool).createTable();

@@ -1,29 +1,29 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { createJwtAuthTokenManagerMock } from "../../../testing/createJwtAuthTokenManagerMock.js";
 import { UserAlreadyExistsException } from "../../../../users/domain/exceptions/UserAlreadyExistsException.js";
 import { createPasswordHasherMock } from "../../../../users/testing/createPasswordHasherMock.js";
 import { createUsersRepositoryMock } from "../../../../users/testing/createUsersRepositoryMock.js";
 import { WeakPasswordException } from "../../../domain/exceptions/WeakPasswordException.js";
+import { createAuthSessionsServiceMock } from "../../../testing/createAuthSessionsServiceMock.js";
 import { SignUpUseCase } from "./index.js";
 
 describe("SignUpUseCase", () => {
   const tokens = { accessToken: "access", refreshToken: "refresh" };
   const usersRepository = createUsersRepositoryMock();
   const passwordHasher = createPasswordHasherMock();
-  const jwtAuthTokenManager = createJwtAuthTokenManagerMock();
-  const useCase = new SignUpUseCase(usersRepository, passwordHasher, jwtAuthTokenManager);
+  const authSessionsService = createAuthSessionsServiceMock();
+  const useCase = new SignUpUseCase(usersRepository, passwordHasher, authSessionsService);
 
   beforeEach(() => {
     usersRepository.createUser.mockReset();
     usersRepository.findByLogin.mockReset();
     passwordHasher.hash.mockReset();
-    jwtAuthTokenManager.generateTokens.mockReset();
+    authSessionsService.createUserSession.mockReset();
 
     usersRepository.findByLogin.mockResolvedValue(null);
     usersRepository.createUser.mockResolvedValue({ id: "user-1", login: "alice" });
     passwordHasher.hash.mockResolvedValue("password-hash");
-    jwtAuthTokenManager.generateTokens.mockResolvedValue(tokens);
+    authSessionsService.createUserSession.mockResolvedValue(tokens);
   });
 
   it("создаёт пользователя и выдаёт токены", async () => {
@@ -37,7 +37,7 @@ describe("SignUpUseCase", () => {
       login: "alice",
       passwordHash: "password-hash",
     });
-    expect(jwtAuthTokenManager.generateTokens).toHaveBeenCalledExactlyOnceWith({
+    expect(authSessionsService.createUserSession).toHaveBeenCalledExactlyOnceWith({
       id: "user-1",
       login: "alice",
     });
@@ -59,5 +59,13 @@ describe("SignUpUseCase", () => {
     await expect(useCase.execute({ login: "alice", password: "short" })).rejects.toThrow(
       WeakPasswordException,
     );
+  });
+
+  it("отклоняет пароль длиннее 72 байт до хеширования", async () => {
+    await expect(useCase.execute({ login: "alice", password: "я".repeat(37) })).rejects.toThrow(
+      WeakPasswordException,
+    );
+
+    expect(passwordHasher.hash).not.toHaveBeenCalled();
   });
 });

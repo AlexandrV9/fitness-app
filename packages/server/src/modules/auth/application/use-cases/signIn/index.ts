@@ -2,10 +2,8 @@ import { InvalidCredentialsException } from "../../../domain/exceptions/InvalidC
 
 import type { IPasswordHasher } from "../../../../users/domain/interfaces/IPasswordHasher.js";
 import type { IUsersRepository } from "../../../../users/domain/interfaces/IUsersRepository.js";
-import type {
-  AuthUserPayload,
-  IJwtAuthTokenManager,
-} from "../../../domain/interfaces/IJwtAuthTokenManager.js";
+import type { IAuthSessionsService } from "../../../domain/interfaces/IAuthSessionsService.js";
+import type { AuthUserPayload } from "../../../domain/interfaces/IJwtAuthTokenManager.js";
 
 export type SignInRequest = {
   login: string;
@@ -22,7 +20,7 @@ export class SignInUseCase {
   constructor(
     private readonly usersRepository: IUsersRepository,
     private readonly passwordHasher: IPasswordHasher,
-    private readonly jwtAuthTokenManager: IJwtAuthTokenManager,
+    private readonly authSessionsService: IAuthSessionsService,
   ) {}
 
   async execute(request: SignInRequest): Promise<SignInResponse> {
@@ -39,7 +37,7 @@ export class SignInUseCase {
     }
 
     const user: AuthUserPayload = { id: authUser.id, login: authUser.login };
-    const tokens = await this.jwtAuthTokenManager.generateTokens(user);
+    const tokens = await this.authSessionsService.createUserSession(user);
 
     return {
       accessToken: tokens.accessToken,

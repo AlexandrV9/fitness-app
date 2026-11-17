@@ -19,7 +19,7 @@ const statuses: Record<string, ClientErrorStatusCode> = {
   INVALID_WORKOUT_SET_VALUES: 422,
 };
 
-export function mapWorkoutError(error: Error): Error {
+export function mapWorkoutError(error: Error): Error | null {
   if (error instanceof WorkoutException) {
     const status = statuses[error.code] ?? 400;
     const body =
@@ -38,5 +38,5 @@ export function mapWorkoutError(error: Error): Error {
     return new HTTPException(409, { message: "EXERCISE_USED_IN_WORKOUT_TEMPLATE" });
   }
 
-  return error;
+  return null;
 }

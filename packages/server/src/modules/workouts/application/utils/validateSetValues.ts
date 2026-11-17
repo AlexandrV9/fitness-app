@@ -1,100 +1,21 @@
 import { z } from "zod";
 
 import { isObject } from "../../../../shared/lib/guards.js";
+import { parseParameterFields } from "../../../../shared/lib/parameterSchema.js";
 import {
   InvalidWorkoutParameterSchemaException,
   InvalidWorkoutSetValuesException,
 } from "../../domain/exceptions/index.js";
 
+import type { ParameterField } from "../../../../shared/lib/parameterSchema.js";
 import type { SetParameterValues } from "../../domain/interfaces/set/SetDto.js";
 import type { WorkoutFieldError, WorkoutFieldErrorCode } from "./types/index.js";
 
-
-const valueSchemas = {
-  number: z.number(),
-  string: z.string(),
-  boolean: z.boolean(),
-};
-
-const baseField = {
-  key: z.string().min(1),
-  required: z.boolean().optional(),
-};
-const baseFieldSchema = z.object(baseField);
-
-const numberFieldSchema = z.object({
-  ...baseField,
-  type: z.literal("integer"),
-  min: z.number().optional(),
-  max: z.number().optional(),
-});
-
-const stringFieldSchema = z.object({
-  ...baseField,
-  type: z.literal("string"),
-  minLength: z.number().optional(),
-  maxLength: z.number().optional(),
-});
-
-const booleanFieldSchema = z.object({
-  ...baseField,
-  type: z.literal("boolean"),
-});
-
-const fieldSchema = z.discriminatedUnion("type", [
-  numberFieldSchema,
-  stringFieldSchema,
-  booleanFieldSchema,
-]);
-
-type Field = z.infer<typeof fieldSchema>;
 type SetParameterValue = SetParameterValues[string];
 
-type ParseParameterFieldsResult =
-  | { success: true; fields: Field[] }
-  | { success: false; errors: WorkoutFieldError[] };
-
-function parseParameterFields(rules: unknown[]): ParseParameterFieldsResult {
-  const fields: Field[] = [];
-  const fieldKeys = new Set<string>();
-  const errors: WorkoutFieldError[] = [];
-
-  for (const rule of rules) {
-    const baseParsed = baseFieldSchema.safeParse(rule);
-
-    if (!baseParsed.success) {
-      const key = isObject(rule) && typeof rule.key === "string" ? rule.key : "";
-      errors.push({ key, code: "INVALID_KEY" });
-      continue;
-    }
-
-    const key = baseParsed.data.key;
-
-    if (fieldKeys.has(key)) {
-      errors.push({ key, code: "DUPLICATE_KEY" });
-      continue;
-    }
-
-    const parsed = fieldSchema.safeParse(rule);
-    if (!parsed.success) {
-      errors.push({ key, code: "INVALID_FIELD_CONFIG" });
-      continue;
-    }
-
-    fieldKeys.add(key);
-    fields.push(parsed.data);
-  }
-
-  if (errors.length > 0) {
-    return { success: false, errors };
-  }
-
-  return { success: true, fields };
-}
-
-function getValueSchema(field: Field): z.ZodType<SetParameterValue> {
+function getValueSchema(field: ParameterField): z.ZodType<SetParameterValue> {
   if (field.type === "boolean") {
-    return valueSchemas.boolean;
+    return z.boolean();
   }
 
   if (field.type === "string") {
@@ -111,7 +32,7 @@ function getValueSchema(field: Field): z.ZodType<SetParameterValue> {
     return schema;
   }
 
-  let schema = z.number().int();
+  let schema = field.type === "integer" ? z.number().int() : z.number();
 
   if (field.min !== undefined) {
     schema = schema.min(field.min);
@@ -124,7 +45,7 @@ function getValueSchema(field: Field): z.ZodType<SetParameterValue> {
   return schema;
 }
 
-function getValueErrorCode(field: Field, issueCode?: string): WorkoutFieldErrorCode {
+function getValueErrorCode(field: ParameterField, issueCode?: string): WorkoutFieldErrorCode {
   if (issueCode === "too_small" || issueCode === "too_big") {
     return field.type === "string" ? "INVALID_LENGTH" : "OUT_OF_RANGE";
   }
@@ -150,7 +71,7 @@ export function validateSetValues(rules: unknown[], rawValues: unknown): SetPara
     // Если нужного ключа нету в rawValues
     if (!Object.hasOwn(rawValues, key)) {
       // А оно было обязательно, то возвращаем ошибку
-      if (field.required !== false) {
+      if (field.required ?? key !== "wellbeing_score") {
         errors.push({ key, code: "REQUIRED" });
       }
       continue;

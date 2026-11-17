@@ -3,7 +3,7 @@ import { HTTPException } from "hono/http-exception";
 import { UserAlreadyExistsException } from "../domain/exceptions/UserAlreadyExistsException.js";
 import { UserNotFoundException } from "../domain/exceptions/UserNotFoundException.js";
 
-export function mapUserError(error: Error): Error {
+export function mapUserError(error: Error): Error | null {
   if (error instanceof UserAlreadyExistsException) {
     return new HTTPException(409, { message: "USER_ALREADY_EXISTS" });
   }
@@ -12,5 +12,5 @@ export function mapUserError(error: Error): Error {
     return new HTTPException(404, { message: error.message });
   }
 
-  return error;
+  return null;
 }

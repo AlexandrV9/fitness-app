@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { createJwtAuthTokenManagerMock } from "../../../testing/createJwtAuthTokenManagerMock.js";
 import { createPasswordHasherMock } from "../../../../users/testing/createPasswordHasherMock.js";
 import { createUsersRepositoryMock } from "../../../../users/testing/createUsersRepositoryMock.js";
 import { InvalidCredentialsException } from "../../../domain/exceptions/InvalidCredentialsException.js";
+import { createAuthSessionsServiceMock } from "../../../testing/createAuthSessionsServiceMock.js";
 import { SignInUseCase } from "./index.js";
 
 describe("SignInUseCase", () => {
@@ -16,17 +16,17 @@ describe("SignInUseCase", () => {
 
   const usersRepository = createUsersRepositoryMock();
   const passwordHasher = createPasswordHasherMock();
-  const jwtAuthTokenManager = createJwtAuthTokenManagerMock();
-  const useCase = new SignInUseCase(usersRepository, passwordHasher, jwtAuthTokenManager);
+  const authSessionsService = createAuthSessionsServiceMock();
+  const useCase = new SignInUseCase(usersRepository, passwordHasher, authSessionsService);
 
   beforeEach(() => {
     usersRepository.findAuthByLogin.mockReset();
     passwordHasher.verify.mockReset();
-    jwtAuthTokenManager.generateTokens.mockReset();
+    authSessionsService.createUserSession.mockReset();
 
     usersRepository.findAuthByLogin.mockResolvedValue(authUser);
     passwordHasher.verify.mockResolvedValue(true);
-    jwtAuthTokenManager.generateTokens.mockResolvedValue(tokens);
+    authSessionsService.createUserSession.mockResolvedValue(tokens);
   });
 
   it("выдаёт токены при верных credentials", async () => {
@@ -36,7 +36,7 @@ describe("SignInUseCase", () => {
     });
 
     expect(passwordHasher.verify).toHaveBeenCalledExactlyOnceWith("password1", "password-hash");
-    expect(jwtAuthTokenManager.generateTokens).toHaveBeenCalledExactlyOnceWith({
+    expect(authSessionsService.createUserSession).toHaveBeenCalledExactlyOnceWith({
       id: "user-1",
       login: "alice",
     });
