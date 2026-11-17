@@ -1,6 +1,7 @@
+import type { Pool } from "pg";
+
 import type { IUser, IUserAuth } from "../domain/interfaces/IUser.js";
 import type { CreateUserProps, IUsersRepository } from "../domain/interfaces/IUsersRepository.js";
-import type { Pool } from "pg";
 
 export class UsersRepository implements IUsersRepository {
   constructor(private readonly pool: Pool) {}

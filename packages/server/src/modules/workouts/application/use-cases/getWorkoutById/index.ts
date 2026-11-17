@@ -1,7 +1,6 @@
-
-import type { IWorkoutsRepository } from "../../../domain/repositories/IWorkoutsRepository.js";
 import { WorkoutNotFoundException } from "../../../domain/exceptions/index.js";
 
+import type { IWorkoutsRepository } from "../../../domain/repositories/IWorkoutsRepository.js";
 
 export class GetWorkoutByIdUseCase {
   constructor(private readonly repository: IWorkoutsRepository) {}

@@ -1,4 +1,5 @@
 import type { PaginatedResult } from "~/shared/lib/pagination.js";
+
 import type { WorkoutTemplateDetailDto } from "../interfaces/template/TemplateDetailDto.js";
 import type {
   WorkoutTemplateDto,

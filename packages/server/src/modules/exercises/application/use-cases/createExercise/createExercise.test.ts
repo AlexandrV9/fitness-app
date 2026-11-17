@@ -1,7 +1,9 @@
-import { HTTPException } from "hono/http-exception";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ExerciseCreateFailedException } from "../../../domain/exceptions/index.js";
+import {
+  ExerciseCreateFailedException,
+  ExerciseInvalidParameterSchemaException,
+} from "../../../domain/exceptions/index.js";
 import {
   createExerciseRequest,
   createExercisesRepositoryMock,
@@ -36,7 +38,7 @@ describe("CreateExerciseUseCase", () => {
         ...createExerciseRequest,
         parameterSchema: {},
       }),
-    ).rejects.toThrow(HTTPException);
+    ).rejects.toThrow(ExerciseInvalidParameterSchemaException);
 
     expect(repository.createExercise).not.toHaveBeenCalled();
   });

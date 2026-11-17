@@ -1,4 +1,5 @@
 import type { PaginatedResult } from "~/shared/lib/pagination.js";
+
 import type { SetDto, SetResult } from "../interfaces/set/SetDto.js";
 import type { WorkoutDetailDto } from "../interfaces/workout/WorkoutDetailDto.js";
 import type { WorkoutDto } from "../interfaces/workout/WorkoutDto.js";

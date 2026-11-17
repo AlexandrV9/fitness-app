@@ -1,6 +1,6 @@
-import type { Pool } from 'pg'
+import type { Pool } from "pg";
 
-const TABLE_NAME = 'workout_exercises'
+const TABLE_NAME = "workout_exercises";
 
 /** Схема упражнений внутри конкретной тренировки (`workout_exercises`). */
 export class WorkoutExercisesRepository {
@@ -19,11 +19,11 @@ export class WorkoutExercisesRepository {
           CHECK (jsonb_typeof(parameter_schema) = 'array'),
         UNIQUE (workout_id, position)
       )
-    `)
+    `);
 
     await this.pool.query(`
       CREATE INDEX IF NOT EXISTS workout_exercises_exercise_id_idx
         ON ${TABLE_NAME} (exercise_id)
-    `)
+    `);
   }
 }

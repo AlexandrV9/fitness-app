@@ -1,6 +1,6 @@
-import type { Pool } from 'pg'
+import type { Pool } from "pg";
 
-const TABLE_NAME = 'workout_template_exercises'
+const TABLE_NAME = "workout_template_exercises";
 
 /** Схема состава шаблона: какие упражнения и сколько подходов в нём запланировано. */
 export class WorkoutTemplateExercisesRepository {
@@ -18,11 +18,11 @@ export class WorkoutTemplateExercisesRepository {
         planned_sets INTEGER CHECK (planned_sets BETWEEN 1 AND 100),
         UNIQUE (template_id, position)
       )
-    `)
+    `);
 
     await this.pool.query(`
       CREATE INDEX IF NOT EXISTS workout_template_exercises_exercise_id_idx
         ON ${TABLE_NAME} (exercise_id)
-    `)
+    `);
   }
 }

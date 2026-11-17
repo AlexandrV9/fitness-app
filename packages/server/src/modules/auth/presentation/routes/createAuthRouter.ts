@@ -1,18 +1,19 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 
-import { config } from "../../../config/index.js";
 import { pool } from "~/database/pool.js";
-import { globalErrorMapper } from "~/shared/lib/error-mapper.js";
 import { BcryptPasswordHasher } from "~/modules/users/infrastructure/BcryptPasswordHasher.js";
 import { UsersRepository } from "~/modules/users/infrastructure/UsersRepository.js";
-import { SignInUseCase } from "../application/use-cases/signIn/index.js";
-import { SignUpUseCase } from "../application/use-cases/signUp/index.js";
-import { JwtAuthTokenManager } from "../infrastructure/JwtAuthTokenManager.js";
-import { RefreshSessionsRepository } from "../infrastructure/RefreshSessionsRepository.js";
-import { AuthSessionsService } from "../services/AuthSessions/index.js";
+import { globalErrorMapper } from "~/shared/lib/errorMapper.js";
+
+import { config } from "../../../../config/index.js";
+import { SignInUseCase } from "../../application/use-cases/signIn/index.js";
+import { SignUpUseCase } from "../../application/use-cases/signUp/index.js";
+import { JwtAuthTokenManager } from "../../infrastructure/JwtAuthTokenManager.js";
+import { RefreshSessionsRepository } from "../../infrastructure/RefreshSessionsRepository.js";
+import { AuthSessionsService } from "../../services/AuthSessions/index.js";
+import { mapAuthError } from "../utils/mapAuthError.js";
 import { AuthController } from "./AuthController.js";
-import { mapAuthError } from "./mapAuthError.js";
 
 export function createAuthRouter() {
   globalErrorMapper.register(mapAuthError);

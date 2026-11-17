@@ -15,9 +15,9 @@ describe("AddSetUseCase", () => {
     changes.createSet.mockResolvedValue(createdSet);
     const useCase = new AddSetUseCase(repository);
 
-    await expect(
-      useCase.execute(userId, workout.id, "workout-exercise-1"),
-    ).resolves.toEqual(createdSet);
+    await expect(useCase.execute(userId, workout.id, "workout-exercise-1")).resolves.toEqual(
+      createdSet,
+    );
     expect(changes.createSet).toHaveBeenCalledExactlyOnceWith("workout-exercise-1");
   });
 
@@ -28,9 +28,9 @@ describe("AddSetUseCase", () => {
     });
     const useCase = new AddSetUseCase(repository);
 
-    await expect(
-      useCase.execute(userId, workout.id, "workout-exercise-1"),
-    ).rejects.toMatchObject({ code: "WORKOUT_FINISHED" });
+    await expect(useCase.execute(userId, workout.id, "workout-exercise-1")).rejects.toMatchObject({
+      code: "WORKOUT_FINISHED",
+    });
     expect(changes.createSet).not.toHaveBeenCalled();
   });
 
@@ -41,9 +41,9 @@ describe("AddSetUseCase", () => {
     });
     const useCase = new AddSetUseCase(repository);
 
-    await expect(
-      useCase.execute(userId, workout.id, "workout-exercise-1"),
-    ).rejects.toMatchObject({ code: "WORKOUT_EXERCISE_SKIPPED" });
+    await expect(useCase.execute(userId, workout.id, "workout-exercise-1")).rejects.toMatchObject({
+      code: "WORKOUT_EXERCISE_SKIPPED",
+    });
     expect(changes.createSet).not.toHaveBeenCalled();
   });
 });

@@ -1,6 +1,6 @@
-import type { Pool } from 'pg'
+import type { Pool } from "pg";
 
-const TABLE_NAME = 'workout_sets'
+const TABLE_NAME = "workout_sets";
 
 /** Схема подходов внутри упражнения тренировки (`workout_sets`). */
 export class WorkoutSetsRepository {
@@ -20,6 +20,6 @@ export class WorkoutSetsRepository {
         CHECK (status = 'completed' OR parameter_values = '{}'::jsonb),
         UNIQUE (workout_exercise_id, set_number)
       )
-    `)
+    `);
   }
 }

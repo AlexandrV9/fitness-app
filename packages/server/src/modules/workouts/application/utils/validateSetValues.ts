@@ -2,12 +2,14 @@ import { z } from "zod";
 
 import { isObject } from "~/shared/lib/guards.js";
 import { parseParameterFields } from "~/shared/lib/parameterSchema.js";
+
 import {
   InvalidWorkoutParameterSchemaException,
   InvalidWorkoutSetValuesException,
 } from "../../domain/exceptions/index.js";
 
 import type { ParameterField } from "~/shared/lib/parameterSchema.js";
+
 import type { SetParameterValues } from "../../domain/interfaces/set/SetDto.js";
 import type { WorkoutFieldError, WorkoutFieldErrorCode } from "./types/index.js";
 

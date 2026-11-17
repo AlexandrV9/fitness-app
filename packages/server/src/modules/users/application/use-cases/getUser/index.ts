@@ -1,4 +1,4 @@
-import { UserNotFoundException } from "../../../domain/exceptions/UserNotFoundException.js";
+import { UserNotFoundException } from "../../../domain/exceptions/index.js";
 
 import type { IUser } from "../../../domain/interfaces/IUser.js";
 import type { IUsersRepository } from "../../../domain/interfaces/IUsersRepository.js";

@@ -1,8 +1,12 @@
 import { HTTPException } from "hono/http-exception";
 
-import { InvalidCredentialsException } from "../domain/exceptions/InvalidCredentialsException.js";
-import { InvalidRefreshTokenException } from "../domain/exceptions/InvalidRefreshTokenException.js";
-import { WeakPasswordException } from "../domain/exceptions/WeakPasswordException.js";
+import { UserAlreadyExistsException } from "~/modules/users/domain/exceptions/index.js";
+
+import {
+  InvalidCredentialsException,
+  InvalidRefreshTokenException,
+  WeakPasswordException,
+} from "../../domain/exceptions/index.js";
 
 export function mapAuthError(error: Error): Error | null {
   if (
@@ -14,6 +18,10 @@ export function mapAuthError(error: Error): Error | null {
 
   if (error instanceof WeakPasswordException) {
     return new HTTPException(400, { message: error.message });
+  }
+
+  if (error instanceof UserAlreadyExistsException) {
+    return new HTTPException(409, { message: "USER_ALREADY_EXISTS" });
   }
 
   return null;

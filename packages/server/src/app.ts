@@ -2,16 +2,21 @@ import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
+import { globalOnError } from "~/shared/lib/errorHandler.js";
+
 import { config } from "./config/index.js";
-import { createAuthRouter } from "~/modules/auth/presentation/createAuthRouter.js";
-import { createExercisesRouter } from "~/modules/exercises/presentation/createExercisesRouter.js";
-import { createUsersRouter } from "~/modules/users/presentation/createUsersRouter.js";
-import { createWorkoutsRouter } from "~/modules/workouts/presentation/createWorkoutsRouter.js";
-import { createWorkoutTemplatesRouter } from "~/modules/workouts/presentation/createWorkoutTemplatesRouter.js";
-import { errorHandler } from "~/shared/lib/error-handler.js";
-import { globalErrorMapper } from "~/shared/lib/error-mapper.js";
+import { createAuthRouter } from "./modules/auth/index.js";
+import { createExercisesRouter } from "./modules/exercises/index.js";
+import { createUsersRouter } from "./modules/users/index.js";
+import { createWorkoutsRouter, createWorkoutTemplatesRouter } from "./modules/workouts/index.js";
 
 export const app = new OpenAPIHono();
+
+app.openAPIRegistry.registerComponent("securitySchemes", "bearerAuth", {
+  type: "http",
+  scheme: "bearer",
+  bearerFormat: "JWT",
+});
 
 app.use(
   "*",
@@ -22,7 +27,7 @@ app.use(
   }),
 );
 
-app.onError((error, c) => errorHandler(globalErrorMapper.map(error), c));
+app.onError(globalOnError);
 
 app.get("/", (c) => c.text("Hello Hono!"));
 

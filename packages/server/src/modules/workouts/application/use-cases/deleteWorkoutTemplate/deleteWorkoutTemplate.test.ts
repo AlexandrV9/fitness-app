@@ -1,10 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import {
-  createWorkoutTemplatesRepositoryMock,
-  template,
-  userId,
-} from "../../../testing/index.js";
+import { createWorkoutTemplatesRepositoryMock, template, userId } from "../../../testing/index.js";
 import { DeleteWorkoutTemplateUseCase } from "./index.js";
 
 describe("DeleteWorkoutTemplateUseCase", () => {

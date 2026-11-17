@@ -1,9 +1,12 @@
 import { withTransaction } from "~/database/withTransaction.js";
 import { buildPaginationMeta } from "~/shared/lib/pagination.js";
+
 import {
   WorkoutTemplateExerciseNotFoundException,
   WorkoutTemplateNotFoundException,
 } from "../domain/exceptions/index.js";
+
+import type { Pool, PoolClient } from "pg";
 
 import type { WorkoutTemplateDetailDto } from "../domain/interfaces/template/TemplateDetailDto.js";
 import type { WorkoutTemplateDto } from "../domain/interfaces/template/TemplateDto.js";
@@ -16,8 +19,6 @@ import type {
   IWorkoutTemplatesRepository,
   UpdateWorkoutTemplateProps,
 } from "../domain/repositories/IWorkoutTemplatesRepository.js";
-import type { Pool, PoolClient } from "pg";
-
 
 const TABLE_NAME = "workout_templates";
 const templateSummary = 'id, user_id AS "userId", name';

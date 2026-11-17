@@ -1,9 +1,12 @@
 import { isUuid } from "~/shared/lib/guards.js";
-import { JwtAuthTokenManager } from "../infrastructure/JwtAuthTokenManager.js";
+
+import { JwtAuthTokenManager } from "../../infrastructure/JwtAuthTokenManager.js";
+
+import type { MiddlewareHandler } from "hono";
 
 import type { AuthVariables } from "~/shared/lib/types.js";
-import type { IJwtAuthTokenManager } from "../domain/interfaces/IJwtAuthTokenManager.js";
-import type { MiddlewareHandler } from "hono";
+
+import type { IJwtAuthTokenManager } from "../../domain/interfaces/IJwtAuthTokenManager.js";
 
 /**
  * Bearer access JWT → c.set("user", { id }).

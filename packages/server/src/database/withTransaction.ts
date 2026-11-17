@@ -17,13 +17,12 @@ export async function withTransaction<T>(
 
     return result;
   } catch (error) {
-
     try {
       await client.query("ROLLBACK");
     } catch (failure) {
       rollbackError = failure instanceof Error ? failure : true;
     }
-    
+
     throw error;
   } finally {
     client.release(rollbackError);

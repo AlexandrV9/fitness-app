@@ -13,9 +13,9 @@ describe("SkipExerciseUseCase", () => {
     changes.skipExercise.mockResolvedValue(skipped);
     const useCase = new SkipExerciseUseCase(repository);
 
-    await expect(
-      useCase.execute(userId, workout.id, "workout-exercise-1"),
-    ).resolves.toEqual(skipped);
+    await expect(useCase.execute(userId, workout.id, "workout-exercise-1")).resolves.toEqual(
+      skipped,
+    );
     expect(changes.skipExercise).toHaveBeenCalledExactlyOnceWith("workout-exercise-1");
   });
 
@@ -27,9 +27,9 @@ describe("SkipExerciseUseCase", () => {
     const { repository, changes } = createWorkoutsRepositoryMock(skippedWorkout);
     const useCase = new SkipExerciseUseCase(repository);
 
-    await expect(
-      useCase.execute(userId, skippedWorkout.id, "workout-exercise-1"),
-    ).resolves.toEqual(skippedWorkout);
+    await expect(useCase.execute(userId, skippedWorkout.id, "workout-exercise-1")).resolves.toEqual(
+      skippedWorkout,
+    );
     expect(changes.skipExercise).not.toHaveBeenCalled();
   });
 
@@ -40,9 +40,9 @@ describe("SkipExerciseUseCase", () => {
     });
     const useCase = new SkipExerciseUseCase(repository);
 
-    await expect(
-      useCase.execute(userId, workout.id, "workout-exercise-1"),
-    ).rejects.toMatchObject({ code: "WORKOUT_FINISHED" });
+    await expect(useCase.execute(userId, workout.id, "workout-exercise-1")).rejects.toMatchObject({
+      code: "WORKOUT_FINISHED",
+    });
     expect(changes.skipExercise).not.toHaveBeenCalled();
   });
 });

@@ -1,6 +1,5 @@
-import { scrypt, timingSafeEqual } from "node:crypto";
-
 import bcrypt from "bcrypt";
+import { scrypt, timingSafeEqual } from "node:crypto";
 
 import { BCRYPT_MAX_PASSWORD_BYTES } from "../domain/passwordLimits.js";
 

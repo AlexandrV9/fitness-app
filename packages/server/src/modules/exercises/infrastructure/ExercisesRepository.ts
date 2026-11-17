@@ -1,5 +1,7 @@
 import { buildPaginationMeta } from "~/shared/lib/pagination.js";
 
+import type { Pool } from "pg";
+
 import type { IExercise } from "../domain/interfaces/IExercise.js";
 import type {
   CreateExerciseProps,
@@ -7,7 +9,6 @@ import type {
   IExercisesRepository,
   UpdateExerciseProps,
 } from "../domain/interfaces/IExercisesRepository.js";
-import type { Pool } from "pg";
 
 type ExerciseRow = {
   id: string;

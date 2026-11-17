@@ -1,10 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import {
-  createWorkoutTemplatesRepositoryMock,
-  template,
-  userId,
-} from "../../../testing/index.js";
+import { createWorkoutTemplatesRepositoryMock, template, userId } from "../../../testing/index.js";
 import { UpdateWorkoutTemplateUseCase } from "./index.js";
 
 describe("UpdateWorkoutTemplateUseCase", () => {
@@ -19,9 +15,9 @@ describe("UpdateWorkoutTemplateUseCase", () => {
     const updated = { ...template, name: "Push day" };
     repository.updateWorkoutTemplate.mockResolvedValue(updated);
 
-    await expect(
-      useCase.execute(userId, template.id, { name: "Push day" }),
-    ).resolves.toEqual(updated);
+    await expect(useCase.execute(userId, template.id, { name: "Push day" })).resolves.toEqual(
+      updated,
+    );
     expect(repository.updateWorkoutTemplate).toHaveBeenCalledExactlyOnceWith({
       userId,
       templateId: template.id,

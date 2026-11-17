@@ -1,5 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 
+import { ErrorCodeSchema, jsonBody, jsonResponse } from "~/shared/openapi/index.js";
+
 export const AuthUserSchema = z
   .object({
     id: z.uuid(),
@@ -22,12 +24,6 @@ export const AuthSuccessSchema = z
   })
   .openapi("AuthSuccess");
 
-export const ErrorCodeSchema = z
-  .object({
-    code: z.string(),
-  })
-  .openapi("ErrorCode");
-
 export const SignInBodySchema = z
   .object({
     login: z.string().trim().min(1).max(254),
@@ -47,23 +43,6 @@ export const RefreshBodySchema = z
     refreshToken: z.string().min(1).max(4096),
   })
   .openapi("RefreshBody");
-
-const jsonBody = <T extends z.ZodType>(schema: T) => ({
-  content: {
-    "application/json": {
-      schema,
-    },
-  },
-});
-
-const jsonResponse = <T extends z.ZodType>(schema: T, description: string) => ({
-  content: {
-    "application/json": {
-      schema,
-    },
-  },
-  description,
-});
 
 export const signUpRoute = createRoute({
   method: "post",

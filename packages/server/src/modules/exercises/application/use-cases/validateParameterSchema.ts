@@ -1,6 +1,5 @@
-import { HTTPException } from "hono/http-exception";
-
 import { parseParameterFields } from "~/shared/lib/parameterSchema.js";
+
 import { ExerciseInvalidParameterSchemaException } from "../../domain/exceptions/index.js";
 
 export const defaultParameterSchema = [
@@ -18,9 +17,7 @@ export const defaultParameterSchema = [
 
 export function validateParameterSchema(schema: unknown): unknown[] {
   if (!Array.isArray(schema) || !parseParameterFields(schema).success) {
-    throw new HTTPException(422, {
-      message: new ExerciseInvalidParameterSchemaException().message,
-    });
+    throw new ExerciseInvalidParameterSchemaException();
   }
 
   return schema;

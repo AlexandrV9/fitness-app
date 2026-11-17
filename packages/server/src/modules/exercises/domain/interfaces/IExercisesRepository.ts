@@ -1,4 +1,5 @@
 import type { PaginationMeta } from "~/shared/lib/pagination.js";
+
 import type { IExercise } from "./IExercise.js";
 
 export type GetExercisesProps = {

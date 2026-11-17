@@ -1,9 +1,10 @@
-import { logoutRoute, refreshRoute, signInRoute, signUpRoute } from "./authOpenApi.js";
+import { logoutRoute, refreshRoute, signInRoute, signUpRoute } from "../openapi/auth.js";
 
-import type { SignInUseCase } from "../application/use-cases/signIn/index.js";
-import type { SignUpUseCase } from "../application/use-cases/signUp/index.js";
-import type { IAuthSessionsService } from "../domain/interfaces/IAuthSessionsService.js";
 import type { OpenAPIHono } from "@hono/zod-openapi";
+
+import type { SignInUseCase } from "../../application/use-cases/signIn/index.js";
+import type { SignUpUseCase } from "../../application/use-cases/signUp/index.js";
+import type { IAuthSessionsService } from "../../domain/interfaces/IAuthSessionsService.js";
 
 export class AuthController {
   constructor(

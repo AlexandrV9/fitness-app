@@ -4,10 +4,11 @@ import { z } from "zod";
 import { readRequestBody } from "~/shared/hono/context.js";
 import { isUuid } from "~/shared/lib/guards.js";
 
+import type { Context } from "hono";
+
 import type { SetResultInput } from "../../domain/interfaces/set/SetDto.js";
 import type { WorkoutTemplateInputDto } from "../../domain/interfaces/template/TemplateDto.js";
 import type { TemplateExerciseInputDto } from "../../domain/interfaces/template/TemplateExerciseDto.js";
-import type { Context } from "hono";
 
 export const templateExerciseSchema = z.object({
   exerciseId: z.uuid(),

@@ -1,18 +1,18 @@
-import type { ErrorHandler } from "hono";
 import { HTTPException } from "hono/http-exception";
+
+import { globalErrorMapper } from "./errorMapper.js";
+
+import type { ErrorHandler } from "hono";
 
 export const errorHandler: ErrorHandler = (error, c) => {
   if (error instanceof HTTPException && error.status < 500) {
-    if (error.res) {
-      return new Response(error.res.body, {
-        status: error.status,
-        headers: error.res.headers,
-      });
-    }
-
-    return c.json({ code: error.message }, error.status);
+    return error.getResponse();
   }
 
   console.error("Unhandled HTTP error:", error);
   return c.json({ code: "INTERNAL_SERVER_ERROR" }, 500);
+};
+
+export const globalOnError: ErrorHandler = (error, c) => {
+  return errorHandler(globalErrorMapper.map(error), c);
 };

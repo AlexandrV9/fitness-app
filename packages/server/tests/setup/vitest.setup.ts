@@ -1,7 +1,6 @@
+import dotenv from "dotenv";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-
-import dotenv from "dotenv";
 
 const setupDir = path.dirname(fileURLToPath(import.meta.url));
 const serverRoot = path.resolve(setupDir, "../..");

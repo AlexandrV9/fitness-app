@@ -6,6 +6,7 @@ import { WorkoutSetsRepository } from "~/modules/workouts/infrastructure/Workout
 import { WorkoutsRepository } from "~/modules/workouts/infrastructure/WorkoutsRepository.js";
 import { WorkoutTemplateExercisesRepository } from "~/modules/workouts/infrastructure/WorkoutTemplateExercisesRepository.js";
 import { WorkoutTemplatesRepository } from "~/modules/workouts/infrastructure/WorkoutTemplatesRepository.js";
+
 import { checkDatabaseConnection, closePool, pool } from "./pool.js";
 
 async function setup(): Promise<void> {

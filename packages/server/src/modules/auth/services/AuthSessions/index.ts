@@ -1,7 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
 
 import { isUuid } from "~/shared/lib/guards.js";
-import { InvalidRefreshTokenException } from "../../domain/exceptions/InvalidRefreshTokenException.js";
+
+import { InvalidRefreshTokenException } from "../../domain/exceptions/index.js";
 
 import type { IAuthSessionsService } from "../../domain/interfaces/IAuthSessionsService.js";
 import type {

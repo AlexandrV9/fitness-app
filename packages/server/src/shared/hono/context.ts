@@ -3,9 +3,10 @@ import z from "zod";
 
 import { isObject, isUuid } from "../lib/guards.js";
 
-import type { AuthVariables } from "../lib/types.js";
-import type { PaginationParams } from "../lib/pagination.js";
 import type { Context } from "hono";
+
+import type { PaginationParams } from "../lib/pagination.js";
+import type { AuthVariables } from "../lib/types.js";
 
 export async function readRequestBody(c: Context): Promise<Record<string, unknown>> {
   const input = await c.req.json<unknown>().catch(() => null);

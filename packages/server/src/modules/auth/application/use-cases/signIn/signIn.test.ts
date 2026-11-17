@@ -1,10 +1,11 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { InvalidCredentialsException } from "../../../domain/exceptions/InvalidCredentialsException.js";
-import { createAuthSessionsServiceMock } from "../../../testing/createAuthSessionsServiceMock.js";
-import { SignInUseCase } from "./index.js";
 import { createPasswordHasherMock } from "~/modules/users/testing/createPasswordHasherMock.js";
 import { createUsersRepositoryMock } from "~/modules/users/testing/createUsersRepositoryMock.js";
+
+import { InvalidCredentialsException } from "../../../domain/exceptions/index.js";
+import { createAuthSessionsServiceMock } from "../../../testing/createAuthSessionsServiceMock.js";
+import { SignInUseCase } from "./index.js";
 
 describe("SignInUseCase", () => {
   const tokens = { accessToken: "access", refreshToken: "refresh" };

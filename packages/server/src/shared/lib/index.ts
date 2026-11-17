@@ -1,4 +1,4 @@
-export * from "./error-handler.js";
+export * from "./errorHandler.js";
 export * from "./pagination.js";
 export * from "./guards.js";
 

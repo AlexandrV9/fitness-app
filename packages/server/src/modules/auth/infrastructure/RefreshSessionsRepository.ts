@@ -1,5 +1,6 @@
-import type { IRefreshSessionsRepository } from "../domain/interfaces/IRefreshSessionsRepository.js";
 import type { Pool } from "pg";
+
+import type { IRefreshSessionsRepository } from "../domain/interfaces/IRefreshSessionsRepository.js";
 
 export class RefreshSessionsRepository implements IRefreshSessionsRepository {
   constructor(private readonly pool: Pool) {}

@@ -1,8 +1,7 @@
 import { createHash } from "node:crypto";
-
 import { describe, expect, it, vi } from "vitest";
 
-import { InvalidRefreshTokenException } from "../../domain/exceptions/InvalidRefreshTokenException.js";
+import { InvalidRefreshTokenException } from "../../domain/exceptions/index.js";
 import { createJwtAuthTokenManagerMock } from "../../testing/createJwtAuthTokenManagerMock.js";
 import { AuthSessionsService } from "./index.js";
 
