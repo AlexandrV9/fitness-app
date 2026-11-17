@@ -1,4 +1,4 @@
-import type { PaginationParams } from "../../../../../shared/lib/pagination.js";
+import type { PaginationParams } from "~/shared/lib/pagination.js";
 import type { IWorkoutsRepository } from "../../../domain/repositories/IWorkoutsRepository.js";
 
 export class GetWorkoutsUseCase {

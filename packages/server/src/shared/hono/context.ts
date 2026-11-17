@@ -3,7 +3,7 @@ import z from "zod";
 
 import { isObject, isUuid } from "../lib/guards.js";
 
-import type { AuthVariables } from "../../modules/auth/presentation/createAuthMiddleware.js";
+import type { AuthVariables } from "../lib/types.js";
 import type { PaginationParams } from "../lib/pagination.js";
 import type { Context } from "hono";
 

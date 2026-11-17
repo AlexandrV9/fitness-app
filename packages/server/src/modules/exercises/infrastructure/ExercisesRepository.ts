@@ -1,4 +1,4 @@
-import { buildPaginationMeta } from "../../../shared/lib/pagination.js";
+import { buildPaginationMeta } from "~/shared/lib/pagination.js";
 
 import type { IExercise } from "../domain/interfaces/IExercise.js";
 import type {

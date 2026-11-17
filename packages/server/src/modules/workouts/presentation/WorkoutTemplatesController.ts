@@ -2,10 +2,10 @@ import {
   getPaginationParamsFromContext,
   getUserIdFromContext,
   getUuidParamFromContext,
-} from "../../../shared/hono/context.js";
+} from "~/shared/hono/context.js";
 import { readNewTemplate, readTemplateUpdate } from "./utils/templates.js";
 
-import type { AuthVariables } from "../../auth/presentation/createAuthMiddleware.js";
+import type { AuthVariables } from "~/shared/lib/types.js";
 import type { CreateWorkoutTemplateUseCase } from "../application/use-cases/createWorkoutTemplate/index.js";
 import type { DeleteWorkoutTemplateUseCase } from "../application/use-cases/deleteWorkoutTemplate/index.js";
 import type { GetWorkoutTemplateUseCase } from "../application/use-cases/getWorkoutTemplate/index.js";

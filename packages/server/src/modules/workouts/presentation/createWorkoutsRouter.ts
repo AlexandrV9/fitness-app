@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 
-import { pool } from "../../../database/pool.js";
-import { globalErrorMapper } from "../../../shared/lib/error-mapper.js";
-import { authMiddleware } from "../../auth/presentation/authMiddleware.js";
+import { pool } from "~/database/pool.js";
+import { globalErrorMapper } from "~/shared/lib/error-mapper.js";
+import { authMiddleware } from "~/modules/auth/presentation/authMiddleware.js";
 import { AddSetUseCase } from "../application/use-cases/addSet/index.js";
 import { FinishWorkoutUseCase } from "../application/use-cases/finishWorkout/index.js";
 import { GetActiveWorkoutUseCase } from "../application/use-cases/getActiveWorkout/index.js";
@@ -15,7 +15,7 @@ import { WorkoutsRepository } from "../infrastructure/WorkoutsRepository.js";
 import { mapWorkoutError } from "./utils/mapWorkoutError.js";
 import { WorkoutsController } from "./WorkoutsController.js";
 
-import type { AuthVariables } from "../../../shared/lib/types.js";
+import type { AuthVariables } from "~/shared/lib/types.js";
 
 export function createWorkoutsRouter() {
   globalErrorMapper.register(mapWorkoutError);

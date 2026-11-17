@@ -1,8 +1,8 @@
 import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 
-import { readRequestBody } from "../../../../shared/hono/context.js";
-import { isUuid } from "../../../../shared/lib/guards.js";
+import { readRequestBody } from "~/shared/hono/context.js";
+import { isUuid } from "~/shared/lib/guards.js";
 
 import type { SetResultInput } from "../../domain/interfaces/set/SetDto.js";
 import type { WorkoutTemplateInputDto } from "../../domain/interfaces/template/TemplateDto.js";

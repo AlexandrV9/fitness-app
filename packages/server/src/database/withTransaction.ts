@@ -5,6 +5,7 @@ export async function withTransaction<T>(
   operation: (client: PoolClient) => Promise<T>,
 ): Promise<T> {
   const client = await pool.connect();
+
   let rollbackError: Error | boolean | undefined;
 
   try {
@@ -13,14 +14,16 @@ export async function withTransaction<T>(
     const result = await operation(client);
 
     await client.query("COMMIT");
-    
+
     return result;
   } catch (error) {
+
     try {
       await client.query("ROLLBACK");
     } catch (failure) {
       rollbackError = failure instanceof Error ? failure : true;
     }
+    
     throw error;
   } finally {
     client.release(rollbackError);

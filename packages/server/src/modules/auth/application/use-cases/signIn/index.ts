@@ -1,9 +1,9 @@
 import { InvalidCredentialsException } from "../../../domain/exceptions/InvalidCredentialsException.js";
 
-import type { IPasswordHasher } from "../../../../users/domain/interfaces/IPasswordHasher.js";
-import type { IUsersRepository } from "../../../../users/domain/interfaces/IUsersRepository.js";
 import type { IAuthSessionsService } from "../../../domain/interfaces/IAuthSessionsService.js";
 import type { AuthUserPayload } from "../../../domain/interfaces/IJwtAuthTokenManager.js";
+import type { IPasswordHasher } from "~/modules/users/domain/interfaces/IPasswordHasher.js";
+import type { IUsersRepository } from "~/modules/users/domain/interfaces/IUsersRepository.js";
 
 export type SignInRequest = {
   login: string;

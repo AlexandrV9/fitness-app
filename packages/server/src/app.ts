@@ -3,13 +3,13 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
 
 import { config } from "./config/index.js";
-import { createAuthRouter } from "./modules/auth/presentation/createAuthRouter.js";
-import { createExercisesRouter } from "./modules/exercises/presentation/createExercisesRouter.js";
-import { createUsersRouter } from "./modules/users/presentation/createUsersRouter.js";
-import { createWorkoutsRouter } from "./modules/workouts/presentation/createWorkoutsRouter.js";
-import { createWorkoutTemplatesRouter } from "./modules/workouts/presentation/createWorkoutTemplatesRouter.js";
-import { errorHandler } from "./shared/lib/error-handler.js";
-import { globalErrorMapper } from "./shared/lib/error-mapper.js";
+import { createAuthRouter } from "~/modules/auth/presentation/createAuthRouter.js";
+import { createExercisesRouter } from "~/modules/exercises/presentation/createExercisesRouter.js";
+import { createUsersRouter } from "~/modules/users/presentation/createUsersRouter.js";
+import { createWorkoutsRouter } from "~/modules/workouts/presentation/createWorkoutsRouter.js";
+import { createWorkoutTemplatesRouter } from "~/modules/workouts/presentation/createWorkoutTemplatesRouter.js";
+import { errorHandler } from "~/shared/lib/error-handler.js";
+import { globalErrorMapper } from "~/shared/lib/error-mapper.js";
 
 export const app = new OpenAPIHono();
 

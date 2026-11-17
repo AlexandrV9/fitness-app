@@ -2,10 +2,10 @@ import {
   getPaginationParamsFromContext,
   getUserIdFromContext,
   getUuidParamFromContext,
-} from "../../../shared/hono/context.js";
+} from "~/shared/hono/context.js";
 import { getTemplateIdFromBody, readSetResult } from "./utils/templates.js";
 
-import type { AuthVariables } from "../../auth/presentation/createAuthMiddleware.js";
+import type { AuthVariables } from "~/shared/lib/types.js";
 import type { AddSetUseCase } from "../application/use-cases/addSet/index.js";
 import type { FinishWorkoutUseCase } from "../application/use-cases/finishWorkout/index.js";
 import type { GetActiveWorkoutUseCase } from "../application/use-cases/getActiveWorkout/index.js";

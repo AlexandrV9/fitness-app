@@ -2,10 +2,10 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { HTTPException } from "hono/http-exception";
 
 import { config } from "../../../config/index.js";
-import { pool } from "../../../database/pool.js";
-import { globalErrorMapper } from "../../../shared/lib/error-mapper.js";
-import { BcryptPasswordHasher } from "../../users/infrastructure/BcryptPasswordHasher.js";
-import { UsersRepository } from "../../users/infrastructure/UsersRepository.js";
+import { pool } from "~/database/pool.js";
+import { globalErrorMapper } from "~/shared/lib/error-mapper.js";
+import { BcryptPasswordHasher } from "~/modules/users/infrastructure/BcryptPasswordHasher.js";
+import { UsersRepository } from "~/modules/users/infrastructure/UsersRepository.js";
 import { SignInUseCase } from "../application/use-cases/signIn/index.js";
 import { SignUpUseCase } from "../application/use-cases/signUp/index.js";
 import { JwtAuthTokenManager } from "../infrastructure/JwtAuthTokenManager.js";

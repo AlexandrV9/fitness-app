@@ -2,7 +2,7 @@ import { serve } from "@hono/node-server";
 
 import { app } from "./app.js";
 import { config } from "./config/index.js";
-import { checkDatabaseConnection } from "./database/index.js";
+import { checkDatabaseConnection } from "~/database/index.js";
 
 const { accessToken, refreshToken } = config.auth;
 if (

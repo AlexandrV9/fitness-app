@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { UserAlreadyExistsException } from "../../../../users/domain/exceptions/UserAlreadyExistsException.js";
-import { createPasswordHasherMock } from "../../../../users/testing/createPasswordHasherMock.js";
-import { createUsersRepositoryMock } from "../../../../users/testing/createUsersRepositoryMock.js";
+import { UserAlreadyExistsException } from "~/modules/users/domain/exceptions/UserAlreadyExistsException.js";
+import { createPasswordHasherMock } from "~/modules/users/testing/createPasswordHasherMock.js";
+import { createUsersRepositoryMock } from "~/modules/users/testing/createUsersRepositoryMock.js";
 import { WeakPasswordException } from "../../../domain/exceptions/WeakPasswordException.js";
 import { createAuthSessionsServiceMock } from "../../../testing/createAuthSessionsServiceMock.js";
 import { SignUpUseCase } from "./index.js";

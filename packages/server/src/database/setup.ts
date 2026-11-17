@@ -1,12 +1,12 @@
-import { RefreshSessionsRepository } from "../modules/auth/infrastructure/RefreshSessionsRepository.js";
-import { ExercisesRepository } from "../modules/exercises/infrastructure/ExercisesRepository.js";
-import { UsersRepository } from "../modules/users/infrastructure/UsersRepository.js";
-import { WorkoutExercisesRepository } from "../modules/workouts/infrastructure/WorkoutExercisesRepository.js";
-import { WorkoutSetsRepository } from "../modules/workouts/infrastructure/WorkoutSetsRepository.js";
-import { WorkoutsRepository } from "../modules/workouts/infrastructure/WorkoutsRepository.js";
-import { WorkoutTemplateExercisesRepository } from "../modules/workouts/infrastructure/WorkoutTemplateExercisesRepository.js";
-import { WorkoutTemplatesRepository } from "../modules/workouts/infrastructure/WorkoutTemplatesRepository.js";
-import { checkDatabaseConnection, pool } from "./pool.js";
+import { RefreshSessionsRepository } from "~/modules/auth/infrastructure/RefreshSessionsRepository.js";
+import { ExercisesRepository } from "~/modules/exercises/infrastructure/ExercisesRepository.js";
+import { UsersRepository } from "~/modules/users/infrastructure/UsersRepository.js";
+import { WorkoutExercisesRepository } from "~/modules/workouts/infrastructure/WorkoutExercisesRepository.js";
+import { WorkoutSetsRepository } from "~/modules/workouts/infrastructure/WorkoutSetsRepository.js";
+import { WorkoutsRepository } from "~/modules/workouts/infrastructure/WorkoutsRepository.js";
+import { WorkoutTemplateExercisesRepository } from "~/modules/workouts/infrastructure/WorkoutTemplateExercisesRepository.js";
+import { WorkoutTemplatesRepository } from "~/modules/workouts/infrastructure/WorkoutTemplatesRepository.js";
+import { checkDatabaseConnection, closePool, pool } from "./pool.js";
 
 async function setup(): Promise<void> {
   await checkDatabaseConnection();
@@ -23,7 +23,7 @@ async function setup(): Promise<void> {
 
     console.log("Database tables are ready");
   } finally {
-    await pool.end();
+    await closePool();
   }
 }
 

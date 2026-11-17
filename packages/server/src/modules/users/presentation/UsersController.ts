@@ -1,6 +1,6 @@
-import { getUserIdFromContext } from "../../../shared/hono/index.js";
+import { getUserIdFromContext } from "~/shared/hono/index.js";
 
-import type { AuthVariables } from "../../auth/presentation/createAuthMiddleware.js";
+import type { AuthVariables } from "~/shared/lib/types.js";
 import type { GetUserUseCase } from "../application/use-cases/getUser/index.js";
 import type { Context, Hono } from "hono";
 

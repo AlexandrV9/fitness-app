@@ -1,9 +1,9 @@
-import { UserAlreadyExistsException } from "../../../../users/domain/exceptions/UserAlreadyExistsException.js";
-import { BCRYPT_MAX_PASSWORD_BYTES } from "../../../../users/domain/passwordLimits.js";
+import { UserAlreadyExistsException } from "~/modules/users/domain/exceptions/UserAlreadyExistsException.js";
+import { BCRYPT_MAX_PASSWORD_BYTES } from "~/modules/users/domain/passwordLimits.js";
 import { WeakPasswordException } from "../../../domain/exceptions/WeakPasswordException.js";
 
-import type { IPasswordHasher } from "../../../../users/domain/interfaces/IPasswordHasher.js";
-import type { IUsersRepository } from "../../../../users/domain/interfaces/IUsersRepository.js";
+import type { IPasswordHasher } from "~/modules/users/domain/interfaces/IPasswordHasher.js";
+import type { IUsersRepository } from "~/modules/users/domain/interfaces/IUsersRepository.js";
 import type { IAuthSessionsService } from "../../../domain/interfaces/IAuthSessionsService.js";
 import type { AuthUserPayload } from "../../../domain/interfaces/IJwtAuthTokenManager.js";
 

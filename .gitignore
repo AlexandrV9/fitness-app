@@ -13,6 +13,16 @@ dist
 dist-ssr
 *.local
 
+# Env (keep examples)
+.env
+.env.local
+.env.production
+!.env.example
+!.env.test
+
+# Docker Postgres data
+.docker/postgres/data/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

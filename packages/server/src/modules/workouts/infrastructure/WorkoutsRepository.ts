@@ -1,5 +1,5 @@
-import { withTransaction } from "../../../database/withTransaction.js";
-import { buildPaginationMeta } from "../../../shared/lib/pagination.js";
+import { withTransaction } from "~/database/withTransaction.js";
+import { buildPaginationMeta } from "~/shared/lib/pagination.js";
 import {
   ActiveWorkoutExistsException,
   UserNotFoundException,

@@ -1,7 +1,7 @@
-import { isUuid } from "../../../shared/lib/guards.js";
+import { isUuid } from "~/shared/lib/guards.js";
 import { JwtAuthTokenManager } from "../infrastructure/JwtAuthTokenManager.js";
 
-import type { AuthVariables } from "../../../shared/lib/types.js";
+import type { AuthVariables } from "~/shared/lib/types.js";
 import type { IJwtAuthTokenManager } from "../domain/interfaces/IJwtAuthTokenManager.js";
 import type { MiddlewareHandler } from "hono";
 

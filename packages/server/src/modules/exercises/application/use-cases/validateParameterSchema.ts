@@ -1,6 +1,6 @@
 import { HTTPException } from "hono/http-exception";
 
-import { parseParameterFields } from "../../../../shared/lib/parameterSchema.js";
+import { parseParameterFields } from "~/shared/lib/parameterSchema.js";
 import { ExerciseInvalidParameterSchemaException } from "../../domain/exceptions/index.js";
 
 export const defaultParameterSchema = [
