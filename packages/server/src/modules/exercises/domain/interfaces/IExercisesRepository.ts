@@ -4,6 +4,7 @@ import type { IExercise } from "./IExercise.js";
 export type GetExercisesProps = {
   page?: number;
   size?: number;
+  search?: string;
 };
 
 export type GetExercisesResult = {

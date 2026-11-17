@@ -8,20 +8,28 @@ import { WorkoutTemplateExercisesRepository } from "../modules/workouts/infrastr
 import { WorkoutTemplatesRepository } from "../modules/workouts/infrastructure/WorkoutTemplatesRepository.js";
 import { checkDatabaseConnection, pool } from "./pool.js";
 
-await checkDatabaseConnection();
+async function setup(): Promise<void> {
+  await checkDatabaseConnection();
+
+  try {
+    await new UsersRepository(pool).createTable();
+    await new RefreshSessionsRepository(pool).createTable();
+    await new ExercisesRepository(pool).createTable();
+    await new WorkoutTemplatesRepository(pool).createTable();
+    await new WorkoutTemplateExercisesRepository(pool).createTable();
+    await new WorkoutsRepository(pool).createTable();
+    await new WorkoutExercisesRepository(pool).createTable();
+    await new WorkoutSetsRepository(pool).createTable();
+
+    console.log("Database tables are ready");
+  } finally {
+    await pool.end();
+  }
+}
 
 try {
-  await new UsersRepository(pool).createTable();
-  await new RefreshSessionsRepository(pool).createTable();
-
-  await new ExercisesRepository(pool).createTable();
-  await new WorkoutTemplatesRepository(pool).createTable();
-  await new WorkoutTemplateExercisesRepository(pool).createTable();
-  await new WorkoutsRepository(pool).createTable();
-  await new WorkoutExercisesRepository(pool).createTable();
-  await new WorkoutSetsRepository(pool).createTable();
-
-  console.log("Database tables are ready");
-} finally {
-  await pool.end();
+  await setup();
+} catch (error) {
+  console.error("Database setup failed:", error);
+  process.exit(1);
 }

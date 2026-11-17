@@ -1,6 +1,5 @@
-import type { Pool } from "pg";
-
 import { buildPaginationMeta } from "../../../shared/lib/pagination.js";
+
 import type { IExercise } from "../domain/interfaces/IExercise.js";
 import type {
   CreateExerciseProps,
@@ -8,6 +7,7 @@ import type {
   IExercisesRepository,
   UpdateExerciseProps,
 } from "../domain/interfaces/IExercisesRepository.js";
+import type { Pool } from "pg";
 
 type ExerciseRow = {
   id: string;
@@ -108,8 +108,10 @@ export class ExercisesRepository implements IExercisesRepository {
     return (result.rowCount ?? 0) > 0;
   }
 
-  async getExercises(userId: string, { page = 0, size = 20 }: GetExercisesProps = {}) {
+  async getExercises(userId: string, { page = 0, size = 20, search = "" }: GetExercisesProps = {}) {
     const offset = page * size;
+    const filter = "user_id = $1 AND ($2 = '' OR strpos(lower(name), lower($2)) > 0)";
+    const filterParams = [userId, search];
 
     const {
       rows: [total],
@@ -117,21 +119,21 @@ export class ExercisesRepository implements IExercisesRepository {
       `
         SELECT COUNT(*) AS count
         FROM ${TABLE_NAME}
-        WHERE user_id = $1
+        WHERE ${filter}
       `,
-      [userId],
+      filterParams,
     );
 
     const { rows } = await this.pool.query<ExerciseRow>(
       `
         SELECT id, user_id, name, parameter_schema
         FROM ${TABLE_NAME}
-        WHERE user_id = $1
+        WHERE ${filter}
         ORDER BY id
-        LIMIT $2
-        OFFSET $3
+        LIMIT $3
+        OFFSET $4
       `,
-      [userId, size, offset],
+      [...filterParams, size, offset],
     );
 
     return {

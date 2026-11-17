@@ -18,10 +18,11 @@ import type {
 export class JwtAuthTokenManager implements IJwtAuthTokenManager {
   async generateTokens(
     user: AuthUserPayload,
+    sessionId: string,
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const [accessToken, refreshToken] = await Promise.all([
       this.generateAccessToken(user),
-      this.generateRefreshToken(user),
+      this.generateRefreshToken(user, sessionId),
     ]);
 
     return { accessToken, refreshToken };
@@ -38,9 +39,9 @@ export class JwtAuthTokenManager implements IJwtAuthTokenManager {
   /**
    * Функция генерации refresh токена
    */
-  generateRefreshToken<TData extends Record<string, unknown>>(payload: TData) {
+  generateRefreshToken<TData extends Record<string, unknown>>(payload: TData, sessionId: string) {
     const { expInSec, secret } = config.auth.refreshToken;
-    return this.generateToken(payload, expInSec, secret);
+    return this.generateToken(payload, expInSec, secret, sessionId);
   }
 
   /**
@@ -114,11 +115,13 @@ export class JwtAuthTokenManager implements IJwtAuthTokenManager {
     payload: TData,
     expInSec: number,
     secret: string,
+    sessionId?: string,
   ) {
     return sign(
       {
         data: payload,
         jti: randomUUID(),
+        ...(sessionId === undefined ? {} : { sid: sessionId }),
         exp: this.getTokenExpiration(expInSec),
       },
       secret,

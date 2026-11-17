@@ -6,7 +6,7 @@ import type {
 export class GetExercisesUseCase {
   constructor(private readonly repository: IExercisesRepository) {}
 
-  execute(userId: string, pagination: GetExercisesProps) {
-    return this.repository.getExercises(userId, pagination);
+  execute(userId: string, filters: GetExercisesProps) {
+    return this.repository.getExercises(userId, filters);
   }
 }

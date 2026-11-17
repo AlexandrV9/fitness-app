@@ -40,10 +40,12 @@ export class ExercisesController {
   }
 
   private handleGetExercises = async (c: Context<AuthData>) => {
-    const result = await this.getExercisesUseCase.execute(
-      c.get("user").id,
-      getPaginationParamsFromContext(c),
-    );
+    const search = c.req.query("query")?.trim() || undefined;
+
+    const result = await this.getExercisesUseCase.execute(c.get("user").id, {
+      ...getPaginationParamsFromContext(c),
+      search,
+    });
     return c.json({ success: true, ...result });
   };
 

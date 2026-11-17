@@ -13,6 +13,7 @@
     "build:client": "npm run build -w @fitness-app/client",
     "build:server": "npm run build -w @fitness-app/server",
     "start:server": "npm run start -w @fitness-app/server",
+    "db:setup": "npm run db:setup -w @fitness-app/server",
     "lint": "npm run lint -w @fitness-app/client",
     "preview": "npm run preview -w @fitness-app/client",
     "test:server": "npm run test -w @fitness-app/server",

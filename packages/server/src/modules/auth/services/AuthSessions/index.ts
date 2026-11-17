@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 
 import { isUuid } from "../../../../shared/lib/guards.js";
 import { InvalidRefreshTokenException } from "../../domain/exceptions/InvalidRefreshTokenException.js";
@@ -23,9 +23,11 @@ export class AuthSessionsService implements IAuthSessionsService {
   ) {}
 
   async createUserSession(user: AuthUserPayload): Promise<GenerateTokensResponse> {
-    const tokens = await this.tokens.generateTokens(user);
+    const sessionId = randomUUID();
+    const tokens = await this.tokens.generateTokens(user, sessionId);
 
     await this.refreshSessionsRepository.createRefreshSession(
+      sessionId,
       user.id,
       generateHashToken(tokens.refreshToken),
       this.getHashRefreshTokenExpiresAt(),
@@ -34,22 +36,15 @@ export class AuthSessionsService implements IAuthSessionsService {
   }
 
   async refresh(refreshToken: string) {
-    const verified = await this.tokens.verifyRefreshToken(refreshToken);
-    if (!verified.success) {
+    const payload = await this.getRefreshPayload(refreshToken);
+    if (!payload) {
       throw new InvalidRefreshTokenException();
     }
 
-    const user = verified.payload.data;
-    const { id: userId, login } = user;
-
-    if (!isUuid(userId) || typeof login !== "string") {
-      throw new InvalidRefreshTokenException();
-    }
-
-    const tokens = await this.tokens.generateTokens(user);
-
+    const { data: user, sid } = payload;
+    const tokens = await this.tokens.generateTokens(user, sid);
     const rotated = await this.refreshSessionsRepository.updateRefreshTokenHash(
-      userId,
+      user.id,
       generateHashToken(refreshToken),
       generateHashToken(tokens.refreshToken),
       this.getHashRefreshTokenExpiresAt(),
@@ -63,7 +58,24 @@ export class AuthSessionsService implements IAuthSessionsService {
   }
 
   async logout(refreshToken: string): Promise<void> {
-    await this.refreshSessionsRepository.revokeRefreshSession(generateHashToken(refreshToken));
+    const payload = await this.getRefreshPayload(refreshToken);
+    if (!payload) return;
+
+    await this.refreshSessionsRepository.revokeRefreshSession(payload.data.id, payload.sid);
+  }
+
+  private async getRefreshPayload(token: string) {
+    const verified = await this.tokens.verifyRefreshToken(token);
+    if (!verified.success) {
+      return null;
+    }
+
+    const { data: user, sid } = verified.payload;
+    if (!isUuid(user?.id) || typeof user.login !== "string" || !isUuid(sid)) {
+      return null;
+    }
+
+    return { data: user, sid };
   }
 
   private getHashRefreshTokenExpiresAt(): Date {

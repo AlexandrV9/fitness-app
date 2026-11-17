@@ -17,30 +17,27 @@ export class RefreshSessionsRepository implements IRefreshSessionsRepository {
     `);
   }
 
-  async createRefreshSession(userId: string, tokenHash: string, expiresAt: Date): Promise<void> {
+  async createRefreshSession(
+    sessionId: string,
+    userId: string,
+    tokenHash: string,
+    expiresAt: Date,
+  ): Promise<void> {
     await this.pool.query(
       `
-        INSERT INTO refresh_sessions (user_id, refresh_token_hash, expires_at) 
-        VALUES ($1, $2, $3)
+        INSERT INTO refresh_sessions (id, user_id, refresh_token_hash, expires_at)
+        VALUES ($1, $2, $3, $4)
       `,
-      [userId, tokenHash, expiresAt],
+      [sessionId, userId, tokenHash, expiresAt],
     );
   }
 
-  /**
-   * Обновляет хэш рефреш токена
-   * @param userId - идентификатор сессии пользователя (его id)
-   * @param tokenHash - текущий хэш рефреш токена
-   * @param nextTokenHash - новый хэщ рефреш токена
-   * @param expiresAt - время жизни для нового рефреш токена
-   * @returns true если получилось обновить хэш рефреш токена и false, если нет
-   */
   async updateRefreshTokenHash(
     userId: string,
     tokenHash: string,
     nextTokenHash: string,
     expiresAt: Date,
-  ) {
+  ): Promise<boolean> {
     const { rowCount } = await this.pool.query(
       `
         UPDATE refresh_sessions
@@ -54,17 +51,13 @@ export class RefreshSessionsRepository implements IRefreshSessionsRepository {
     return rowCount === 1;
   }
 
-  /**
-   * Отзывает сессию пользователя
-   * @param tokenHash
-   */
-  async revokeRefreshSession(tokenHash: string): Promise<void> {
+  async revokeRefreshSession(userId: string, sessionId: string): Promise<void> {
     await this.pool.query(
       `
         UPDATE refresh_sessions SET revoked_at = clock_timestamp()
-        WHERE refresh_token_hash = $1 AND revoked_at IS NULL
+        WHERE user_id = $1 AND id = $2 AND revoked_at IS NULL
       `,
-      [tokenHash],
+      [userId, sessionId],
     );
   }
 }

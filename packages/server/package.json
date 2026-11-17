@@ -1,7 +1,7 @@
 {
   "name": "@fitness-app/server",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file-if-exists=.env src/index.ts",
@@ -9,7 +9,7 @@
     "start": "node --env-file-if-exists=.env dist/index.js",
     "test": "vitest run --dir src",
     "lint": "oxlint src",
-    "db:migrate": "tsx --env-file-if-exists=.env src/database/migrate.ts"
+    "db:setup": "node --env-file-if-exists=.env dist/database/setup.js"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.3",
