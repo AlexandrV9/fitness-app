@@ -9,5 +9,22 @@
     "node": true,
     "es2024": true
   },
+  "rules": {
+    "vitest/expect-expect": [
+      "error",
+      {
+        "assertFunctionNames": [
+          "expect",
+          "expectTypeOf",
+          "assert",
+          "assertType",
+          "expectStatus",
+          "expectErrorMessage",
+          "expectErrorCode",
+          "expectUnauthorized"
+        ]
+      }
+    ]
+  },
   "ignorePatterns": ["dist/**", "coverage/**", "**/*.d.ts"]
 }
