@@ -146,7 +146,7 @@
   --button-border-color-default-accent_inverse: var( --button-text-color-default-accent_inverse );
   --button-border-color-default-alert: var(--button-text-color-default-alert);
   --button-border-color-default-link: var(--button-text-color-default-link);
-  --button-border-color-disable-all_accept_alert: var(--base_palette-grey_2);
+  --button-border-color-disable-all_accept_alert: #e8e8e8;
   --button-border-color-disable-alert: var(--base_palette-red_pale);
   --button-text-color-default-primary: var(--base_palette-text-primary);
   --button-text-color-default-secondary: var(--base_palette-text-secondary);
@@ -163,14 +163,14 @@
   --button-text-color-hover-primary: var(--base_palette-text-secondary);
   --button-text-color-disable-all_accept_alert: var(--base_palette-grey_1);
   --button-text-color-disable-alert: var(--base_palette-red_pale);
-  --button-text-color-disable-on_all: var(--base_palette-grey_4);
+  --button-text-color-disable-on_all: #6f6f6f;
   --button-text-color-hover-secondary: var(--base_palette-text-third);
   --button-text-color-hover-accent: var(--base_palette-text-secondary);
   --button-text-color-hover-accent_inverse: var(--base_palette-accent_hover);
   --button-text-color-hover-alert: var(--base_palette-alert_hover);
   --button-text-color-hover-link: var(--base_palette-text-link_hover);
   --button-border-size-default: var(--border-size-xs);
-  --button-bg-color-disable-all_accept_alert: var(--base_palette-grey_2);
+  --button-bg-color-disable-all_accept_alert: #e8e8e8;
   --button-bg-color-disable-alert: var(--base_palette-red_pale);
   --button-bg-color-active-primary: var(--base_palette-primary_3);
   --button-bg-color-active-secondary: var(--base_palette-primary_7);
@@ -285,6 +285,10 @@
   --button-border-color-active-accent: var(--base_palette-white);
   --button-text-color-default-on_primary: var(--base_palette-text-inverse);
   --button-text-color-default-on_accent: var(--base_palette-text-inverse);
+  --button-bg-color-disable-all_accept_alert: #2f2f2f;
+  --button-border-color-disable-all_accept_alert: #3a3a3a;
+  --button-text-color-disable-on_all: #9a9a9a;
+  --button-text-color-disable-all_accept_alert: #9a9a9a;
 
   --input-field-bg-inactive: var(--base_palette-bg-default);
   --input-field-bg-hover: var(--base_palette-primary_8);
