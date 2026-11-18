@@ -1,0 +1,46 @@
+.badge {
+  position: absolute;
+  top: var(--badge-top);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.button {
+  position: relative;
+  aspect-ratio: 1;
+  box-sizing: border-box;
+
+  &:disabled .badge {
+    background-color: var(--base_palette-white);
+  }
+
+  &.button {
+    padding: 0;
+  }
+
+  &.size_xl {
+    --custom-icon-size: var(--button-icon-size-xl, 20px);
+    --badge-top: calc(var(--button-bage-size-l, 12px) / -2);
+  }
+
+  &.size_l {
+    --custom-icon-size: var(--button-icon-size-l, 16px);
+    --badge-top: calc(var(--button-bage-size-l, 10px) / -2);
+  }
+
+  &.size_m {
+    --custom-icon-size: var(--button-icon-size-m, 14px);
+    --badge-top: calc(var(--button-bage-size-m, 8px) / -2);
+  }
+
+  &.size_s {
+    --custom-icon-size: var(--button-icon-size-s, 12px);
+    --badge-top: calc(var(--button-bage-size-s, 6px) / -2);
+  }
+}
+
+.badgeWrapper {
+  position: absolute;
+  inset: 0;
+  transform: rotate(45deg);
+}

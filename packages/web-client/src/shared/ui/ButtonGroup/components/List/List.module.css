@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  gap: var(--button_group-gap, 12px);
+}
+
+.stretched {
+  width: 100%;
+}
+
+.vertical {
+  flex-direction: column;
+}

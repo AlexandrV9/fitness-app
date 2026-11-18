@@ -1,0 +1,156 @@
+.text {
+  display: block;
+  word-wrap: break-word;
+  text-align: var(--text-align, inherit);
+  white-space: pre-wrap;
+  margin: 0;
+  text-decoration: none;
+
+  & > * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.text :global(img) {
+  vertical-align: middle;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.accent_1 {
+  font-family: var(--fonts-font-family-accent, 'Hagrid Text');
+  font-size: var(--fonts-size-xxxl, 32px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: var(--fonts-line-height-xxxl, 32px); /* 100% */
+  letter-spacing: -0.64px;
+}
+
+.accent_2 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-xxxl, 32px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--fonts-line-height-xxxl, 32px); /* 100% */
+}
+
+.accent_3 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-l, 16px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: var(--fonts-line-height-l, 15px); /* 93.75% */
+}
+
+.h_1 {
+  font-family: var(--fonts-font-family-accent, 'Hagrid Text');
+  font-size: var(--fonts-size-xxl, 24px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: var(--fonts-line-height-xxl, 24px); /* 100% */
+  letter-spacing: -0.48px;
+}
+
+.h_2 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-xxl, 24px);
+  font-style: normal;
+  font-weight: 700;
+  line-height: var(--fonts-line-height-xxl, 24px); /* 100% */
+}
+
+.h_3 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-xl, 20px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--fonts-line-height-xl, 20px); /* 100% */
+}
+
+.h_4 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-m, 14px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--fonts-line-height-l, 15px); /* 107.143% */
+}
+
+.h_5 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-m, 14px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--fonts-line-height-l, 15px); /* 107.143% */
+}
+
+.text_controls {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-s, 12px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--fonts-line-height-xs, 12px); /* 100% */
+  letter-spacing: 0.24px;
+}
+
+.text_1 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-s, 12px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--fonts-line-height-l, 15px); /* 125% */
+}
+
+.text_2 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-s, 12px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--fonts-line-height-l, 15px); /* 125% */
+}
+
+.text_3 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-xs, 11px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--fonts-line-height-xs, 12px); /* 109.091% */
+  letter-spacing: 0.11px;
+}
+
+.text_4 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-l, 16px);
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--fonts-line-height-l, 15px); /* 93.75% */
+}
+
+.text_5 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: var(--fonts-size-l, 16px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--fonts-line-height-l, 15px); /* 93.75% */
+}
+
+.text_6 {
+  font-family: var(--fonts-font-family-default, 'Inter Tight');
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: var(--fonts-line-height-xs, 12px); /* 109.091% */
+  letter-spacing: 0.11px;
+}
+
+.text_inline {
+  display: inline-block;
+}
+
+.text_overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

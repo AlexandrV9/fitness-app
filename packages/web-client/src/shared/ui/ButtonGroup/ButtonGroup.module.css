@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+
+  &.fullWidth {
+    width: 100%;
+  }
+}
+
+.center {
+  align-items: center;
+}
+
+.right {
+  align-items: flex-end;
+}

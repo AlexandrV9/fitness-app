@@ -1,0 +1,106 @@
+.badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 20px;
+  min-height: 20px;
+  background: var(--circle-background);
+  border-radius: 50%;
+  color: var(--text-color);
+
+  &.color_blue {
+    --background: var(--base_palette-blue_bright, #2f54eb);
+    --text-color: var(--base_palette-white, #fff);
+    --circle-background: var(--base_palette-blue_bright, #2f54eb);
+  }
+
+  &.color_green {
+    --background: var(--base_palette-green_bright, #52c41a);
+    --text-color: var(--base_palette-white, #fff);
+    --circle-background: var(--base_palette-green_bright, #52c41a);
+  }
+
+  &.color_purple {
+    --background: var(--base_palette-purple_bright, #722ed1);
+    --text-color: var(--base_palette-white, #fff);
+    --circle-background: var(--base_palette-purple_bright, #722ed1);
+  }
+
+  &.color_red {
+    --background: var(--base_palette-red_bright, #d12a0d);
+    --text-color: var(--base_palette-white, #fff);
+    --circle-background: var(--base_palette-red_bright, #d12a0d);
+  }
+
+  &.color_yellow {
+    --background: var(--base_palette-yellow_bright, #faad14);
+    --text-color: var(--base_palette-white, #fff);
+    --circle-background: var(--base_palette-yellow_bright, #faad14);
+  }
+
+  &.color_accent {
+    --background: var(--base_palette-accent_default, #f1ff3e);
+    --text-color: var(--base_palette-accent_default, #f1ff3e);
+    --circle-background: var(--base-palette-primary-default, #182925);
+  }
+
+  &.color_secondary {
+    --background: var(--base_palette-secondary_default, #c4dcd7);
+    --text-color: var(--base_palette-black, #262626);
+    --circle-background: var(--base_palette-secondary_default, #c4dcd7);
+  }
+
+  &.color_greenPale {
+    --background: var(--base_palette-green_pale, #cce7b3);
+    --text-color: var(--base_palette-black, #262626);
+    --circle-background: var(--base_palette-green_pale, #cce7b3);
+  }
+
+  &.color_bluePale {
+    --background: var(--base_palette-blue_pale, #c2d0f0);
+    --text-color: var(--base_palette-black, #262626);
+    --circle-background: var(--base_palette-blue_pale, #c2d0f0);
+  }
+
+  &.color_default {
+    --background: #000;
+    --text-color: var(--base_palette-white, #fff);
+    --circle-background: #000;
+  }
+
+  &.color_white {
+    --background: var(--base_palette-white, #fff);
+    --text-color: var(--base_palette-black, #262626);
+    --circle-background: var(--base_palette-white, #fff);
+  }
+
+  &.color_grey {
+    --background: var(--base_palette-grey_2, #e0e0e0);
+    --text-color: var(--base_palette-white, #fff);
+    --circle-background: var(--base_palette-grey_2, #e0e0e0);
+  }
+
+  &.badge_empty {
+    min-width: auto;
+    min-height: auto;
+    aspect-ratio: 1;
+    color: var(--text-color);
+    background: var(--background);
+
+    &.size_xl {
+      height: var(--button-bage-size-xl, 10px);
+    }
+
+    &.size_l {
+      height: var(--button-bage-size-l, 8px);
+    }
+
+    &.size_m {
+      height: var(--button-bage-size-m, 6px);
+    }
+
+    &.size_s {
+      height: var(--button-bage-size-s, 6px);
+    }
+  }
+}

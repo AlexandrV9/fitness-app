@@ -1,0 +1,469 @@
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-wrap: nowrap;
+  border: var(--button-border-size-default, 1px) solid transparent;
+  border-radius: var(--button-radius);
+  background: transparent;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &.fullWidth {
+    width: 100%;
+  }
+
+  &.color_primary {
+    --background: var(--button-bg-color-default-primary, #638f83);
+    --text-color: var(--button-text-color-default-on_primary, #fff);
+    --hover-background: var(--button-bg-color-hover-primary, #546d68);
+    --disable-text-color: var(--button-text-color-disable-on_all, #f5f5f5);
+    --disable-background: var(
+      --button-bg-color-disable-all_accept_alert,
+      #e0e0e0
+    );
+    --active-border-color: var(--button-border-color-active-primary, #638f83);
+    --active-background: var(--button-bg-color-active-primary, #afc0bd);
+    --focus-border-color: var(--button-border-color-focus, #52c41a);
+    --focus-background: var(--button-bg-color-default-primary, #638f83);
+    --stroke-text-color: var(--button-text-color-default-primary, #182925);
+    --stroke-border-color: var(--button-border-color-default-primary, #638f83);
+    --stroke-hover-text-color: var(--button-text-color-hover-primary, #546d68);
+    --stroke-hover-border-color: var(
+      --button-border-color-hover-primary,
+      #546d68
+    );
+    --stroke-disable-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --stroke-disable-border-color: var(
+      --button-border-color-disable-all_accept_alert,
+      #e0e0e0
+    );
+    --stroke-active-border-color: var(
+      --button-border-color-active-primary,
+      #638f83
+    );
+    --stroke-active-background: var(
+      --button-bg-color-active-stroke_btn,
+      rgb(99 143 131 / 10%)
+    );
+    --stroke-focus-border-color: var(--button-border-color-focus, #52c41a);
+    --text-text-color: var(--button-text-color-default-primary, #182925);
+    --text-hover-text-color: var(--button-text-color-hover-accent, #546d68);
+    --text-disable-text-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --text-active-text-color: var(--button-text-color-default-accent, #182925);
+    --text-focus-border-color: var(--button-border-color-focus, #52c41a);
+  }
+
+  &.color_secondary {
+    --background: var(--button-bg-color-default-secondary, #d5e4e1);
+    --text-color: var(--button-text-color-default-on_secondary, #182925);
+    --hover-background: var(--button-bg-color-hover-secondary, #c4dcd7);
+    --disable-text-color: var(--button-text-color-disable-on_all, #f5f5f5);
+    --disable-background: var(--button-bg-color-disable-secondary, #e0e0e0);
+    --active-border-color: var(--button-border-color-active-secondary, #546d68);
+    --active-background: var(--button-bg-color-active-secondary, #eaf3f1);
+    --focus-border-color: var(--button-border-color-focus, #52c41a);
+    --focus-background: var(--button-bg-color-default-secondary, #d5e4e1);
+    --stroke-text-color: var(--button-text-color-default-secondary);
+    --stroke-border-color: var(
+      --button-border-color-default-secondary,
+      #c4dcd7
+    );
+    --stroke-hover-text-color: var(
+      --button-text-color-hover-secondary,
+      #638f83
+    );
+    --stroke-hover-border-color: var(
+      --button-border-color-hover-secondary,
+      #638f83
+    );
+    --stroke-disable-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --stroke-disable-border-color: var(
+      --button-border-color-disable-all_accept_alert,
+      #e0e0e0
+    );
+    --stroke-active-border-color: var(
+      --button-border-color-active-secondary,
+      #546d68
+    );
+    --stroke-active-background: var(
+      --button-bg-color-active-stroke_btn,
+      rgb(99 143 131 / 10%)
+    );
+    --stroke-focus-border-color: var(--button-border-color-focus, #52c41a);
+    --text-text-color: var(--button-text-color-default-secondary, #546d68);
+    --text-hover-text-color: var(--button-text-color-hover-secondary, #638f83);
+    --text-disable-text-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --text-active-text-color: var(
+      --button-text-color-default-secondary,
+      #546d68
+    );
+    --text-focus-border-color: var(--button-border-color-focus, #52c41a);
+  }
+
+  &.color_accentPrimary {
+    --background: var(--button-bg-color-default-accent, #182925);
+    --text-color: var(--button-text-color-default-on_accent, #f1ff3e);
+    --hover-background: var(--button-bg-color-hover-accent, #262626);
+    --disable-background: var(--button-bg-color-disable-accent, #e0e0e0);
+    --disable-text-color: var(--button-text-color-disable-on_all, #f5f5f5);
+    --active-border-color: var(--button-border-color-active-accent, #f1ff3e);
+    --active-background: var(--button-bg-color-active-accent, #546d68);
+    --focus-border-color: var(--button-border-color-focus, #52c41a);
+    --focus-background: var(--button-bg-color-default-accent, #182925);
+    --stroke-text-color: var(--button-text-color-default-accent, #182925);
+    --stroke-border-color: var(--button-border-color-default-accent, #182925);
+    --stroke-hover-text-color: var(--button-text-color-hover-accent, #546d68);
+    --stroke-hover-border-color: var(
+      --button-border-color-hover-accent,
+      #546d68
+    );
+    --stroke-disable-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --stroke-disable-border-color: var(
+      --button-border-color-disable-all_accept_alert,
+      #e0e0e0
+    );
+    --stroke-active-border-color: var(
+      --button-border-color-active-accent,
+      #f1ff3e
+    );
+    --stroke-active-background: var(
+      --button-bg-color-active-stroke_btn,
+      rgb(99 143 131 / 10%)
+    );
+    --stroke-focus-border-color: var(--button-border-color-focus, #52c41a);
+    --text-text-color: var(--button-text-color-default-accent, #182925);
+    --text-hover-text-color: var(--button-text-color-hover-accent, #546d68);
+    --text-disable-text-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --text-active-text-color: var(--button-text-color-default-accent, #182925);
+    --text-focus-border-color: var(--button-border-color-focus, #52c41a);
+  }
+
+  &.color_accentSecondary {
+    --background: var(--button-bg-color-default-accent_inverse, #f1ff3e);
+    --text-color: var(--button-text-color-default-on_accent_inverse, #262626);
+    --hover-background: var(--button-bg-color-hover-accent_inverse, #d5e510);
+    --disable-background: var(
+      --button-bg-color-disable-accent_inverse,
+      #e0e0e0
+    );
+    --disable-text-color: var(--button-text-color-disable-on_all, #f5f5f5);
+    --active-border-color: var(
+      --button-border-color-active-accent_inverse,
+      #182925
+    );
+    --active-background: var(--button-bg-color-active-accent_inverse, #f5ff78);
+    --focus-border-color: var(--button-border-color-focus, #52c41a);
+    --focus-background: var(--button-bg-color-default-accent_inverse, #f1ff3e);
+    --stroke-text-color: var(
+      --button-text-color-default-accent_inverse,
+      #f1ff3e
+    );
+    --stroke-border-color: var(
+      --button-border-color-default-accent_inverse,
+      #f1ff3e
+    );
+    --stroke-hover-text-color: var(
+      --button-text-color-hover-accent_inverse,
+      #d5e510
+    );
+    --stroke-hover-border-color: var(
+      --button-border-color-hover-accent_inverse,
+      #d5e510
+    );
+    --stroke-disable-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --stroke-disable-border-color: var(
+      --button-border-color-disable-all_accept_alert,
+      #e0e0e0
+    );
+    --stroke-active-border-color: var(
+      --button-border-color-active-accent_inverse,
+      #182925
+    );
+    --stroke-active-background: var(
+      --button-bg-color-active-stroke_btn,
+      rgb(99 143 131 / 10%)
+    );
+    --stroke-focus-border-color: var(--button-border-color-focus, #52c41a);
+    --text-text-color: var(--button-text-color-default-accent_inverse, #f1ff3e);
+    --text-hover-text-color: var(
+      --button-text-color-hover-accent_inverse,
+      #d5e510
+    );
+    --text-disable-text-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --text-active-text-color: var(
+      --button-text-color-default-accent_inverse,
+      #f1ff3e
+    );
+    --text-focus-border-color: var(--button-border-color-focus, #52c41a);
+  }
+
+  &.color_alert {
+    --background: var(--button-bg-color-default-alert, #fb644a);
+    --text-color: var(--button-text-color-default-on_alert, #fff);
+    --hover-background: var(--button-bg-color-hover-alert, #dc4024);
+    --disable-background: var(--button-bg-color-disable-alert, #ffc7bd);
+    --disable-text-color: var(--button-text-color-disable-on_all, #f5f5f5);
+    --active-border-color: var(--button-border-color-active-alert, #d12a0d);
+    --active-background: var(--button-bg-color-active-alert, #f9826d);
+    --focus-border-color: var(--button-border-color-focus, #52c41a);
+    --focus-background: var(--button-bg-color-default-alert, #fb644a);
+    --stroke-text-color: var(--button-text-color-default-alert, #fb644a);
+    --stroke-border-color: var(--button-border-color-default-alert, #fb644a);
+    --stroke-hover-text-color: var(--button-text-color-hover-alert, #dc4024);
+    --stroke-hover-border-color: var(
+      --button-border-color-hover-alert,
+      #dc4024
+    );
+    --stroke-disable-color: var(--button-border-color-disable-alert, #ffc7bd);
+    --stroke-disable-border-color: var(
+      --button-text-color-disable-alert,
+      #ffc7bd
+    );
+    --stroke-active-border-color: var(
+      --button-border-color-active-alert,
+      #d12a0d
+    );
+    --stroke-active-background: var(
+      --button-bg-color-active-stroke_btn,
+      rgb(99 143 131 / 10%)
+    );
+    --stroke-focus-border-color: var(--button-border-color-focus, #52c41a);
+    --text-text-color: var(--button-text-color-default-alert, #fb644a);
+    --text-hover-text-color: var(--button-text-color-hover-alert, #dc4024);
+    --text-disable-text-color: var(--button-text-color-disable-alert, #ffc7bd);
+    --text-active-text-color: var(--button-text-color-default-alert, #fb644a);
+    --text-focus-border-color: var(--button-border-color-focus, #52c41a);
+  }
+
+  &.color_link {
+    --background: var(--button-bg-color-default-link, #1890ff);
+    --text-color: var(--button-text-color-default-on_link, #fff);
+    --hover-background: var(--button-bg-color-hover-link, #0050b3);
+    --disable-background: var(--button-bg-color-disable-link, #e0e0e0);
+    --disable-text-color: var(--button-text-color-disable-on_all, #f5f5f5);
+    --active-border-color: var(--button-border-color-active-link, #2f54eb);
+    --active-background: var(--button-bg-color-active-link, #40a9ff);
+    --focus-border-color: var(--button-border-color-focus, #52c41a);
+    --focus-background: var(--button-bg-color-default-link, #1890ff);
+    --stroke-text-color: var(--button-text-color-default-link, #1890ff);
+    --stroke-border-color: var(--button-border-color-default-link, #1890ff);
+    --stroke-hover-text-color: var(--button-text-color-hover-link, #0050b3);
+    --stroke-hover-border-color: var(--button-border-color-hover-link, #0050b3);
+    --stroke-disable-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --stroke-disable-border-color: var(
+      --button-border-color-disable-all_accept_alert,
+      #e0e0e0
+    );
+    --stroke-active-border-color: var(
+      --button-border-color-active-link,
+      #2f54eb
+    );
+    --stroke-active-background: var(
+      --button-bg-color-active-stroke_btn,
+      rgb(99 143 131 / 10%)
+    );
+    --stroke-focus-border-color: var(--button-border-color-focus, #52c41a);
+    --text-text-color: var(--button-text-color-default-link, #1890ff);
+    --text-hover-text-color: var(--button-text-color-hover-link, #0050b3);
+    --text-disable-text-color: var(
+      --button-text-color-disable-all_accept_alert,
+      #a9a9a9
+    );
+    --text-active-text-color: var(--button-text-color-default-link, #1890ff);
+    --text-focus-border-color: var(--button-border-color-focus, #52c41a);
+  }
+
+  &.variant_default {
+    color: var(--text-color);
+    background: var(--background);
+
+    &:disabled {
+      color: var(--disable-text-color);
+      background: var(--disable-background);
+    }
+
+    &:not(:disabled):hover {
+      background: var(--hover-background);
+    }
+
+    &:not(:disabled):active {
+      border-color: var(--active-border-color);
+      background: var(--active-background);
+    }
+
+    &:not(:disabled):focus-visible {
+      border-color: var(--focus-border-color);
+      background: var(--focus-background);
+    }
+  }
+
+  &.variant_outline {
+    color: var(--stroke-text-color);
+    border-color: var(--stroke-border-color);
+
+    &:disabled {
+      color: var(--stroke-disable-color);
+      border-color: var(--stroke-disable-border-color);
+    }
+
+    &:not(:disabled):hover {
+      color: var(--stroke-hover-text-color);
+      border-color: var(--stroke-hover-border-color);
+    }
+
+    &:not(:disabled):focus-visible {
+      border-color: var(--stroke-focus-border-color);
+    }
+
+    &:not(:disabled):active {
+      border-color: var(--stroke-active-border-color);
+      background: var(--stroke-active-background);
+    }
+  }
+
+  &.variant_empty {
+    color: var(--text-text-color);
+
+    &:disabled {
+      color: var(--text-disable-text-color);
+    }
+
+    &.underline {
+      text-decoration: underline;
+    }
+
+    &:not(:disabled):hover {
+      color: var(--text-hover-text-color);
+    }
+
+    &:not(:disabled):focus-visible {
+      border-color: var(--text-focus-border-color);
+    }
+
+    &:not(:disabled):active {
+      color: var(--text-active-text-color);
+    }
+  }
+
+  &.variant_inline {
+    color: var(--text-text-color);
+
+    &&& {
+      height: auto;
+      padding: 0;
+    }
+
+    &:disabled {
+      color: var(--text-disable-text-color);
+    }
+
+    &.underline {
+      text-decoration: underline;
+    }
+
+    &:not(:disabled):hover {
+      color: var(--text-hover-text-color);
+    }
+
+    &:not(:disabled):focus-visible {
+      border-color: var(--text-focus-border-color);
+    }
+
+    &:not(:disabled):active {
+      color: var(--text-active-text-color);
+    }
+  }
+
+  &.size_xl {
+    --custom-icon-size: var(--button-icon-size-xl, 20px);
+
+    gap: var(--custom-button-gap, var(--button-gap-xl, 6px));
+    padding: var(
+      --custom-button-padding,
+      0 var(--button-padding-subtle-xl, 16px)
+    );
+    height: var(--custom-button-height, var(--button-height-xl, 48px));
+  }
+
+  &.size_l {
+    --custom-icon-size: var(--button-icon-size-l, 16px);
+
+    gap: var(--custom-button-gap, var(--button-gap-l, 6px));
+    padding: var(
+      --custom-button-padding,
+      0 var(--button-padding-subtle-l, 12px)
+    );
+    height: var(--custom-button-height, var(--button-height-l, 40px));
+  }
+
+  &.size_m {
+    --custom-icon-size: var(--button-icon-size-m, 14px);
+
+    gap: var(--custom-button-gap, var(--button-gap-m, 4px));
+    padding: var(
+      --custom-button-padding,
+      0 var(--button-padding-subtle-m, 8px)
+    );
+    height: var(--custom-button-height, var(--button-height-m, 32px));
+  }
+
+  &.size_s {
+    --custom-icon-size: var(--button-icon-size-s, 12px);
+
+    gap: var(--custom-button-gap, var(--button-gap-s, 2px));
+    padding: var(
+      --custom-button-padding,
+      0 var(--button-padding-subtle-s, 4px)
+    );
+    height: var(--custom-button-height, var(--button-height-s, 24px));
+  }
+}
+
+.text_wrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right_icon,
+.left_icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}

@@ -1,0 +1,23 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--input-gap_gorizontal, 2px);
+
+  &.fullWidth {
+    width: 100%;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  &:disabled {
+    color: var(--input-icon-disable);
+  }
+}

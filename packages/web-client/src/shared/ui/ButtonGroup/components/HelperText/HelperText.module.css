@@ -1,0 +1,7 @@
+.default {
+  color: var(--button_group-helper_text-color-default, #546d68);
+}
+
+.alert {
+  color: var(--button_group-helper_text-color-alert, #d12a0d);
+}
