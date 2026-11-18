@@ -6,11 +6,11 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev -w @fitness-app/client",
-    "dev:client": "npm run dev -w @fitness-app/client",
+    "dev": "concurrently -n web,server -c cyan,magenta \"npm run dev:web\" \"npm run dev:server\"",
+    "dev:web": "npm run dev -w @fitness-app/web-client",
     "dev:server": "npm run dev -w @fitness-app/server",
-    "build": "npm run build -w @fitness-app/client && npm run build -w @fitness-app/server",
-    "build:client": "npm run build -w @fitness-app/client",
+    "build": "npm run build -w @fitness-app/web-client && npm run build -w @fitness-app/server",
+    "build:web": "npm run build -w @fitness-app/web-client",
     "build:server": "npm run build -w @fitness-app/server",
     "start:server": "npm run start -w @fitness-app/server",
     "db:up": "docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml up -d postgres",
@@ -18,10 +18,13 @@
     "db:rm": "docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml down",
     "db:ps": "docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml ps",
     "db:setup": "npm run db:setup -w @fitness-app/server",
-    "lint": "npm run lint -w @fitness-app/client",
-    "preview": "npm run preview -w @fitness-app/client",
+    "lint": "npm run lint -w @fitness-app/web-client",
+    "preview": "npm run preview -w @fitness-app/web-client",
     "test": "npm run test -w @fitness-app/server",
     "test:server": "npm run test -w @fitness-app/server",
     "lint:server": "npm run lint -w @fitness-app/server"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7"
   }
 }
