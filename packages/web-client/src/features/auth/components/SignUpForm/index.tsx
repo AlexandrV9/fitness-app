@@ -1,25 +1,23 @@
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import type { z } from "zod";
 
 import { TextInputField, useForm } from "~/features/form";
 import { ApiError } from "~/shared/config";
-import { Button, Typography, toast } from "~/shared/ui";
+import { Button, Flex, Typography, toast } from "~/shared/ui";
 
 import { authManager } from "../../AuthManager";
-
 import { signUpFormSchema } from "./constants";
-
 import styles from "./SignUpForm.module.css";
+
+import type { z } from "zod";
 
 type SignUpFormSchema = z.infer<typeof signUpFormSchema>;
 
 export const SignUpForm = () => {
   const navigate = useNavigate();
 
-  const signUpMutation = useMutation({
-    mutationFn: ({ login, password }: SignUpFormSchema) =>
-      authManager.signUp({ login, password }),
+  const { mutate: signUp, isPending } = useMutation({
+    mutationFn: ({ login, password }: SignUpFormSchema) => authManager.signUp({ login, password }),
     onSuccess: (response) => {
       if (!response.success) {
         toast.error(response.message ?? "Не удалось зарегистрироваться");
@@ -30,17 +28,14 @@ export const SignUpForm = () => {
       void navigate({ to: "/" });
     },
     onError: (error) => {
-      const message =
-        error instanceof ApiError
-          ? error.message
-          : "Не удалось зарегистрироваться";
+      const message = error instanceof ApiError ? error.message : "Не удалось зарегистрироваться";
       toast.error(message);
     },
   });
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit: submitWrapper } = useForm({
     schema: signUpFormSchema,
-    disabled: signUpMutation.isPending,
+    disabled: isPending,
     defaultValues: {
       login: "",
       password: "",
@@ -48,13 +43,13 @@ export const SignUpForm = () => {
     },
   });
 
-  return (
-    <form
-      className={styles.form}
-      onSubmit={handleSubmit((data) => signUpMutation.mutate(data))}
-    >
-      <Typography variant="h_1">Регистрация</Typography>
+  const handleSubmit = submitWrapper((data) => {
+    signUp(data);
+  });
 
+  return (
+    <Flex as="form" direction="column" className={styles.form} onSubmit={handleSubmit}>
+      <Typography variant="h_1">Регистрация</Typography>
       <TextInputField
         name="login"
         control={control}
@@ -78,15 +73,14 @@ export const SignUpForm = () => {
         autoComplete="new-password"
         fullWidth
       />
-
-      <div className={styles.actions}>
-        <Button type="submit" disabled={signUpMutation.isPending} fullWidth>
-          {signUpMutation.isPending ? "Создание..." : "Создать аккаунт"}
+      <Flex direction="column" className={styles.bottomContent}>
+        <Button type="submit" disabled={isPending} fullWidth>
+          {isPending ? "Создание..." : "Создать аккаунт"}
         </Button>
-        <p className={styles.linkRow}>
+        <Typography variant="text_3">
           Уже есть аккаунт? <Link to="/signin">Войти</Link>
-        </p>
-      </div>
-    </form>
+        </Typography>
+      </Flex>
+    </Flex>
   );
 };

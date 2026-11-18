@@ -1,0 +1,10 @@
+.form {
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 24rem;
+}
+
+.bottomContent {
+  gap: 1rem;
+  margin-top: 1rem;
+}

@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+
 import { authManager } from "../../AuthManager";
 
 export const SignOutButton = () => {
@@ -7,9 +8,7 @@ export const SignOutButton = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: () => authManager.signOut(),
-    onSuccess: () => {
-      void navigate({ to: "/signin" });
-    },
+    onSuccess: () => navigate({ to: "/signin" }),
   });
 
   return (

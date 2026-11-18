@@ -1,0 +1,16 @@
+{
+  "$schema": "../../node_modules/oxfmt/configuration_schema.json",
+  "sortImports": {
+    "internalPattern": ["~/"],
+    "newlinesBetween": true,
+    "groups": [
+      ["builtin", "external"],
+      "internal",
+      ["parent", "sibling", "index"],
+      ["type-builtin", "type-external"],
+      "type-internal",
+      ["type-parent", "type-sibling", "type-index"],
+      "unknown"
+    ]
+  }
+}

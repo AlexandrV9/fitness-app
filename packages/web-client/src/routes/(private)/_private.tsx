@@ -1,7 +1,9 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+
 import { authManager, useAuthStore } from "~/features/auth";
 import { buildLocationRedirectPath } from "~/shared/libs";
-import styles from "./Private.module.css";
+
+import { PrivateLayout } from "./_ui/PrivateLayout";
 
 export const Route = createFileRoute("/(private)/_private")({
   beforeLoad: async ({ location }) => {
@@ -34,11 +36,3 @@ export const Route = createFileRoute("/(private)/_private")({
   },
   component: PrivateLayout,
 });
-
-function PrivateLayout() {
-  return (
-    <div className={styles.page}>
-      <Outlet />
-    </div>
-  );
-}
