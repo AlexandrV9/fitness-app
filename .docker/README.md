@@ -19,14 +19,16 @@ docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml --
 - Postgres: `localhost:${DB_PORT}` (по умолчанию `5432`)
 - pgAdmin: http://localhost:8080
 
-## Остановка
+## Остановка и удаление
 
 ```sh
-# контейнеры, данные в .docker/postgres/data/ сохраняются
-docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml down
+# только остановить (контейнер остаётся)
+npm run db:down
+# или: docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml stop
 
-# то же + named volumes (bind mount с данными остаётся)
-docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml down -v
+# удалить контейнер (данные в .docker/postgres/data/ сохраняются)
+npm run db:rm
+# или: docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml down
 ```
 
 ## Схема таблиц

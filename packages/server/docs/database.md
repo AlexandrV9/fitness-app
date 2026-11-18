@@ -1,6 +1,6 @@
 # PostgreSQL
 
-Инструкция по запуску PostgreSQL в Docker 
+Инструкция по запуску PostgreSQL в Docker
 
 ## Быстрый старт
 
@@ -35,11 +35,12 @@ npm run dev:server
 
 ## Compose
 
-| Команда | Действие |
-| --- | --- |
-| `npm run db:up` | `postgres` в фоне |
-| `npm run db:ps` | статус контейнеров |
-| `npm run db:down` | остановить (данные в `.docker/postgres/data/` сохраняются) |
+| Команда           | Действие                                                          |
+| ----------------- | ----------------------------------------------------------------- |
+| `npm run db:up`   | запуск                                                            |
+| `npm run db:ps`   | посмотреть статус                                                 |
+| `npm run db:down` | остановка                                                         |
+| `npm run db:rm`   | удалить контейнер (данные в `.docker/postgres/data/` сохраняются) |
 
 С pgAdmin:
 
