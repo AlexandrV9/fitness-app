@@ -14,6 +14,15 @@ import { Route as privatePrivateRouteImport } from './routes/(private)/_private'
 import { Route as privatePrivateIndexRouteImport } from './routes/(private)/_private/index'
 import { Route as authAuthSigninIndexRouteImport } from './routes/(auth)/_auth.signin/index'
 import { Route as authAuthSignupIndexRouteImport } from './routes/(auth)/_auth.signup/index'
+import { Route as privatePrivateExercisesIndexRouteImport } from './routes/(private)/_private/exercises/index'
+import { Route as privatePrivateExercisesExerciseIdRouteImport } from './routes/(private)/_private/exercises/$exerciseId'
+import { Route as privatePrivateExercisesNewRouteImport } from './routes/(private)/_private/exercises/new'
+import { Route as privatePrivateSettingsIndexRouteImport } from './routes/(private)/_private/settings/index'
+import { Route as privatePrivateTemplatesIndexRouteImport } from './routes/(private)/_private/templates/index'
+import { Route as privatePrivateTemplatesTemplateIdRouteImport } from './routes/(private)/_private/templates/$templateId'
+import { Route as privatePrivateTemplatesNewRouteImport } from './routes/(private)/_private/templates/new'
+import { Route as privatePrivateWorkoutsIndexRouteImport } from './routes/(private)/_private/workouts/index'
+import { Route as privatePrivateWorkoutsWorkoutIdRouteImport } from './routes/(private)/_private/workouts/$workoutId'
 
 const authAuthRoute = authAuthRouteImport.update({
   id: '/(auth)/_auth',
@@ -38,37 +47,151 @@ const authAuthSignupIndexRoute = authAuthSignupIndexRouteImport.update({
   path: '/signup/',
   getParentRoute: () => authAuthRoute,
 } as any)
+const privatePrivateExercisesIndexRoute =
+  privatePrivateExercisesIndexRouteImport.update({
+    id: '/exercises/',
+    path: '/exercises/',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateExercisesExerciseIdRoute =
+  privatePrivateExercisesExerciseIdRouteImport.update({
+    id: '/exercises/$exerciseId',
+    path: '/exercises/$exerciseId',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateExercisesNewRoute =
+  privatePrivateExercisesNewRouteImport.update({
+    id: '/exercises/new',
+    path: '/exercises/new',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateSettingsIndexRoute =
+  privatePrivateSettingsIndexRouteImport.update({
+    id: '/settings/',
+    path: '/settings/',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateTemplatesIndexRoute =
+  privatePrivateTemplatesIndexRouteImport.update({
+    id: '/templates/',
+    path: '/templates/',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateTemplatesTemplateIdRoute =
+  privatePrivateTemplatesTemplateIdRouteImport.update({
+    id: '/templates/$templateId',
+    path: '/templates/$templateId',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateTemplatesNewRoute =
+  privatePrivateTemplatesNewRouteImport.update({
+    id: '/templates/new',
+    path: '/templates/new',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateWorkoutsIndexRoute =
+  privatePrivateWorkoutsIndexRouteImport.update({
+    id: '/workouts/',
+    path: '/workouts/',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
+const privatePrivateWorkoutsWorkoutIdRoute =
+  privatePrivateWorkoutsWorkoutIdRouteImport.update({
+    id: '/workouts/$workoutId',
+    path: '/workouts/$workoutId',
+    getParentRoute: () => privatePrivateRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof privatePrivateIndexRoute
+  '/exercises/$exerciseId': typeof privatePrivateExercisesExerciseIdRoute
+  '/exercises/new': typeof privatePrivateExercisesNewRoute
+  '/templates/$templateId': typeof privatePrivateTemplatesTemplateIdRoute
+  '/templates/new': typeof privatePrivateTemplatesNewRoute
+  '/workouts/$workoutId': typeof privatePrivateWorkoutsWorkoutIdRoute
   '/signin/': typeof authAuthSigninIndexRoute
   '/signup/': typeof authAuthSignupIndexRoute
+  '/exercises/': typeof privatePrivateExercisesIndexRoute
+  '/settings/': typeof privatePrivateSettingsIndexRoute
+  '/templates/': typeof privatePrivateTemplatesIndexRoute
+  '/workouts/': typeof privatePrivateWorkoutsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof privatePrivateIndexRoute
+  '/exercises/$exerciseId': typeof privatePrivateExercisesExerciseIdRoute
+  '/exercises/new': typeof privatePrivateExercisesNewRoute
+  '/templates/$templateId': typeof privatePrivateTemplatesTemplateIdRoute
+  '/templates/new': typeof privatePrivateTemplatesNewRoute
+  '/workouts/$workoutId': typeof privatePrivateWorkoutsWorkoutIdRoute
   '/signin': typeof authAuthSigninIndexRoute
   '/signup': typeof authAuthSignupIndexRoute
+  '/exercises': typeof privatePrivateExercisesIndexRoute
+  '/settings': typeof privatePrivateSettingsIndexRoute
+  '/templates': typeof privatePrivateTemplatesIndexRoute
+  '/workouts': typeof privatePrivateWorkoutsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(auth)/_auth': typeof authAuthRouteWithChildren
   '/(private)/_private': typeof privatePrivateRouteWithChildren
   '/(private)/_private/': typeof privatePrivateIndexRoute
+  '/(private)/_private/exercises/$exerciseId': typeof privatePrivateExercisesExerciseIdRoute
+  '/(private)/_private/exercises/new': typeof privatePrivateExercisesNewRoute
+  '/(private)/_private/templates/$templateId': typeof privatePrivateTemplatesTemplateIdRoute
+  '/(private)/_private/templates/new': typeof privatePrivateTemplatesNewRoute
+  '/(private)/_private/workouts/$workoutId': typeof privatePrivateWorkoutsWorkoutIdRoute
   '/(auth)/_auth/signin/': typeof authAuthSigninIndexRoute
   '/(auth)/_auth/signup/': typeof authAuthSignupIndexRoute
+  '/(private)/_private/exercises/': typeof privatePrivateExercisesIndexRoute
+  '/(private)/_private/settings/': typeof privatePrivateSettingsIndexRoute
+  '/(private)/_private/templates/': typeof privatePrivateTemplatesIndexRoute
+  '/(private)/_private/workouts/': typeof privatePrivateWorkoutsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/signin/' | '/signup/'
+  fullPaths:
+    | '/'
+    | '/exercises/$exerciseId'
+    | '/exercises/new'
+    | '/templates/$templateId'
+    | '/templates/new'
+    | '/workouts/$workoutId'
+    | '/signin/'
+    | '/signup/'
+    | '/exercises/'
+    | '/settings/'
+    | '/templates/'
+    | '/workouts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/signup'
+  to:
+    | '/'
+    | '/exercises/$exerciseId'
+    | '/exercises/new'
+    | '/templates/$templateId'
+    | '/templates/new'
+    | '/workouts/$workoutId'
+    | '/signin'
+    | '/signup'
+    | '/exercises'
+    | '/settings'
+    | '/templates'
+    | '/workouts'
   id:
     | '__root__'
     | '/(auth)/_auth'
     | '/(private)/_private'
     | '/(private)/_private/'
+    | '/(private)/_private/exercises/$exerciseId'
+    | '/(private)/_private/exercises/new'
+    | '/(private)/_private/templates/$templateId'
+    | '/(private)/_private/templates/new'
+    | '/(private)/_private/workouts/$workoutId'
     | '/(auth)/_auth/signin/'
     | '/(auth)/_auth/signup/'
+    | '/(private)/_private/exercises/'
+    | '/(private)/_private/settings/'
+    | '/(private)/_private/templates/'
+    | '/(private)/_private/workouts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -113,6 +236,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authAuthSignupIndexRouteImport
       parentRoute: typeof authAuthRoute
     }
+    '/(private)/_private/exercises/': {
+      id: '/(private)/_private/exercises/'
+      path: '/exercises'
+      fullPath: '/exercises/'
+      preLoaderRoute: typeof privatePrivateExercisesIndexRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/exercises/$exerciseId': {
+      id: '/(private)/_private/exercises/$exerciseId'
+      path: '/exercises/$exerciseId'
+      fullPath: '/exercises/$exerciseId'
+      preLoaderRoute: typeof privatePrivateExercisesExerciseIdRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/exercises/new': {
+      id: '/(private)/_private/exercises/new'
+      path: '/exercises/new'
+      fullPath: '/exercises/new'
+      preLoaderRoute: typeof privatePrivateExercisesNewRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/settings/': {
+      id: '/(private)/_private/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof privatePrivateSettingsIndexRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/templates/': {
+      id: '/(private)/_private/templates/'
+      path: '/templates'
+      fullPath: '/templates/'
+      preLoaderRoute: typeof privatePrivateTemplatesIndexRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/templates/$templateId': {
+      id: '/(private)/_private/templates/$templateId'
+      path: '/templates/$templateId'
+      fullPath: '/templates/$templateId'
+      preLoaderRoute: typeof privatePrivateTemplatesTemplateIdRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/templates/new': {
+      id: '/(private)/_private/templates/new'
+      path: '/templates/new'
+      fullPath: '/templates/new'
+      preLoaderRoute: typeof privatePrivateTemplatesNewRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/workouts/': {
+      id: '/(private)/_private/workouts/'
+      path: '/workouts'
+      fullPath: '/workouts/'
+      preLoaderRoute: typeof privatePrivateWorkoutsIndexRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
+    '/(private)/_private/workouts/$workoutId': {
+      id: '/(private)/_private/workouts/$workoutId'
+      path: '/workouts/$workoutId'
+      fullPath: '/workouts/$workoutId'
+      preLoaderRoute: typeof privatePrivateWorkoutsWorkoutIdRouteImport
+      parentRoute: typeof privatePrivateRoute
+    }
   }
 }
 
@@ -132,10 +318,30 @@ const authAuthRouteWithChildren = authAuthRoute._addFileChildren(
 
 interface privatePrivateRouteChildren {
   privatePrivateIndexRoute: typeof privatePrivateIndexRoute
+  privatePrivateExercisesExerciseIdRoute: typeof privatePrivateExercisesExerciseIdRoute
+  privatePrivateExercisesNewRoute: typeof privatePrivateExercisesNewRoute
+  privatePrivateTemplatesTemplateIdRoute: typeof privatePrivateTemplatesTemplateIdRoute
+  privatePrivateTemplatesNewRoute: typeof privatePrivateTemplatesNewRoute
+  privatePrivateWorkoutsWorkoutIdRoute: typeof privatePrivateWorkoutsWorkoutIdRoute
+  privatePrivateExercisesIndexRoute: typeof privatePrivateExercisesIndexRoute
+  privatePrivateSettingsIndexRoute: typeof privatePrivateSettingsIndexRoute
+  privatePrivateTemplatesIndexRoute: typeof privatePrivateTemplatesIndexRoute
+  privatePrivateWorkoutsIndexRoute: typeof privatePrivateWorkoutsIndexRoute
 }
 
 const privatePrivateRouteChildren: privatePrivateRouteChildren = {
   privatePrivateIndexRoute: privatePrivateIndexRoute,
+  privatePrivateExercisesExerciseIdRoute:
+    privatePrivateExercisesExerciseIdRoute,
+  privatePrivateExercisesNewRoute: privatePrivateExercisesNewRoute,
+  privatePrivateTemplatesTemplateIdRoute:
+    privatePrivateTemplatesTemplateIdRoute,
+  privatePrivateTemplatesNewRoute: privatePrivateTemplatesNewRoute,
+  privatePrivateWorkoutsWorkoutIdRoute: privatePrivateWorkoutsWorkoutIdRoute,
+  privatePrivateExercisesIndexRoute: privatePrivateExercisesIndexRoute,
+  privatePrivateSettingsIndexRoute: privatePrivateSettingsIndexRoute,
+  privatePrivateTemplatesIndexRoute: privatePrivateTemplatesIndexRoute,
+  privatePrivateWorkoutsIndexRoute: privatePrivateWorkoutsIndexRoute,
 }
 
 const privatePrivateRouteWithChildren = privatePrivateRoute._addFileChildren(

@@ -1,11 +1,24 @@
 import axios from "axios";
+
 import { authService } from "~/shared/api";
-import { ApiError } from "~/shared/config";
+import { ApiError, queryClient } from "~/shared/config";
 import { tokenManager } from "~/shared/utils";
-import { authActions, useAuthStore } from "./useAuthStore";
+
+import { authActions } from "./useAuthStore";
 
 class AuthManager {
-  async checkAuth(): Promise<boolean> {
+  private checkRequest: Promise<boolean> | null = null;
+
+  checkAuth(): Promise<boolean> {
+    if (!this.checkRequest) {
+      this.checkRequest = this.restoreSession().finally(() => {
+        this.checkRequest = null;
+      });
+    }
+    return this.checkRequest;
+  }
+
+  private async restoreSession(): Promise<boolean> {
     try {
       authActions.setStatus("PENDING");
 
@@ -54,6 +67,7 @@ class AuthManager {
         return response;
       }
 
+      queryClient.clear();
       this.applySession(response.data);
       return response;
     } catch (error) {
@@ -73,6 +87,7 @@ class AuthManager {
         return response;
       }
 
+      queryClient.clear();
       this.applySession(response.data);
       return response;
     } catch (error) {
@@ -82,23 +97,15 @@ class AuthManager {
   }
 
   async signOut() {
-    const currentStatus = useAuthStore.getState().status;
     const refreshToken = tokenManager.getRefreshToken();
-
-    try {
-      authActions.setStatus("PENDING");
-
-      if (refreshToken) {
-        await authService.logout(refreshToken);
-      }
-
-      tokenManager.clearTokens();
-      authActions.setUser(null);
-      authActions.setStatus("UNAUTHENTICATED");
-    } catch (error) {
-      console.error(error);
-      authActions.setStatus(currentStatus);
+    await queryClient.cancelQueries();
+    if (refreshToken) {
+      await authService.logout(refreshToken);
     }
+    tokenManager.clearTokens();
+    queryClient.clear();
+    authActions.setUser(null);
+    authActions.setStatus("UNAUTHENTICATED");
   }
 
   private applySession(session: {

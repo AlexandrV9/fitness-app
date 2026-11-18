@@ -1,31 +1,37 @@
 /* Design tokens used by shared UI components */
 :root {
-  /* Palette */
-  --base_palette-primary_default: #182925;
-  --base_palette-primary_2: #1c453c;
+  /* Palette — light: black text, black primary button / white on-button text */
+  --base_palette-black: #111111;
+  --base_palette-white: #ffffff;
+  --base_palette-grey_1: #8a8a8a;
+  --base_palette-grey_2: #d0d0d0;
+  --base_palette-grey_4: #f5f5f5;
+
+  --base_palette-primary_default: #111111;
+  --base_palette-primary_2: #2a2a2a;
+  --base_palette-primary_3: #4a4a4a;
+  --base_palette-primary_4: #111111;
+  --base_palette-primary_4_opacity_10: #1111111a;
+  --base_palette-primary_6: #8a8a8a;
+  --base_palette-primary_7: #efefef;
+  --base_palette-primary_8: #f7f7f7;
+
+  --base_palette-secondary_default: #d0d0d0;
+  --base_palette-secondary_1: #efefef;
+  --base_palette-accent_default: #111111;
+  --base_palette-accent_1: #2a2a2a;
+  --base_palette-accent_2: #4a4a4a;
+  --base_palette-accent_hover: #2a2a2a;
+
   --base_palette-text-default: var(--base_palette-black);
   --base_palette-text-inverse: var(--base_palette-white);
-  --base_palette-text-primary: var(--base_palette-primary_default);
+  --base_palette-text-primary: var(--base_palette-black);
   --base_palette-text-secondary: var(--base_palette-primary_3);
-  --base_palette-text-third: var(--base_palette-primary_4);
+  --base_palette-text-third: var(--base_palette-primary_3);
   --base_palette-text-fourth: var(--base_palette-primary_6);
-  --base_palette-primary_3: #546d68;
-  --base_palette-primary_4: #638f83;
-  --base_palette-primary_4_opacity_10: #638f831a;
-  --base_palette-primary_6: #afc0bd;
-  --base_palette-primary_7: #eaf3f1;
-  --base_palette-primary_8: #f3f9f9;
-  --base_palette-secondary_default: #c4dcd7;
-  --base_palette-secondary_1: #d5e4e1;
-  --base_palette-accent_default: #f1ff3e;
-  --base_palette-accent_1: #f5ff78;
-  --base_palette-accent_2: #faffb4;
-  --base_palette-accent_hover: #e4f41a;
-  --base_palette-black: #262626;
-  --base_palette-grey_1: #a9a9a9;
-  --base_palette-grey_2: #e0e0e0;
-  --base_palette-grey_4: #f5f5f5;
-  --base_palette-white: #ffffff;
+  --base_palette-text-accent: var(--base_palette-black);
+  --base_palette-bg-default: var(--base_palette-white);
+
   --base_palette-green_bright: #52c41a;
   --base_palette-green_pale: #cce7b3;
   --base_palette-purple_bright: #722ed1;
@@ -38,11 +44,9 @@
   --base_palette-yellow_bright: #faad14;
   --base_palette-alert_default: #fb644a;
   --base_palette-alert_hover: #dc4024;
-  --base_palette-action_default: #1890ff;
-  --base_palette-action_hover: #125297;
+  --base_palette-action_default: #2f8cff;
+  --base_palette-action_hover: #1a6fe0;
   --base_palette-error: var(--base_palette-red_bright);
-  --base_palette-text-accent: var(--base_palette-accent_default);
-  --base_palette-bg-default: var(--base_palette-white);
   --base_palette-text-error: var(--base_palette-red_bright);
   --base_palette-text-link_default: var(--base_palette-action_default);
   --base_palette-text-link_hover: var(--base_palette-action_hover);
@@ -76,8 +80,8 @@
   --control_height-xl: var(--number-main-3);
 
   /* Fonts */
-  --fonts-font-family-default: 'Inter Tight';
-  --fonts-font-family-accent: 'Hagrid Text';
+  --fonts-font-family-default: "Inter Tight", system-ui, sans-serif;
+  --fonts-font-family-accent: "Inter Tight", system-ui, sans-serif;
   --fonts-size-xs: 11px;
   --fonts-size-s: var(--number-main-0_75);
   --fonts-size-m: var(--number-main-0_875);
@@ -110,27 +114,27 @@
   --button-padding-subtle-l: var(--number-main-0_75);
   --button-padding-subtle-m: var(--number-main-0_5);
   --button-padding-subtle-s: var(--number-main-0_25);
-  --button-bg-color-default-primary: var(--base_palette-primary_4);
+  --button-bg-color-default-primary: var(--base_palette-black);
   --button-bg-color-default-secondary: var(--base_palette-secondary_1);
-  --button-bg-color-default-accent: var(--base_palette-primary_default);
-  --button-bg-color-default-accent_inverse: var( --base_palette-accent_default );
+  --button-bg-color-default-accent: var(--base_palette-black);
+  --button-bg-color-default-accent_inverse: var(--base_palette-white);
   --button-bg-color-default-alert: var(--base_palette-alert_default);
   --button-bg-color-default-link: var(--base_palette-action_default);
-  --button-bg-color-hover-primary: var(--base_palette-primary_3);
+  --button-bg-color-hover-primary: var(--base_palette-primary_2);
   --button-bg-color-hover-secondary: var(--base_palette-secondary_default);
   --button-bg-color-hover-accent: var(--base_palette-primary_2);
-  --button-bg-color-hover-accent_inverse: var(--base_palette-accent_2);
+  --button-bg-color-hover-accent_inverse: var(--base_palette-primary_7);
   --button-bg-color-hover-alert: var(--base_palette-alert_hover);
   --button-bg-color-hover-link: var(--base_palette-action_hover);
   --button-radius: var(--radius-control);
   --button-border-color-focus: var(--border-color-focus);
-  --button-border-color-active-primary: var(--base_palette-primary_4);
+  --button-border-color-active-primary: var(--base_palette-black);
   --button-border-color-active-secondary: var(--base_palette-primary_3);
-  --button-border-color-active-accent: var(--base_palette-primary_default);
-  --button-border-color-active-accent_inverse: var( --base_palette-primary_default );
+  --button-border-color-active-accent: var(--base_palette-black);
+  --button-border-color-active-accent_inverse: var(--base_palette-black);
   --button-border-color-active-alert: var(--base_palette-red_bright);
-  --button-border-color-active-link: var(--base_palette-blue_bright);
-  --button-border-color-default-primary: var(--base_palette-primary_4);
+  --button-border-color-active-link: var(--base_palette-black);
+  --button-border-color-default-primary: var(--base_palette-black);
   --button-border-color-hover-primary: var(--button-text-color-hover-primary);
   --button-border-color-hover-secondary: var( --button-text-color-hover-secondary );
   --button-border-color-hover-accent: var(--button-text-color-hover-accent);
@@ -147,13 +151,13 @@
   --button-text-color-default-primary: var(--base_palette-text-primary);
   --button-text-color-default-secondary: var(--base_palette-text-secondary);
   --button-text-color-default-accent: var(--base_palette-text-primary);
-  --button-text-color-default-accent_inverse: var(--base_palette-text-accent);
+  --button-text-color-default-accent_inverse: var(--base_palette-text-primary);
   --button-text-color-default-alert: var(--base_palette-alert_default);
   --button-text-color-default-link: var(--base_palette-text-link_default);
   --button-text-color-default-on_primary: var(--base_palette-text-inverse);
   --button-text-color-default-on_secondary: var(--base_palette-text-primary);
   --button-text-color-default-on_accent: var(--base_palette-text-inverse);
-  --button-text-color-default-on_accent_inverse: var( --base_palette-text-default );
+  --button-text-color-default-on_accent_inverse: var(--base_palette-text-default);
   --button-text-color-default-on_alert: var(--base_palette-text-inverse);
   --button-text-color-default-on_link: var(--base_palette-text-inverse);
   --button-text-color-hover-primary: var(--base_palette-text-secondary);
@@ -168,13 +172,13 @@
   --button-border-size-default: var(--border-size-xs);
   --button-bg-color-disable-all_accept_alert: var(--base_palette-grey_2);
   --button-bg-color-disable-alert: var(--base_palette-red_pale);
-  --button-bg-color-active-primary: var(--base_palette-primary_6);
+  --button-bg-color-active-primary: var(--base_palette-primary_3);
   --button-bg-color-active-secondary: var(--base_palette-primary_7);
   --button-bg-color-active-accent: var(--base_palette-primary_3);
-  --button-bg-color-active-accent_inverse: var(--base_palette-accent_1);
+  --button-bg-color-active-accent_inverse: var(--base_palette-primary_7);
   --button-bg-color-active-alert: var(--base_palette-red_middle);
-  --button-bg-color-active-link: var(--base_palette-blue_middle);
-  --button-bg-color-active-stroke_btn: var( --base_palette-primary_4_opacity_10 );
+  --button-bg-color-active-link: var(--base_palette-primary_3);
+  --button-bg-color-active-stroke_btn: var(--base_palette-primary_4_opacity_10);
   --button-bage-size-xl: var(--number-main-0_625);
   --button-bage-size-l: var(--number-main-0_5);
   --button-bage-size-m: var(--number-main-0_375);
@@ -223,4 +227,75 @@
   --input-text-color-hint: var(--base_palette-text-default);
   --input-text-color-hint-error: var(--base_palette-text-error);
   --input-text-color-disable: var(--base_palette-grey_2);
+  --input-field-bg-autofill: #ebebeb;
+  --input-field-border-color-autofill: #9a9a9a;
+  --input-text-color-autofill: var(--base_palette-text-default);
+}
+
+/* Dark — white text, white primary button / black on-button text */
+[data-theme="dark"] {
+  --base_palette-black: #111111;
+  --base_palette-white: #ffffff;
+  --base_palette-grey_1: #8a8a8a;
+  --base_palette-grey_2: #3a3a3a;
+  --base_palette-grey_4: #2a2a2a;
+
+  --base_palette-primary_default: #ffffff;
+  --base_palette-primary_2: #e8e8e8;
+  --base_palette-primary_3: #b0b0b0;
+  --base_palette-primary_4: #ffffff;
+  --base_palette-primary_4_opacity_10: #ffffff1a;
+  --base_palette-primary_6: #8a8a8a;
+  --base_palette-primary_7: #2a2a2a;
+  --base_palette-primary_8: #1c1c1c;
+
+  --base_palette-secondary_default: #3a3a3a;
+  --base_palette-secondary_1: #2a2a2a;
+  --base_palette-accent_default: #ffffff;
+  --base_palette-accent_1: #e8e8e8;
+  --base_palette-accent_2: #b0b0b0;
+  --base_palette-accent_hover: #e8e8e8;
+
+  --base_palette-text-default: var(--base_palette-white);
+  --base_palette-text-inverse: var(--base_palette-black);
+  --base_palette-text-primary: var(--base_palette-white);
+  --base_palette-text-secondary: var(--base_palette-primary_3);
+  --base_palette-text-third: var(--base_palette-primary_3);
+  --base_palette-text-fourth: var(--base_palette-primary_6);
+  --base_palette-text-accent: var(--base_palette-white);
+  --base_palette-bg-default: #111111;
+
+  --base_palette-action_default: #6bb6ff;
+  --base_palette-action_hover: #8fc7ff;
+  --base_palette-text-link_default: var(--base_palette-action_default);
+  --base_palette-text-link_hover: var(--base_palette-action_hover);
+
+  --border-color-default: var(--base_palette-secondary_default);
+  --border-color-accent: var(--base_palette-primary_3);
+
+  --button-bg-color-default-primary: var(--base_palette-white);
+  --button-bg-color-default-accent: var(--base_palette-white);
+  --button-bg-color-default-accent_inverse: var(--base_palette-black);
+  --button-bg-color-hover-primary: var(--base_palette-primary_2);
+  --button-bg-color-hover-accent: var(--base_palette-primary_2);
+  --button-bg-color-active-primary: var(--base_palette-primary_3);
+  --button-bg-color-active-accent: var(--base_palette-primary_3);
+  --button-border-color-default-primary: var(--base_palette-white);
+  --button-border-color-active-primary: var(--base_palette-white);
+  --button-border-color-active-accent: var(--base_palette-white);
+  --button-text-color-default-on_primary: var(--base_palette-text-inverse);
+  --button-text-color-default-on_accent: var(--base_palette-text-inverse);
+
+  --input-field-bg-inactive: var(--base_palette-bg-default);
+  --input-field-bg-hover: var(--base_palette-primary_8);
+  --input-field-bg-disable: var(--base_palette-bg-default);
+  --input-field-bg-error: var(--base_palette-bg-default);
+  --input-field-border-color-disable: var(--base_palette-grey_2);
+  --input-text-color-entered: var(--base_palette-text-default);
+  --input-text-color-hint: var(--base_palette-text-default);
+  --input-text-color-lable: var(--base_palette-text-secondary);
+  --input-text-color-placeholder: var(--base_palette-text-fourth);
+  --input-field-bg-autofill: #2a2a2a;
+  --input-field-border-color-autofill: #8a8a8a;
+  --input-text-color-autofill: var(--base_palette-text-default);
 }

@@ -7,7 +7,7 @@
     "dev": "vite --port 3000",
     "serve": "vite preview --port 3000",
     "routes": "npx @tanstack/router-cli generate",
-    "build": "npm run routes && tsc -b && vite build",
+    "build": "vite build && tsc -b",
     "lint": "oxlint",
     "preview": "vite preview"
   },

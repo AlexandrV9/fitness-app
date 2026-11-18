@@ -1,26 +1,21 @@
 import cx from "clsx";
 import { useId } from "react";
-import type { ChangeEvent, KeyboardEvent, ReactNode } from "react";
 
 import { Typography } from "../../Typography";
+import typographyStyles from "../../Typography/Typography.module.css";
 import { ActionButton, type ActionButtonProps } from "./ActionButton";
-
-import typographyStyles from '../../Typography/Typography.module.css';
-import styles from './TextInput.module.css';
+import styles from "./TextInput.module.css";
 
 export const SizeVariant = {
-  s: 's',
-  m: 'm',
-  l: 'l',
-  xl: 'xl',
+  s: "s",
+  m: "m",
+  l: "l",
+  xl: "xl",
 } as const;
 
-export type TextInputProps = Omit<
-  React.ComponentPropsWithoutRef<'input'>,
-  'size'
-> & {
+export type TextInputProps = Omit<React.ComponentPropsWithoutRef<"input">, "size"> & {
   inputClassName?: string;
-  label?: ReactNode;
+  label?: React.ReactNode;
   placeholder?: string;
   name?: string;
   hintMessage?: string;
@@ -52,7 +47,7 @@ export const TextInput = ({
   rightSection,
   value,
   autoComplete,
-  size = 'l',
+  size = "l",
   onChange,
   onBlur,
   onKeyDown,
@@ -64,39 +59,6 @@ export const TextInput = ({
   const id = useId();
   const hint = errorMessage ?? hintMessage;
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-
-    if (type === 'number' && value) {
-      const numberValue = parseInt(value);
-
-      if (
-        props.min !== undefined &&
-        numberValue < parseInt(props.min.toString())
-      ) {
-        return;
-      }
-
-      if (
-        props.max !== undefined &&
-        numberValue > parseInt(props.max.toString())
-      ) {
-        return;
-      }
-    }
-
-    onChange?.(event);
-  };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (type === 'number' && ['e', 'E', '+', '-'].includes(event.key)) {
-      event.preventDefault();
-      return;
-    }
-
-    onKeyDown?.(event);
-  };
-
   return (
     <div
       className={cx(
@@ -107,11 +69,11 @@ export const TextInput = ({
         (actionButtonProps || label) && styles.hasLabel,
         hint && styles.hasHint,
         {
-          [typographyStyles.h_5]: size === 'xl' || size === 'l',
-          [typographyStyles.text_2]: size === 'm',
-          [typographyStyles.text_3]: size === 's',
+          [typographyStyles.h_5]: size === "xl" || size === "l",
+          [typographyStyles.text_2]: size === "m",
+          [typographyStyles.text_3]: size === "s",
         },
-        className
+        className,
       )}
       style={style}
     >
@@ -119,45 +81,41 @@ export const TextInput = ({
         className={cx(styles.input, inputClassName, error && styles.error)}
         ref={ref}
         name={name}
-        onChange={handleChange}
+        onChange={onChange}
         onBlur={onBlur}
         value={value}
         type={type}
         autoComplete={autoComplete}
         id={id}
         disabled={disabled}
-        onKeyDown={handleKeyDown}
+        aria-invalid={error || undefined}
+        aria-describedby={hint ? (props.id ?? id) + "-hint" : undefined}
+        onKeyDown={onKeyDown}
         {...props}
       />
       {leftSection ? (
-        <div className={cx(styles.leftSection, error && styles.error)}>
-          {leftSection}
-        </div>
+        <div className={cx(styles.leftSection, error && styles.error)}>{leftSection}</div>
       ) : null}
       {rightSection ? (
-        <div className={cx(styles.rightSection, error && styles.error)}>
-          {rightSection}
-        </div>
+        <div className={cx(styles.rightSection, error && styles.error)}>{rightSection}</div>
       ) : null}
       {label && (
         <Typography
           as="label"
           className={cx(styles.label, typographyStyles.text_2)}
           htmlFor={props.id ?? id}
-          variant={size === 's' ? 'text_controls' : 'h_4'}
+          variant={size === "s" ? "text_controls" : "h_4"}
           hasTextOverflow
         >
           {label}
         </Typography>
       )}
       {actionButtonProps && (
-        <ActionButton
-          {...actionButtonProps}
-          disabled={disabled || actionButtonProps.disabled}
-        />
+        <ActionButton {...actionButtonProps} disabled={disabled || actionButtonProps.disabled} />
       )}
       {hint && (
         <Typography
+          id={(props.id ?? id) + "-hint"}
           className={cx(styles.hint, error && styles.error)}
           variant="text_3"
           hasTextOverflow

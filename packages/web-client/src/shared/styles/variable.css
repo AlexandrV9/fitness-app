@@ -2,17 +2,8 @@
 
 :root {
   color-scheme: light dark;
-  font-family: var(--fonts-font-family-default, system-ui, sans-serif);
+  font-family: var(--fonts-font-family-default), system-ui, sans-serif;
   line-height: 1.5;
-  --app-page-bg: #ffffff;
-  --app-page-fg: #111111;
-  --fonts-font-family-default: "Inter Tight", system-ui, sans-serif;
-  --fonts-font-family-accent: "Inter Tight", system-ui, sans-serif;
-}
-
-[data-theme="dark"] {
-  --app-page-bg: #111111;
-  --app-page-fg: #f5f5f5;
 }
 
 html,
@@ -23,8 +14,8 @@ body,
 
 body {
   margin: 0;
-  background: var(--app-page-bg);
-  color: var(--app-page-fg);
+  background: var(--base_palette-bg-default);
+  color: var(--base_palette-text-default);
 }
 
 button,

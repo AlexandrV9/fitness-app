@@ -10,3 +10,12 @@ h6 {
 * {
   box-sizing: border-box;
 }
+
+a {
+  color: var(--base_palette-text-link_default, #2f8cff);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--base_palette-text-link_hover, #1a6fe0);
+}

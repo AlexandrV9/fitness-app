@@ -146,9 +146,17 @@
   }
 
   &:focus,
-  &:not(:placeholder-shown),
+  &:not(:placeholder-shown) {
+    outline: none;
+  }
+
   &:is(:-webkit-autofill, :autofill) {
     outline: none;
+    border-color: var(--input-field-border-color-autofill, #9a9a9a);
+    -webkit-text-fill-color: var(--input-text-color-autofill, #111111);
+    caret-color: var(--input-text-color-autofill, #111111);
+    box-shadow: 0 0 0 1000px var(--input-field-bg-autofill, #ebebeb) inset;
+    transition: background-color 99999s ease-in-out 0s;
   }
 
   &[readonly] {

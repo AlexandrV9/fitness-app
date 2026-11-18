@@ -1,4 +1,5 @@
-import { axiosInstance } from "~/shared/config";
+import { axiosInstance, refreshSession } from "~/shared/config/axios";
+
 import type { ApiResult, AuthSessionDTO, AuthUserDTO } from "./types";
 
 const toResult = <T>(data: T): ApiResult<T> => ({
@@ -24,11 +25,7 @@ class AuthService {
   }
 
   async refresh(refreshToken: string) {
-    const response = await axiosInstance.post<{ data: AuthSessionDTO }>(
-      "/auth/refresh",
-      { refreshToken },
-    );
-    return toResult(response.data.data);
+    return toResult(await refreshSession(refreshToken));
   }
 
   async logout(refreshToken: string) {
