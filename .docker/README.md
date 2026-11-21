@@ -1,8 +1,10 @@
 # Docker: локальный PostgreSQL
 
-Приложение на хосте (`npm run dev:server`), БД в контейнере.
+Приложение на хосте (`npm run dev`), БД в контейнере.
 
 Переменные берутся из `packages/server/.env` (`DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_PORT`).
+
+Полный стек (client + server + postgres) и prod — см. [docs/docker.md](../docs/docker.md) и [docs/deploy.md](../docs/deploy.md).
 
 ## Запуск только Postgres
 
@@ -22,13 +24,8 @@ docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml --
 ## Остановка и удаление
 
 ```sh
-# только остановить (контейнер остаётся)
-npm run db:down
-# или: docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml stop
-
-# удалить контейнер (данные в .docker/postgres/data/ сохраняются)
-npm run db:rm
-# или: docker compose --env-file packages/server/.env -f .docker/docker-compose.yaml down
+npm run db:down   # остановить
+npm run db:rm     # удалить контейнер (данные в .docker/postgres/data/ сохраняются)
 ```
 
 ## Схема таблиц

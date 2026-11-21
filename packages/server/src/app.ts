@@ -31,6 +31,8 @@ app.onError(globalOnError);
 
 app.get("/", (c) => c.text("Hello Hono!"));
 
+app.get("/health", (c) => c.json({ status: "OK", success: true }));
+
 app.route("/auth", createAuthRouter());
 app.route("/users", createUsersRouter());
 app.route("/exercises", createExercisesRouter());
