@@ -1,0 +1,23 @@
+---
+description: Inline React Query mutation/query keys; no key factory helpers
+alwaysApply: true
+---
+
+# React Query keys
+
+Always write keys inline as arrays. Export only the base string constant if needed. Do not create helper functions that return `[KEY, id] as const`.
+
+```ts
+// BAD
+export function workoutWriteMutationKey(workoutId: string) {
+  return [WORKOUT_WRITE_MUTATION_KEY, workoutId] as const;
+}
+mutationKey: workoutWriteMutationKey(workoutId)
+
+// GOOD
+export const WORKOUT_WRITE_MUTATION_KEY = "workout-write";
+mutationKey: [WORKOUT_WRITE_MUTATION_KEY, workoutId]
+queryKey: [WORKOUT_DETAILS_QUERY_KEY, workoutId]
+```
+
+Same for `useIsMutating`, `invalidateQueries`, and anywhere else a key is passed.

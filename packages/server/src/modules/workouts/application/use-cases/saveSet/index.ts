@@ -2,7 +2,7 @@ import {
   WorkoutExerciseSkippedException,
   WorkoutSetNotFoundException,
 } from "../../../domain/exceptions/index.js";
-import { changeActiveWorkout } from "../../utils/changeActiveWorkout.js";
+import { changeWorkout } from "../../utils/changeWorkout.js";
 import { findExerciseInWorkout } from "../../utils/findExerciseInWorkout.js";
 import { validateSetValues } from "../../utils/validateSetValues.js";
 
@@ -13,7 +13,7 @@ export class SaveSetUseCase {
   constructor(private readonly repository: IWorkoutsRepository) {}
 
   execute(userId: string, id: string, exerciseId: string, setId: string, input: SetResultInput) {
-    return changeActiveWorkout(this.repository, userId, id, async (workout, changes) => {
+    return changeWorkout(this.repository, userId, id, async (workout, changes) => {
       const exercise = findExerciseInWorkout(workout, exerciseId);
 
       if (exercise.isSkipped) {
@@ -25,9 +25,13 @@ export class SaveSetUseCase {
       }
 
       const parameterValues =
-        input.status === "completed"
-          ? validateSetValues(exercise.parameterSchema, input.parameterValues)
-          : {};
+        input.status === "skipped"
+          ? {}
+          : validateSetValues(
+              exercise.parameterSchema,
+              input.parameterValues,
+              input.status === "pending",
+            );
 
       return changes.updateSet(setId, { status: input.status, parameterValues });
     });

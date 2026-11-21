@@ -1,10 +1,13 @@
 import { ExerciseForm } from "~/features/fitness/components/ExerciseForm";
-import { Page } from "~/shared/ui";
+import { PageContent } from "~/shared/ui";
 
 export function NewExercisePage() {
   return (
-    <Page title="Новое упражнение">
-      <ExerciseForm />
-    </Page>
+    <PageContent>
+      <PageContent.Header>Новое упражнение</PageContent.Header>
+      <PageContent.Body>
+        <ExerciseForm />
+      </PageContent.Body>
+    </PageContent>
   );
 }

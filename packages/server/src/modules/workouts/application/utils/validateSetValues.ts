@@ -40,9 +40,7 @@ function getValueSchema(field: ParameterField): z.ZodType<SetParameterValue> {
     schema = schema.min(field.min);
   }
 
-  if (field.max !== undefined) {
-    schema = schema.max(field.max);
-  }
+  schema = schema.max(Math.min(field.max ?? 999, 999));
 
   return schema;
 }
@@ -54,7 +52,11 @@ function getValueErrorCode(field: ParameterField, issueCode?: string): WorkoutFi
   return "INVALID_TYPE";
 }
 
-export function validateSetValues(rules: unknown[], rawValues: unknown): SetParameterValues {
+export function validateSetValues(
+  rules: unknown[],
+  rawValues: unknown,
+  partial = false,
+): SetParameterValues {
   if (!isObject(rawValues)) {
     throw new InvalidWorkoutSetValuesException([{ key: "", code: "INVALID_TYPE" }]);
   }
@@ -73,7 +75,7 @@ export function validateSetValues(rules: unknown[], rawValues: unknown): SetPara
     // Если нужного ключа нету в rawValues
     if (!Object.hasOwn(rawValues, key)) {
       // А оно было обязательно, то возвращаем ошибку
-      if (field.required ?? key !== "wellbeing_score") {
+      if (!partial && (field.required ?? key !== "wellbeing_score")) {
         errors.push({ key, code: "REQUIRED" });
       }
       continue;

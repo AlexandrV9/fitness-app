@@ -8,6 +8,5 @@ export const Route = createFileRoute("/(private)/_private/workouts/$workoutId")(
 
 function RoutePage() {
   const { workoutId } = Route.useParams();
-
-  return <WorkoutPage key={workoutId} id={workoutId} />;
+  return <WorkoutPage key={workoutId} workoutId={workoutId} />;
 }

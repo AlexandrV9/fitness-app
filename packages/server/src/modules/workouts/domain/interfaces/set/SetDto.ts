@@ -5,11 +5,11 @@ export type SetStatus = "pending" | "completed" | "skipped";
 export type SetParameterValues = Record<string, number | string | boolean>;
 
 export type SetResultInput =
-  | { status: "completed"; parameterValues: unknown }
+  | { status: "pending" | "completed"; parameterValues: unknown }
   | { status: "skipped" };
 
 export type SetResult = {
-  status: Exclude<SetStatus, "pending">;
+  status: SetStatus;
   parameterValues: SetParameterValues;
 };
 

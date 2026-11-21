@@ -13,6 +13,7 @@ export function createWorkoutChangesMock() {
     skipExercise: vi.fn<WorkoutChanges["skipExercise"]>(),
     createSet: vi.fn<WorkoutChanges["createSet"]>(),
     updateSet: vi.fn<WorkoutChanges["updateSet"]>(),
+    deleteSet: vi.fn<WorkoutChanges["deleteSet"]>(),
   };
 }
 

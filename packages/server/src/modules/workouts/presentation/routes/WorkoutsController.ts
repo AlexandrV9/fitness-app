@@ -3,6 +3,7 @@ import { getUserIdFromContext } from "~/shared/hono/context.js";
 import {
   addWorkoutSetRoute,
   finishWorkoutRoute,
+  deleteWorkoutSetRoute,
   getActiveWorkoutRoute,
   getWorkoutRoute,
   listWorkoutsRoute,
@@ -16,6 +17,7 @@ import type { OpenAPIHono } from "@hono/zod-openapi";
 import type { AuthVariables } from "~/shared/lib/types.js";
 
 import type { AddSetUseCase } from "../../application/use-cases/addSet/index.js";
+import type { DeleteSetUseCase } from "../../application/use-cases/deleteSet/index.js";
 import type { FinishWorkoutUseCase } from "../../application/use-cases/finishWorkout/index.js";
 import type { GetActiveWorkoutUseCase } from "../../application/use-cases/getActiveWorkout/index.js";
 import type { GetWorkoutByIdUseCase } from "../../application/use-cases/getWorkoutById/index.js";
@@ -36,6 +38,7 @@ export class WorkoutsController {
     private readonly skipExerciseUseCase: SkipExerciseUseCase,
     private readonly addSetUseCase: AddSetUseCase,
     private readonly saveSetUseCase: SaveSetUseCase,
+    private readonly deleteSetUseCase: DeleteSetUseCase,
   ) {}
 
   register(router: OpenAPIHono<AuthEnv>): void {
@@ -88,6 +91,12 @@ export class WorkoutsController {
       const { id, exerciseId } = c.req.valid("param");
       const set = await this.addSetUseCase.execute(getUserIdFromContext(c), id, exerciseId);
       return c.json({ success: true as const, data: set }, 201);
+    });
+
+    router.openapi(deleteWorkoutSetRoute, async (c) => {
+      const { id, exerciseId, setId } = c.req.valid("param");
+      await this.deleteSetUseCase.execute(getUserIdFromContext(c), id, exerciseId, setId);
+      return c.json({ success: true as const, data: null }, 200);
     });
 
     router.openapi(saveWorkoutSetRoute, async (c) => {

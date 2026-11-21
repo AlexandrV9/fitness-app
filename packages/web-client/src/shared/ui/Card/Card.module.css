@@ -1,0 +1,15 @@
+.card {
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.variant_outline {
+  border: 1px solid var(--border-color-default, #c4dcd7);
+  background: transparent;
+}
+
+.variant_primary {
+  border: 1px solid transparent;
+  background: var(--base_palette-bg-secondary, #efefef);
+}

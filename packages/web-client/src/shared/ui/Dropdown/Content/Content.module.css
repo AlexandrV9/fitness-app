@@ -1,0 +1,21 @@
+.wrapper {
+  min-width: 100px;
+  padding: var(--dropdown-menu-small-padding_tb, 6px)
+    var(--dropdown-menu-small-padding_lr, 6px);
+  border-radius: var(--dropdown-menu-small-radius, 12px);
+  border: var(--dropdown-menu-border-size, 1px) solid
+    var(--dropdown-menu-border-color, #8a8a8a);
+  background: var(--dropdown-menu-bg-color, #fff);
+
+  &[data-size='s'] {
+    min-width: var(--dropdown-menu-width-s, 200px);
+    padding: var(--dropdown-menu-big-padding_tb, 12px)
+      var(--dropdown-menu-big-padding_lr, 12px);
+  }
+
+  &[data-size='m'] {
+    min-width: var(--dropdown-menu-width-m, 256px);
+    padding: var(--dropdown-menu-big-padding_tb, 12px)
+      var(--dropdown-menu-big-padding_lr, 12px);
+  }
+}

@@ -1,0 +1,45 @@
+.field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 152px;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+.caption {
+  min-width: 0;
+}
+.hint {
+  margin-top: 2px;
+  color: var(--base_palette-text-secondary);
+}
+.error {
+  color: var(--input-text-color-hint-error);
+}
+.controls {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  gap: 4px;
+  align-items: center;
+  min-width: 0;
+}
+.stepButton {
+  --custom-button-height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+.stepButton:focus-visible {
+  outline: 2px solid var(--input-field-border-color-focus);
+  outline-offset: 2px;
+}
+.input {
+  --input-field-size-height-m: 44px;
+  --input-field-m_l_padding_lr: 4px;
+  --input-field-border-radius: 8px;
+  min-width: 0;
+}
+.field .input .value {
+  font-size: 16px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}

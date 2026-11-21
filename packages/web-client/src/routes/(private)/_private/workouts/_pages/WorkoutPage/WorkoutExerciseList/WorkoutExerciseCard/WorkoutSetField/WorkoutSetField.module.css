@@ -1,0 +1,14 @@
+.inputWrapper {
+  flex-grow: 1;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  min-width: 0;
+}

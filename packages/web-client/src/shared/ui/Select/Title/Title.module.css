@@ -1,0 +1,6 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: var(--select-container-inside_gap, 4px);
+  color: inherit;
+}

@@ -1,7 +1,5 @@
-import {
-  WorkoutFinishedException,
-  WorkoutNotFoundException,
-} from "../../domain/exceptions/index.js";
+import { WorkoutFinishedException } from "../../domain/exceptions/index.js";
+import { changeWorkout } from "./changeWorkout.js";
 
 import type { WorkoutDetailDto } from "../../domain/interfaces/workout/WorkoutDetailDto.js";
 import type {
@@ -15,21 +13,11 @@ export async function changeActiveWorkout<T>(
   id: string,
   operation: (workout: WorkoutDetailDto, changes: WorkoutChanges) => Promise<T>,
 ) {
-  const result = await repository.changeWorkout({
-    userId,
-    id,
-    operation: (workout, changes) => {
-      if (workout.finishedAt) {
-        throw new WorkoutFinishedException();
-      }
+  return changeWorkout(repository, userId, id, async (workout, changes) => {
+    if (workout.finishedAt) {
+      throw new WorkoutFinishedException();
+    }
 
-      return operation(workout, changes);
-    },
+    return operation(workout, changes);
   });
-
-  if (result === null) {
-    throw new WorkoutNotFoundException();
-  }
-
-  return result;
 }

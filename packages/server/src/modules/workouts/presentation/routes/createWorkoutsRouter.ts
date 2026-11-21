@@ -6,6 +6,7 @@ import { authMiddleware } from "~/modules/auth/presentation/utils/authMiddleware
 import { globalErrorMapper } from "~/shared/lib/errorMapper.js";
 
 import { AddSetUseCase } from "../../application/use-cases/addSet/index.js";
+import { DeleteSetUseCase } from "../../application/use-cases/deleteSet/index.js";
 import { FinishWorkoutUseCase } from "../../application/use-cases/finishWorkout/index.js";
 import { GetActiveWorkoutUseCase } from "../../application/use-cases/getActiveWorkout/index.js";
 import { GetWorkoutByIdUseCase } from "../../application/use-cases/getWorkoutById/index.js";
@@ -42,6 +43,7 @@ export function createWorkoutsRouter() {
     new SkipExerciseUseCase(repository),
     new AddSetUseCase(repository),
     new SaveSetUseCase(repository),
+    new DeleteSetUseCase(repository),
   ).register(router);
 
   return router;

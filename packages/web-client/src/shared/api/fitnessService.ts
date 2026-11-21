@@ -74,7 +74,7 @@ export const templatesService = {
     );
     return response.data.data;
   },
-  
+
   async remove(id: string) {
     await axiosInstance.delete("/workout-templates/" + id);
   },
@@ -122,6 +122,9 @@ export const workoutsService = {
       exercisePath(id, exerciseId) + "/sets",
     );
     return response.data.data;
+  },
+  async deleteSet(id: string, exerciseId: string, setId: string) {
+    await axiosInstance.delete(exercisePath(id, exerciseId) + "/sets/" + setId);
   },
   async saveSet(id: string, exerciseId: string, setId: string, input: SetInput) {
     const response = await axiosInstance.patch<DataResponse<WorkoutSet>>(

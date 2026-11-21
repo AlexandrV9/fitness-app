@@ -5,6 +5,7 @@ import {
   ActiveWorkoutExistsException,
   UserNotFoundException,
   WorkoutNotFoundException,
+  WorkoutSetNotFoundException,
   WorkoutTemplateNotFoundException,
 } from "../domain/exceptions/index.js";
 
@@ -384,8 +385,39 @@ export class WorkoutsRepository implements IWorkoutsRepository {
         },
         createSet: (exerciseId) => this.createSet(client, exerciseId),
         updateSet: (setId, result) => this.updateSet(client, setId, result),
+        deleteSet: (exerciseId, setId) => this.deleteSet(client, exerciseId, setId),
       });
     });
+  }
+
+  private async deleteSet(client: PoolClient, exerciseId: string, setId: string): Promise<void> {
+    const { rowCount } = await client.query(
+      "DELETE FROM workout_sets WHERE id = $1 AND workout_exercise_id = $2",
+      [setId, exerciseId],
+    );
+    if (!rowCount) throw new WorkoutSetNotFoundException();
+
+    // Сдвиг освобождает номера перед перенумерацией с UNIQUE-ограничением.
+    // changeWorkout удерживает блокировку тренировки до завершения транзакции.
+    await client.query(
+      `UPDATE workout_sets
+       SET set_number = set_number + (
+         SELECT COALESCE(MAX(set_number), 0)
+         FROM workout_sets WHERE workout_exercise_id = $1
+       )
+       WHERE workout_exercise_id = $1`,
+      [exerciseId],
+    );
+    await client.query(
+      `WITH numbered AS (
+         SELECT id, ROW_NUMBER() OVER (ORDER BY set_number)::integer AS number
+         FROM workout_sets WHERE workout_exercise_id = $1
+       )
+       UPDATE workout_sets AS target
+       SET set_number = numbered.number
+       FROM numbered WHERE target.id = numbered.id`,
+      [exerciseId],
+    );
   }
 
   /**

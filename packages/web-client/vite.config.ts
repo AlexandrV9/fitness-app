@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       tanstackRouter({
         target: "react",
-        routeFileIgnorePattern: "^_ui$",
+        routeFileIgnorePattern: "^_(ui|layout|pages)$",
         autoCodeSplitting: true,
       }),
       react(),

@@ -14,6 +14,7 @@ export function Pagination({
   disabled?: boolean;
 }) {
   if (pagination.totalPages < 2) return null;
+  
   return (
     <Flex
       as="nav"

@@ -1,0 +1,24 @@
+---
+description: Use Card as="li" for cards inside lists; never wrap Card in a separate li
+alwaysApply: true
+---
+
+# Card in lists
+
+When cards are items of a list, render the list as `ul` (or `Flex as="ul"`) and pass `as="li"` to `Card`. Do not wrap `Card` in a separate `<li>`.
+
+```tsx
+// BAD
+<ul>
+  <li>
+    <Card>...</Card>
+  </li>
+</ul>
+
+// GOOD
+<Flex as="ul" direction="column" rowGap={20}>
+  <Card as="li">...</Card>
+</Flex>
+```
+
+Standalone cards outside lists stay as the default (`div`).

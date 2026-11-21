@@ -9,6 +9,7 @@ import {
   PaginationMetaSchema,
   PaginationQuerySchema,
   successData,
+  successNullSchema,
 } from "~/shared/openapi/index.js";
 
 export const SetSchema = z
@@ -48,9 +49,7 @@ export const WorkoutDetailSchema = WorkoutSchema.extend({
 }).openapi("WorkoutDetail");
 
 /** Separate name so `.nullable()` does not pollute `WorkoutDetail` in OpenAPI. */
-const NullableWorkoutDetailSchema = WorkoutDetailSchema.nullable().openapi(
-  "NullableWorkoutDetail",
-);
+const NullableWorkoutDetailSchema = WorkoutDetailSchema.nullable().openapi("NullableWorkoutDetail");
 
 export const StartWorkoutBodySchema = z
   .object({
@@ -62,6 +61,10 @@ export const SaveSetBodySchema = z
   .discriminatedUnion("status", [
     z.object({
       status: z.literal("skipped"),
+    }),
+    z.object({
+      status: z.literal("pending"),
+      parameterValues: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])),
     }),
     z.object({
       status: z.literal("completed"),
@@ -139,7 +142,8 @@ export const startWorkoutRoute = createRoute({
   tags: ["Workouts"],
   summary: "Start workout from template",
   operationId: "startWorkout",
-  description: "Starts a new workout from a template, or returns the existing active workout for the same template.",
+  description:
+    "Starts a new workout from a template, or returns the existing active workout for the same template.",
   security: [...bearerAuthSecurity],
   request: {
     body: {
@@ -226,5 +230,21 @@ export const saveWorkoutSetRoute = createRoute({
     400: jsonResponse(ErrorCodeSchema, "Invalid set result"),
     401: jsonResponse(ErrorCodeSchema, "Unauthorized"),
     404: jsonResponse(ErrorCodeSchema, "Workout, exercise or set not found"),
+  },
+});
+
+export const deleteWorkoutSetRoute = createRoute({
+  method: "delete",
+  path: "/{id}/exercises/{exerciseId}/sets/{setId}",
+  tags: ["Workouts"],
+  summary: "Delete a set and renumber remaining sets",
+  security: [...bearerAuthSecurity],
+  request: { params: WorkoutSetParamsSchema },
+  responses: {
+    200: jsonResponse(successNullSchema, "Set deleted"),
+    400: jsonResponse(ErrorCodeSchema, "Invalid ids"),
+    401: jsonResponse(ErrorCodeSchema, "Unauthorized"),
+    404: jsonResponse(ErrorCodeSchema, "Workout, exercise or set not found"),
+    409: jsonResponse(ErrorCodeSchema, "Exercise skipped"),
   },
 });

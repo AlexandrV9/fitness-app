@@ -1,10 +1,13 @@
 import { TemplateForm } from "~/features/fitness/components/TemplateForm";
-import { Page } from "~/shared/ui";
+import { PageContent } from "~/shared/ui";
 
 export function NewTemplatePage() {
   return (
-    <Page title="Новый шаблон">
-      <TemplateForm />
-    </Page>
+    <PageContent>
+      <PageContent.Header>Новый шаблон</PageContent.Header>
+      <PageContent.Body>
+        <TemplateForm />
+      </PageContent.Body>
+    </PageContent>
   );
 }

@@ -17,9 +17,11 @@ export class WorkoutSetsRepository {
           CHECK (status IN ('pending', 'completed', 'skipped')),
         parameter_values JSONB NOT NULL DEFAULT '{}'::jsonb
           CHECK (jsonb_typeof(parameter_values) = 'object'),
-        CHECK (status = 'completed' OR parameter_values = '{}'::jsonb),
         UNIQUE (workout_exercise_id, set_number)
       )
     `);
+
+    // Старое ограничение запрещало сохранять неполный результат подхода.
+    await this.pool.query(`ALTER TABLE ${TABLE_NAME} DROP CONSTRAINT IF EXISTS workout_sets_check`);
   }
 }

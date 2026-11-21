@@ -9,6 +9,7 @@ export interface WorkoutChanges {
   skipExercise(exerciseId: string): Promise<WorkoutDetailDto>;
   createSet(exerciseId: string): Promise<SetDto>;
   updateSet(setId: string, result: SetResult): Promise<SetDto>;
+  deleteSet(exerciseId: string, setId: string): Promise<void>;
 }
 
 export type GetWorkoutsProps = {

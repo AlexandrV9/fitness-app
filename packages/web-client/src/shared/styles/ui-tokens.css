@@ -98,7 +98,7 @@
   /* Borders */
   --border-color-default: var(--base_palette-secondary_default);
   --border-color-accent: var(--base_palette-primary_3);
-  --border-color-focus: var(--base_palette-green_bright);
+  --border-color-focus: var(--base_palette-blue_middle);
   --border-size-xs: var(--number-main-0_0625);
 
   /* Button */
@@ -194,7 +194,7 @@
   --button_group-helper_text-color-alert: var(--base_palette-text-error);
 
   /* Input */
-  --input-gap_vertical: var(--number-main-0_25);
+  --input-gap_vertical: var(--number-main-0_5);
   --input-field-m_l_gap: var(--number-main-0_25);
   --input-field-s_gap: var(--number-main-0_125);
   --input-field-m_l_padding_lr: var(--number-main-0_75);
@@ -230,6 +230,90 @@
   --input-field-bg-autofill: #ebebeb;
   --input-field-border-color-autofill: #9a9a9a;
   --input-text-color-autofill: var(--base_palette-text-default);
+
+  /* Select / Dropdown */
+  --base_palette-bg-secondary: var(--base_palette-secondary_1);
+  --base_palette-text-disable: var(--base_palette-grey_2);
+  --indent-xs: var(--number-main-0_25);
+  --indent-xxs: var(--number-main-0_125);
+  --indent-s: var(--number-main-0_375);
+  --indent-sm: var(--number-main-0_5);
+  --number-main-12_5: 200px;
+  --number-main-16: 256px;
+  --radius-small: var(--number-main-0_375);
+  --radius-default_for_small: var(--number-main-0_75);
+  --divider-color: var(--border-color-default);
+  --checkbox-box-checked-bg-color-inactive: var(--base_palette-primary_2);
+
+  --dropdown-header-gap: var(--indent-m);
+  --dropdown-header-padding_t: var(--indent-xs);
+  --dropdown-item_list-big-items_gap: var(--indent-sm);
+  --dropdown-item_list-small-items_gap: var(--indent-xxs);
+  --dropdown-menu-bg-color: var(--base_palette-bg-default);
+  --dropdown-menu-big-button_gap: var(--indent-m);
+  --dropdown-menu-big-padding_lr: var(--indent-m);
+  --dropdown-menu-big-padding_tb: var(--indent-m);
+  --dropdown-menu-border-color: var(--base_palette-grey_2);
+  --dropdown-menu-border-size: var(--border-size-xs);
+  --dropdown-menu-small-padding_lr: var(--indent-s);
+  --dropdown-menu-small-padding_tb: var(--indent-s);
+  --dropdown-menu-small-radius: var(--radius-default_for_small);
+  --dropdown-menu-width-m: var(--number-main-16);
+  --dropdown-menu-width-s: var(--number-main-12_5);
+  --dropdown-menu_item-big-gap: var(--indent-xs);
+  --dropdown-menu_item-big-height: var(--number-main-2_5);
+  --dropdown-menu_item-big-padding_l: var(--indent-sm);
+  --dropdown-menu_item-big-padding_r: var(--indent-sm);
+  --dropdown-menu_item-big-padding_tb: var(--indent-sm);
+  --dropdown-menu_item-radius: var(--radius-small);
+  --dropdown-menu_item-small-height: var(--number-main-2);
+  --dropdown-menu_item-not_selected-bg-color-hover: var(--base_palette-primary_8);
+  --dropdown-menu_item-selected-bg-color-inactive: var(--base_palette-bg-secondary);
+
+  --select-outside_gap: var(--number-main-0_25);
+  --select-container-inside_gap: var(--number-main-0_25);
+  --select-container-padding_l-m: var(--number-main-0_75);
+  --select-container-padding_l-s: var(--number-main-0_5);
+  --select-container-padding_r-m: var(--number-main-0_5);
+  --select-container-padding_r-s: var(--number-main-0_25);
+  --select-container-height-m: var(--control_height-m);
+  --select-container-height-s: var(--control_height-s);
+  --select-container-border-radius: var(--radius-control);
+  --select-container-border-size: var(--border-size-xs);
+  --select-container-border-color-default-inactive: var(--base_palette-grey_2);
+  --select-container-border-color-default-active_hover: var(--base_palette-primary_3);
+  --select-container-border-color-accent-inactive: var(--base_palette-grey_2);
+  --select-container-border-color-accent-hover: var(--base_palette-grey_1);
+  --select-container-border-color-accent-active: var(--base_palette-primary_3);
+  --select-container-border-color-accent-disable: var(--base_palette-grey_2);
+  --select-container-bg-color-inactive: var(--base_palette-bg-default);
+  --select-container-bg-color-hover: var(--base_palette-primary_8);
+  --select-container-bg-color-active: var(--base_palette-primary_2);
+  --select-container-bg-color-active_hover: var(--base_palette-primary_default);
+  --select-container-bg-color-disable: var(--base_palette-bg-default);
+  --select-container-arrow-color-inactive: var(--base_palette-grey_1);
+  --select-container-arrow-color-hover: var(--base_palette-primary_3);
+  --select-container-text-color-default-inactive: var(--base_palette-text-secondary);
+  --select-container-text-color-default-hover: var(--base_palette-text-secondary);
+  --select-container-text-color-default-active: var(--base_palette-text-inverse);
+  --select-container-text-color-default-disable: var(--base_palette-text-disable);
+  --select-container-text-color-accent-inactive: var(--base_palette-text-default);
+  --select-container-text-color-accent-active: var(--base_palette-text-inverse);
+  --select-lable-color-default: var(--base_palette-text-secondary);
+  --select-lable-color-disable: var(--base_palette-text-disable);
+
+  /* Switch */
+  --switch-height: var(--control_height-s);
+  --switch-width: var(--number-main-2_5);
+  --switch-padding: var(--indent-xxs);
+  --switch-radius: var(--radius-control);
+  --switch-knob-size: var(--icon_control-size-m);
+  --switch-bg-off: var(--base_palette-grey_2);
+  --switch-bg-on: var(--base_palette-primary_default);
+  --switch-bg-disable: var(--base_palette-grey_2);
+  --switch-knob-off: var(--base_palette-white);
+  --switch-knob-on: var(--base_palette-white);
+  --switch-knob-disable: var(--base_palette-grey_4);
 }
 
 /* Dark — white text, white primary button / black on-button text */
@@ -264,6 +348,8 @@
   --base_palette-text-fourth: var(--base_palette-primary_6);
   --base_palette-text-accent: var(--base_palette-white);
   --base_palette-bg-default: #111111;
+  --base_palette-bg-secondary: var(--base_palette-secondary_1);
+  --base_palette-text-disable: var(--base_palette-grey_2);
 
   --base_palette-action_default: #6bb6ff;
   --base_palette-action_hover: #8fc7ff;
@@ -289,6 +375,9 @@
   --button-border-color-disable-all_accept_alert: #3a3a3a;
   --button-text-color-disable-on_all: #9a9a9a;
   --button-text-color-disable-all_accept_alert: #9a9a9a;
+
+  --switch-knob-on: var(--base_palette-black);
+  --switch-knob-off: var(--base_palette-primary_3);
 
   --input-field-bg-inactive: var(--base_palette-bg-default);
   --input-field-bg-hover: var(--base_palette-primary_8);

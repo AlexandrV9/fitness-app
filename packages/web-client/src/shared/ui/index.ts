@@ -11,3 +11,5 @@ export * from "./Page";
 export * from "./Pagination";
 export * from "./QueryFeedback";
 export * from "./Select";
+export * from "./Switch";
+export * from "./Card";

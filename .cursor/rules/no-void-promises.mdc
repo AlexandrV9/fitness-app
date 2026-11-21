@@ -1,0 +1,22 @@
+---
+description: Never use void to discard promises or fire-and-forget calls
+alwaysApply: true
+---
+
+# No `void` for promises
+
+Never prefix promise/async calls with `void` to silence floating-promise lint or discard the result.
+
+```tsx
+// BAD
+onRetry={() => void query.refetch()}
+onClick={() => void addSet()}
+void navigate({ to: "/" });
+
+// GOOD
+onRetry={() => query.refetch()}
+onClick={() => addSet()}
+navigate({ to: "/" });
+```
+
+Call the promise/function directly. Do not add `void` «для префикса» в колбэках и эффектах.

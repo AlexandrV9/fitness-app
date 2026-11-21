@@ -11,6 +11,11 @@ h6 {
   box-sizing: border-box;
 }
 
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
 a {
   color: var(--base_palette-text-link_default, #2f8cff);
   text-decoration: none;

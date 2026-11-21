@@ -43,7 +43,7 @@ export type WorkoutSet = {
   parameterValues: ParameterValues;
 };
 export type SetInput =
-  | { status: "completed"; parameterValues: ParameterValues }
+  | { status: "pending" | "completed"; parameterValues: ParameterValues }
   | { status: "skipped" };
 
 export type WorkoutExercise = {

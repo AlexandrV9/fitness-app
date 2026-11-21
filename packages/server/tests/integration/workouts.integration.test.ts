@@ -227,7 +227,7 @@ describe("workouts integration", () => {
       "WORKOUT_FINISHED",
     );
 
-    await expectErrorCode(
+    await expectStatus(
       await jsonRequest(
         app,
         "PATCH",
@@ -237,8 +237,7 @@ describe("workouts integration", () => {
           body: { status: "skipped" },
         },
       ),
-      409,
-      "WORKOUT_FINISHED",
+      200,
     );
   });
 
@@ -334,6 +333,51 @@ describe("workouts integration", () => {
     );
   });
 
+  it("сохраняет отдельное поле, восстанавливает черновик и затем завершает подход", async () => {
+    const { session, workout } = await seedActiveWorkout();
+    const exercise = workout.exercises[0]!;
+    const set = exercise.sets[0]!;
+    await testDb.pool.query(
+      "UPDATE workout_exercises SET parameter_schema = $2::jsonb WHERE id = $1",
+      [
+        exercise.id,
+        JSON.stringify([
+          { key: "reps", type: "integer", min: 1 },
+          { key: "weight_kg", type: "number", min: 0 },
+        ]),
+      ],
+    );
+    const path = `/workouts/${workout.id}/exercises/${exercise.id}/sets/${set.id}`;
+    await expectStatus(
+      await jsonRequest(app, "PATCH", path, {
+        token: session.accessToken,
+        body: { status: "pending", parameterValues: { reps: 10 } },
+      }),
+      200,
+    );
+    const restored = await readJson<{
+      data: { exercises: Array<{ sets: Array<{ status: string; parameterValues: unknown }> }> };
+    }>(await jsonRequest(app, "GET", `/workouts/${workout.id}`, { token: session.accessToken }));
+    expect(restored.data.exercises[0]!.sets[0]).toMatchObject({
+      status: "pending",
+      parameterValues: { reps: 10 },
+    });
+    await expectStatus(
+      await jsonRequest(app, "PATCH", path, {
+        token: session.accessToken,
+        body: { status: "completed", parameterValues: { reps: 10, weight_kg: 22.5 } },
+      }),
+      200,
+    );
+    await expectStatus(
+      await jsonRequest(app, "PATCH", path, {
+        token: session.accessToken,
+        body: { status: "pending", parameterValues: {} },
+      }),
+      200,
+    );
+  });
+
   it("save set с битой parameterSchema → INVALID_WORKOUT_PARAMETER_SCHEMA", async () => {
     const { session, workout } = await seedActiveWorkout();
     const exercise = workout.exercises[0]!;
@@ -374,5 +418,77 @@ describe("workouts integration", () => {
       404,
       "WORKOUT_NOT_FOUND",
     );
+  });
+  it("удаляет подход, сохраняет результаты остальных и последовательно перенумеровывает строки", async () => {
+    const { session, workout } = await seedActiveWorkout();
+    const exercise = workout.exercises[0]!;
+    const base = "/workouts/" + workout.id + "/exercises/" + exercise.id + "/sets";
+    await expectStatus(await jsonRequest(app, "POST", base, { token: session.accessToken }), 201);
+    await expectStatus(
+      await jsonRequest(app, "PATCH", base + "/" + exercise.sets[1]!.id, {
+        token: session.accessToken,
+        body: { status: "completed", parameterValues: { reps: 12 } },
+      }),
+      200,
+    );
+    await expectStatus(
+      await jsonRequest(app, "DELETE", base + "/" + exercise.sets[0]!.id, {
+        token: session.accessToken,
+      }),
+      200,
+    );
+    const response = await jsonRequest(app, "GET", "/workouts/" + workout.id, {
+      token: session.accessToken,
+    });
+    const result = await readJson<{
+      data: {
+        exercises: Array<{
+          sets: Array<{
+            id: string;
+            setNumber: number;
+            parameterValues: Record<string, number>;
+          }>;
+        }>;
+      };
+    }>(response);
+    const sets = result.data.exercises[0]!.sets;
+    expect(sets.map((set) => set.setNumber)).toEqual([1, 2]);
+    expect(sets[0]!.id).toBe(exercise.sets[1]!.id);
+    expect(sets[0]!.parameterValues).toEqual({ reps: 12 });
+  });
+
+  it("сериализует одновременные удаление и добавление подхода", async () => {
+    const { session, workout } = await seedActiveWorkout();
+    const exercise = workout.exercises[0]!;
+    const base = "/workouts/" + workout.id + "/exercises/" + exercise.id + "/sets";
+    const responses = await Promise.all([
+      jsonRequest(app, "DELETE", base + "/" + exercise.sets[0]!.id, { token: session.accessToken }),
+      jsonRequest(app, "POST", base, { token: session.accessToken }),
+    ]);
+    expect(responses.map((response) => response.status)).toEqual([200, 201]);
+    const result = await readJson<{
+      data: { exercises: Array<{ sets: Array<{ id: string; setNumber: number }> }> };
+    }>(await jsonRequest(app, "GET", "/workouts/" + workout.id, { token: session.accessToken }));
+    expect(result.data.exercises[0]!.sets.map((set) => set.setNumber)).toEqual([1, 2]);
+  });
+
+  it("защищает удаление от другого пользователя и разрешает удаление в завершённой тренировке", async () => {
+    const { session, workout } = await seedActiveWorkout();
+    const other = await signUp(app, { login: "other-delete-user" });
+    const exercise = workout.exercises[0]!;
+    const path =
+      "/workouts/" + workout.id + "/exercises/" + exercise.id + "/sets/" + exercise.sets[0]!.id;
+    await expectErrorCode(
+      await jsonRequest(app, "DELETE", path, { token: other.accessToken }),
+      404,
+      "WORKOUT_NOT_FOUND",
+    );
+    await expectStatus(
+      await jsonRequest(app, "POST", "/workouts/" + workout.id + "/finish", {
+        token: session.accessToken,
+      }),
+      200,
+    );
+    await expectStatus(await jsonRequest(app, "DELETE", path, { token: session.accessToken }), 200);
   });
 });

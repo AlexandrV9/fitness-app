@@ -3,8 +3,11 @@ import type { ParameterField, ParameterValues } from "~/shared/api/fitnessTypes"
 const labels: Record<string, string> = {
   weight_kg: "Вес, кг",
   reps: "Повторения",
-  wellbeing_score: "Самочувствие",
 };
+
+export function getVisibleParameters(schema: ParameterField[]) {
+  return schema.filter((field) => field.key !== "wellbeing_score");
+}
 
 export function parameterLabel(field: ParameterField) {
   return (

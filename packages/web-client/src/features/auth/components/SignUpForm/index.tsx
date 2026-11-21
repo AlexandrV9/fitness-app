@@ -25,7 +25,7 @@ export const SignUpForm = () => {
       }
 
       toast.success("Аккаунт создан");
-      void navigate({ to: "/" });
+      navigate({ to: "/" });
     },
     onError: (error) => {
       const message = error instanceof ApiError ? error.message : "Не удалось зарегистрироваться";

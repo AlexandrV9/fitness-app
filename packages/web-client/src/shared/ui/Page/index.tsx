@@ -1,41 +1,45 @@
 import { Flex } from "../Flex";
 import { Typography } from "../Typography";
-import styles from "./Page.module.css";
 
 import type { ReactNode } from "react";
 
-export function Page({
-  title,
-  actions,
-  children,
-}: {
-  title: string;
-  actions?: ReactNode;
+export type PageContentProps = {
   children: ReactNode;
-}) {
+};
+
+export function PageContent({ children }: PageContentProps) {
   return (
     <Flex direction="column" rowGap={20}>
-      <Flex
-        as="header"
-        align="center"
-        justify="space-between"
-        wrap="wrap"
-        rowGap={12}
-        columnGap={12}
-      >
-        <Typography variant="h_1">{title}</Typography>
-        {actions}
-      </Flex>
       {children}
     </Flex>
   );
 }
 
-export function Card({ title, children }: { title?: string; children: ReactNode }) {
+export type PageContentHeaderProps = {
+  children: ReactNode;
+  actions?: ReactNode;
+};
+
+const Header = ({ children, actions }: PageContentHeaderProps) => {
   return (
-    <Flex as="section" direction="column" rowGap={16} className={styles.card}>
-      {title && <Typography variant="h_2">{title}</Typography>}
+    <Flex align="center" justify="space-between" wrap="wrap" rowGap={12} columnGap={12}>
+      <Typography variant="h_1">{children}</Typography>
+      {actions}
+    </Flex>
+  );
+};
+
+export type PageContentBodyProps = {
+  children: ReactNode;
+};
+
+const Body = ({ children }: PageContentBodyProps) => {
+  return (
+    <Flex direction="column" rowGap={20}>
       {children}
     </Flex>
   );
-}
+};
+
+PageContent.Header = Header;
+PageContent.Body = Body;
